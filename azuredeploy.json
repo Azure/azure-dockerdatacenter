@@ -40,7 +40,7 @@
     },
     "ucpNodeCount": {
       "type": "int",
-      "defaultValue": 2,
+      "defaultValue": 6,
       "metadata": {
         "description": "Number of UCP node VMs"
       }
