@@ -454,7 +454,7 @@
         },
         "parameters": {
           "location": {
-            "value": "[parameters('location')]"
+            "value": "[resourceGroup().location]"
           },
           "virtualNetworkName": {
             "value": "[parameters('virtualNetworkName')]"
@@ -843,7 +843,7 @@
             "value": "[variables('apiVersionNetwork')]"
           },
           "location": {
-            "value": "[parameters('location')]"
+            "value": "[resourceGroup().location]"
           },
           "vmNamePrefix": {
             "value": "[concat(parameters('clusterPrefix'), copyindex())]"
@@ -919,7 +919,7 @@
             "value": "[variables('apiVersionNetwork')]"
           },
           "location": {
-            "value": "[parameters('location')]"
+            "value": "[resourceGroup().location]"
           },
           "vmNamePrefix": {
             "value": "[concat(parameters('clusterPrefix'), copyindex())]"
@@ -995,7 +995,7 @@
             "value": "[variables('apiVersionNetwork')]"
           },
           "location": {
-            "value": "[parameters('location')]"
+            "value": "[resourceGroup().location]"
           },
           "vmNamePrefix": {
             "value": "[concat(parameters('clusterPrefix'), copyindex())]"
@@ -1042,9 +1042,9 @@
         "ucpController0"
       ],
       "properties": {
-        "publisher": "Microsoft.OSTCExtensions",
-        "type": "CustomScriptForLinux",
-        "typeHandlerVersion": "1.5",
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
