@@ -365,19 +365,19 @@
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[variables('availabilitySetNameUcpControllers')]",
       "apiVersion": "[variables('apiVersionCompute')]",
-      "location": "[parameters('location')]"
+      "location": "[resourceGroup().location]"
     },
     {
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[variables('availabilitySetNameUcpNodes')]",
       "apiVersion": "[variables('apiVersionCompute')]",
-      "location": "[parameters('location')]"
+      "location": "[resourceGroup().location]"
     },
     {
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[variables('availabilitySetNameUcpNodesDtr')]",
       "apiVersion": "[variables('apiVersionCompute')]",
-      "location": "[parameters('location')]"
+      "location": "[resourceGroup().location]"
     },
     {
       "type": "Microsoft.Storage/storageAccounts",
