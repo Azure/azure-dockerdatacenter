@@ -46,7 +46,7 @@
     },
     "ucpNodeCount": {
       "type": "int",
-      "defaultValue": 2,
+      "defaultValue": 6,
       "metadata": {
         "description": "Number of UCP node VMs"
       }
@@ -70,20 +70,6 @@
       "defaultValue": "ucpadmin",
       "metadata": {
         "description": "OS Admin User Name for UCP Controller Nodes, UCP Nodes and DTR Nodes"
-      }
-    },
-    "authenticationType": {
-      "type": "string",
-      "defaultValue": "password",
-      "metadata": {
-        "description": "Authentication type"
-      }
-    },
-    "adminPassword": {
-      "type": "securestring",
-      "defaultValue": "",
-      "metadata": {
-        "description": "OS Admin password"
       }
     },
     "sshPublicKey": {
@@ -134,7 +120,7 @@
     },
     "controllerLbPublicIpAddress": {
       "type": "string",
-      "defaultValue": "clbpip",
+      "defaultValue": "clbpipossddc",
       "metadata": {
         "description": "Name of IP Address for Controller Load Balancer"
       }
@@ -147,7 +133,7 @@
     },
     "nodeLbPublicIpAddress": {
       "type": "string",
-      "defaultValue": "nlbpip",
+      "defaultValue": "nlbpipossddc",
       "metadata": {
         "description": "Name of IP Address for Node Load Balancer"
       }
@@ -160,7 +146,7 @@
     },
     "nodeDtrLbPublicIpAddress": {
       "type": "string",
-      "defaultValue": "dlbpip",
+      "defaultValue": "dlbpipossddc",
       "metadata": {
         "description": "Public IP Address name of DTR Load Balancer"
       }
