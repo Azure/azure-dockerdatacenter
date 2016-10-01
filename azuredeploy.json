@@ -851,12 +851,6 @@
           "adminUsername": {
             "value": "[parameters('adminUsername')]"
           },
-          "adminPassword": {
-            "value": "[parameters('adminPassword')]"
-          },
-          "authenticationType": {
-            "value": "[parameters('authenticationType')]"
-          },
           "sshPublicKey": {
             "value": "[parameters('sshPublicKey')]"
           },
@@ -926,12 +920,6 @@
           },
           "adminUsername": {
             "value": "[parameters('adminUsername')]"
-          },
-          "adminPassword": {
-            "value": "[parameters('adminPassword')]"
-          },
-          "authenticationType": {
-            "value": "[parameters('authenticationType')]"
           },
           "sshPublicKey": {
             "value": "[parameters('sshPublicKey')]"
@@ -1003,12 +991,6 @@
           "adminUsername": {
             "value": "[parameters('adminUsername')]"
           },
-          "adminPassword": {
-            "value": "[parameters('adminPassword')]"
-          },
-          "authenticationType": {
-            "value": "[parameters('authenticationType')]"
-          },
           "sshPublicKey": {
             "value": "[parameters('sshPublicKey')]"
           },
@@ -1070,9 +1052,9 @@
         "[resourceId('Microsoft.Compute/virtualMachines/extensions', concat(parameters('clusterPrefix'), '0-ucpdtrnode'), 'ucpDtrNodeConfig')]"
       ],
       "properties": {
-        "publisher": "Microsoft.OSTCExtensions",
-        "type": "CustomScriptForLinux",
-        "typeHandlerVersion": "1.5",
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
@@ -1098,9 +1080,9 @@
         "[resourceId('Microsoft.Compute/virtualMachines/extensions', concat(parameters('clusterPrefix'), '0-ucpctrl'), 'ucpControllerConfig')]"
       ],
       "properties": {
-        "publisher": "Microsoft.OSTCExtensions",
-        "type": "CustomScriptForLinux",
-        "typeHandlerVersion": "1.5",
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
@@ -1123,9 +1105,9 @@
         "[resourceId('Microsoft.Compute/virtualMachines/extensions', concat(parameters('clusterPrefix'), '0-ucpctrl'), 'ucpControllerConfig')]"
       ],
       "properties": {
-        "publisher": "Microsoft.OSTCExtensions",
-        "type": "CustomScriptForLinux",
-        "typeHandlerVersion": "1.5",
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
@@ -1151,9 +1133,9 @@
         "[resourceId('Microsoft.Compute/virtualMachines/extensions', concat(parameters('clusterPrefix'), '0-ucpctrl'), 'ucpControllerConfig')]"
       ],
       "properties": {
-        "publisher": "Microsoft.OSTCExtensions",
-        "type": "CustomScriptForLinux",
-        "typeHandlerVersion": "1.5",
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
