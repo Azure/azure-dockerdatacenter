@@ -4,7 +4,6 @@ echo $(date) " - Starting Script"
 
 PASSWORD=$1
 MASTERFQDN=$2
-# Key not FILEURI - to be changed
 FILEURI=$3
 MASTERPRIVATEIP=$4
 
@@ -36,11 +35,7 @@ SSLCiphers = "HIGH:!aNULL:!MD5"
 SSLProtocols = "SSLv3 TLSv1 TLSv1.1 TLSv1.2"'
 
 #copy license key to /opt/ucp/ucp
-cat > /opt/ucp/docker_subscription.lic <<EOF
-'$FILEURI'
-EOF
-     
-#wget "$FILEURI" -O /opt/ucp/docker_subscription.lic
+wget "$FILEURI" -O /opt/ucp/docker_subscription.lic
 
 # Fix for Docker Daemon when cloning a base image
 # rm  /etc/docker/key.json  
@@ -49,11 +44,8 @@ EOF
 # Load the predownloaded Tar File
 
 echo $(date) " - Loading docker install Tar"
-cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
-#cd /opt/ucp && wget https://packages.docker.com/caas/ucp-1.1.4_dtr-2.0.3.tar.gz
-#docker load < /opt/ucp/ucp-1.1.2_dtr-2.0.2.tar.gz
-#docker load < /opt/ucp/ucp-1.1.4_dtr-2.0.3.tar.gz
-docker load < ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
+
+docker load < /opt/ucp/ucp-1.1.3_dtr-2.0.3.tar.gz
 
 # Start installation of UCP with master Controller
 
@@ -64,7 +56,7 @@ docker run --rm -i \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v /opt/ucp/docker_subscription.lic:/docker_subscription.lic \
     -e UCP_ADMIN_PASSWORD=$PASSWORD \
-    docker/ucp:1.1.2 \
+    docker/ucp:1.1.3 \
     install -D --fresh-install --san $MASTERFQDN
 
 if [ $? -eq 0 ]
