@@ -8,7 +8,7 @@
         "description": "Base URL for Marketplace",
         "artifactsBaseUrl": ""
       },
-      "defaultValue": "https://gallery.azure.com/artifact/20151001/docker.dockerdatacenterdocker-datacenter.1.0.9/Artifacts"
+      "defaultValue": "https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master"
     },
     "location": {
       "type": "string",
