@@ -4,6 +4,7 @@ echo $(date) " - Starting Script"
 
 PASSWORD=$1
 MASTERFQDN=$2
+# Key not FILEURI - to be changed
 FILEURI=$3
 MASTERPRIVATEIP=$4
 
