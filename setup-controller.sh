@@ -36,7 +36,11 @@ SSLCiphers = "HIGH:!aNULL:!MD5"
 SSLProtocols = "SSLv3 TLSv1 TLSv1.1 TLSv1.2"'
 
 #copy license key to /opt/ucp/ucp
-wget "$FILEURI" -O /opt/ucp/docker_subscription.lic
+cat > /opt/ucp/docker_subscription.lic <<EOF
+"$FILEURI"
+EOF
+     
+#wget "$FILEURI" -O /opt/ucp/docker_subscription.lic
 
 # Fix for Docker Daemon when cloning a base image
 # rm  /etc/docker/key.json  
