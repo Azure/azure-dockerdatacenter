@@ -3,22 +3,31 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "imagePublisher": {
-      "type": "string",
-      "metadata": {
-        "description": "Image Publisher Name"
-      }
+      "value": "[parameters('imagePublisher')]"
     },
     "imageOffer": {
-      "type": "string",
-      "metadata": {
-        "description": "Image Offer Name"
-      }
+      "value": "[parameters('imageOffer')]"
     },
     "imageSKU": {
-      "type": "string",
-      "metadata": {
-        "description": "Image SKU Name"
-      }
+      "value": "[parameters('imageSKU')]"
+    },
+    "numDataDisks": {
+      "value": "[parameters('numDataDisks')]"
+    },
+    "dataDiskSize": {
+      "value": "[parameters('dataDiskSize')]"
+    },
+    "dockerMachineVer": {
+      "value": "[parameters('dockerMachineVer')]"
+    },
+    "dockerComposeVer": {
+      "value": "[parameters('dockerComposeVer')]"
+    },
+    "dockerVer": {
+      "value": "[parameters('dockerVer')]"
+    },
+    "mountFolder": {
+      "value": "[parameters('mountFolder')]"
     },
     "apiVersionCompute": {
       "type": "string",
@@ -94,6 +103,8 @@
     }
   },
   "variables": {
+    "installationCLI": "[concat('bash azuredeploy.sh ', concat(parameters('vmNamePrefix'), '-ucpnode'), ' ', parameters('mountFolder'), ' ', parameters('numDataDisks'), ' ', parameters('dockerVer'), ' ', parameters('dockerComposeVer'), ' ', parameters('adminUserName'), ' ', parameters('imageSku'), ' ', parameters('dockerMachineVer'))]",
+    "diskCaching": "ReadWrite",
     "sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",
     "osProfileChosen": "osProfilesshPublicKey",
     "osProfilesshPublicKey": {
@@ -200,6 +211,56 @@
               "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
             }
           ]
+        }
+      }
+    },
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(concat(parameters('vmNamePrefix'), '-ucpnode'), '/Installation')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/', concat(parameters('vmNamePrefix'), '-ucpctrl'))]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "commandToExecute": "[variables('installationCLI')]",
+          "fileUris": [
+            "[concat(parameters('location'), 'azuredeploy.sh')]"
+          ]
+        }
+      }
+    },
+    {
+      "apiVersion": "2015-01-01",
+      "name": "diskSelection",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('location'), 'diskSelection', '.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "numDataDisks": {
+            "value": "[parameters('numDataDisks')]"
+          },
+          "diskStorageAccountName": {
+            "value": "[parameters('storageAccountName')]"
+          },
+          "diskCaching": {
+            "value": "[variables('diskCaching')]"
+          },
+          "diskSizeGB": {
+            "value": "[parameters('dataDiskSize')]"
+          },
+          "masterName": {
+            "value": "[concat(parameters('vmNamePrefix'), '-ucpnode')]"
+          }
         }
       }
     }
