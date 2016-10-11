@@ -10,12 +10,6 @@
       },
       "defaultValue": "https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master"
     },
-    "location": {
-      "type": "string",
-      "metadata": {
-        "description": "Location"
-      }
-    },
     "clusterPrefix": {
       "type": "string",
       "defaultValue": "ucpclus",
@@ -33,8 +27,12 @@
     "ucpControllerCount": {
       "type": "int",
       "defaultValue": 3,
+      "allowedValues": [
+        3,
+        5
+      ],
       "metadata": {
-        "description": "Number of UCP Controller VMs"
+        "description": "The Number of UCP Controller Nodes"
       }
     },
     "ucpNodeSize": {
@@ -102,6 +100,7 @@
     },
     "virtualNetworkAddressPrefix": {
       "type": "string",
+      "defaultValue": "10.2.0.0/16",
       "metadata": {
         "description": "The virtual network address space"
       }
@@ -115,6 +114,7 @@
     },
     "controllerSubnetPrefix": {
       "type": "string",
+      "defaultValue": "10.2.0.0/24",
       "metadata": {
         "description": "The Subnet prefix for UCP Controller Nodes"
       }
@@ -128,6 +128,7 @@
     },
     "nodeSubnetPrefix": {
       "type": "string",
+      "defaultValue" "10.2.1.0/24",
       "metadata": {
         "description": "The Subnet prefix for UCP Nodes and DTR Nodes"
       }
@@ -141,6 +142,7 @@
     },
     "controllerLbPublicIpDnsName": {
       "type": "string",
+      "defaultValue": "clbpipossddc",
       "metadata": {
         "description": "DNS label of Public IP for Controller Load Balancer"
       }
@@ -154,6 +156,7 @@
     },
     "nodeLbPublicIpDnsName": {
       "type": "string",
+      "defaultValue" : "nlbpipossddc",
       "metadata": {
         "description": "DNS label for Node Load Balancer"
       }
@@ -167,6 +170,7 @@
     },
     "nodeDtrLbPublicIpDnsName": {
       "type": "string",
+      "defaultValue" : "dlbpipossddc",
       "metadata": {
         "description": "DNS label of Public IP for DTR Load Balancer"
       }
@@ -174,7 +178,7 @@
     "ucpLicenseKey": {
       "type": "string",
       "metadata": {
-        "description": "License Key for UCP"
+        "description": "License Key Contents for UCP 2.0 Beta/GA "
       }
     },
     "ucpAdminPassword": {
