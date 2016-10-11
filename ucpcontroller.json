@@ -229,9 +229,7 @@
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(concat(parameters('vmNamePrefix'), '-ucpctrl'), '/Installation')]",
       "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/', concat(parameters('vmNamePrefix'), '-ucpctrl'))]"
-      ],
+      "dependsOn": [],
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
         "type": "CustomScript",
