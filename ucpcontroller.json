@@ -176,7 +176,7 @@
     "installationCLI": "[concat('bash azuredeploy.sh ', concat(parameters('vmNamePrefix'), '-ucpctrl'), ' ', parameters('mountFolder'), ' ', parameters('numDataDisks'), ' ', parameters('dockerVer'), ' ', parameters('dockerComposeVer'), ' ', parameters('adminUserName'), ' ', parameters('imageSku'), ' ', parameters('dockerMachineVer'))]",
     "diskCaching": "ReadWrite",
     "sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",
-    "osProfileChosen": "osProfilesshPublicKey",
+    "osProfileChosen": "[concat('osProfile', parameters('authenticationType'))]",
     "osProfilesshPublicKey": {
       "adminUsername": "[parameters('adminUsername')]",
       "computerName": "[concat(parameters('vmNamePrefix'), '-ucpctrl')]",
