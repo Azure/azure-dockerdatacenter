@@ -3,31 +3,22 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "imagePublisher": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "Image Publisher Name"
+      }
     },
     "imageOffer": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "Image Offer Name"
+      }
     },
     "imageSKU": {
-      "type": "string"
-    },
-    "numDataDisks": {
-      "type": "string"
-    },
-    "dataDiskSize": {
-      "type": "int"
-    },
-    "dockerMachineVer": {
-      "type": "string"
-    },
-    "dockerComposeVer": {
-      "type": "string"
-    },
-    "dockerVer": {
-      "type": "string"
-    },
-    "mountFolder": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "Image SKU Name"
+      }
     },
     "apiVersionCompute": {
       "type": "string",
@@ -57,6 +48,18 @@
       "type": "string",
       "metadata": {
         "description": "Admin user name"
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Admin password"
+      }
+    },
+    "authenticationType": {
+      "type": "string",
+      "metadata": {
+        "description": "Authentication type"
       }
     },
     "sshPublicKey": {
@@ -103,10 +106,8 @@
     }
   },
   "variables": {
-    "installationCLI": "[concat('bash azuredeploy.sh ', concat(parameters('vmNamePrefix'), '-ucpdtrnode'), ' ', parameters('mountFolder'), ' ', parameters('numDataDisks'), ' ', parameters('dockerVer'), ' ', parameters('dockerComposeVer'), ' ', parameters('adminUsername'), ' ', parameters('imageSKU'), ' ', parameters('dockerMachineVer'))]",
-    "diskCaching": "ReadWrite",
     "sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",
-    "osProfileChosen": "osProfilesshPublicKey",
+    "osProfileChosen": "[concat('osProfile', parameters('authenticationType'))]",
     "osProfilesshPublicKey": {
       "computerName": "[concat(parameters('vmNamePrefix'), '-ucpdtrnode')]",
       "adminUsername": "[parameters('adminUsername')]",
@@ -122,8 +123,13 @@
         }
       }
     },
+    "osProfilepassword": {
+      "computerName": "[concat(parameters('vmNamePrefix'), '-ucpdtrnode')]",
+      "adminUsername": "[parameters('adminUsername')]",
+      "adminPassword": "[parameters('adminPassword')]"
+    },
     "nicName": "[concat(parameters('vmNamePrefix'),'-ucpdtrnode-nic')]",
-    "dataDiskSize": "1022",
+    "dataDiskSize": "128",
     "storageUriProd": "[concat('http://', parameters('storageAccountName'), '.blob.core.windows.net/vhds/')]"
   },
   "resources": [
@@ -200,56 +206,6 @@
               "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
             }
           ]
-        }
-      }
-    },
-    {
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(concat(parameters('vmNamePrefix'), '-ucpdtrnode'), '/Installation')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/', concat(parameters('vmNamePrefix'), '-ucpctrl'))]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScript",
-        "typeHandlerVersion": "2.0",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "commandToExecute": "[variables('installationCLI')]",
-          "fileUris": [
-            "[concat(parameters('location'), 'azuredeploy.sh')]"
-          ]
-        }
-      }
-    },
-    {
-      "apiVersion": "2015-01-01",
-      "name": "diskSelection",
-      "type": "Microsoft.Resources/deployments",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[concat(parameters('location'), 'diskSelection', '.json')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "numDataDisks": {
-            "value": "[parameters('numDataDisks')]"
-          },
-          "diskStorageAccountName": {
-            "value": "[parameters('storageAccountName')]"
-          },
-          "diskCaching": {
-            "value": "[variables('diskCaching')]"
-          },
-          "diskSizeGB": {
-            "value": "[parameters('dataDiskSize')]"
-          },
-          "masterName": {
-            "value": "[concat(parameters('vmNamePrefix'), '-ucpdtrnode')]"
-          }
         }
       }
     }
