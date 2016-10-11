@@ -1,6 +1,12 @@
 {
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
+  "outputs": {
+    "privateIp": {
+      "value": "[reference(variables('nicName')).ipConfigurations[0].properties.privateIpAddress]",
+      "type": "string"
+    }
+  },
   "parameters": {
     "adminUsername": {
       "type": "string",
@@ -44,69 +50,32 @@
         "description": "Subnet reference"
       }
     },
-    "dataDiskSize": {
-      "type": "int",
-      "defaultValue": 10,
-      "metadata": {
-        "description": "The size in GB of each data disk that is attached to the VM.  A MDADM RAID0  is created with all data disks auto-mounted,  that is dataDiskSize * dataDiskCount in size n the Storage ."
-      }
-    },
-    "dockerComposeVer": {
-      "type": "string",
-      "defaultValue": "1.8.0",
-      "metadata": {
-        "description": "The Docker Compose Version **Only for 7.1/7.2 kernels 3.10 and above **"
-      }
-    },
-    "dockerMachineVer": {
-      "type": "string",
-      "defaultValue": "0.8.1",
-      "metadata": {
-        "description": "The docker-machine version **Only for 7.1/7.2 kernels 3.10 and above **"
-      }
-    },
-    "dockerVer": {
-      "type": "string",
-      "defaultValue": "1.12.1-1",
-      "metadata": {
-        "description": "The docker version **Only for 7.1/7.2 kernels 3.10 and above **"
-      }
+    "imagePublisher": {
+      "value": "[parameters('imagePublisher')]"
     },
     "imageOffer": {
-      "type": "string",
-      "defaultValue": "CentOS",
-      "allowedValues": [
-        "CentOS-HPC",
-        "UbuntuServer",
-        "CentOS"
-      ],
-      "metadata": {
-        "description": "Some offers"
-      }
-    },
-    "imagePublisher": {
-      "type": "string",
-      "defaultValue": "openlogic",
-      "allowedValues": [
-        "Canonical",
-        "openlogic"
-      ],
-      "metadata": {
-        "description": "openlogic/Canonical is the CentOS/Ubuntu Distributor in Azure Market Place"
-      }
+      "value": "[parameters('imageOffer')]"
     },
     "imageSKU": {
-      "type": "string",
-      "defaultValue": "7.2",
-      "allowedValues": [
-        "6.5",
-        "7.1",
-        "16.04.0-LTS",
-        "7.2"
-      ],
-      "metadata": {
-        "description": "some Skus"
-      }
+      "value": "[parameters('imageSKU')]"
+    },
+    "numDataDisks": {
+      "value": "[parameters('numDataDisks')]"
+    },
+    "dataDiskSize": {
+      "value": "[parameters('dataDiskSize')]"
+    },
+    "dockerMachineVer": {
+      "value": "[parameters('dockerMachineVer')]"
+    },
+    "dockerComposeVer": {
+      "value": "[parameters('dockerComposeVer')]"
+    },
+    "dockerVer": {
+      "value": "[parameters('dockerVer')]"
+    },
+    "mountFolder": {
+      "value": "[parameters('mountFolder')]"
     },
     "location": {
       "type": "string",
@@ -171,29 +140,6 @@
         "description": "Master VM Size"
       }
     }
-  },
-  "variables": {
-    "installationCLI": "[concat('bash azuredeploy.sh ', concat(parameters('vmNamePrefix'), '-ucpctrl'), ' ', parameters('mountFolder'), ' ', parameters('numDataDisks'), ' ', parameters('dockerVer'), ' ', parameters('dockerComposeVer'), ' ', parameters('adminUserName'), ' ', parameters('imageSku'), ' ', parameters('dockerMachineVer'))]",
-    "diskCaching": "ReadWrite",
-    "sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",
-    "osProfileChosen": "[concat('osProfile', parameters('authenticationType'))]",
-    "osProfilesshPublicKey": {
-      "adminUsername": "[parameters('adminUsername')]",
-      "computerName": "[concat(parameters('vmNamePrefix'), '-ucpctrl')]",
-      "linuxConfiguration": {
-        "disablePasswordAuthentication": "true",
-        "ssh": {
-          "publicKeys": [
-            {
-              "keyData": "[parameters('sshPublicKey')]",
-              "path": "[variables('sshKeyPath')]"
-            }
-          ]
-        }
-      }
-    },
-    "nicName": "[concat(parameters('vmNamePrefix'),'-ucpctrl-nic')]",
-    "storageUriProd": "[concat('http://', parameters('storageAccountName'), '.blob.core.windows.net/vhds/')]"
   },
   "resources": [
     {
@@ -323,10 +269,27 @@
       }
     }
   ],
-  "outputs": {
-    "privateIp": {
-      "value": "[reference(variables('nicName')).ipConfigurations[0].properties.privateIpAddress]",
-      "type": "string"
-    }
+  "variables": {
+    "installationCLI": "[concat('bash azuredeploy.sh ', concat(parameters('vmNamePrefix'), '-ucpctrl'), ' ', parameters('mountFolder'), ' ', parameters('numDataDisks'), ' ', parameters('dockerVer'), ' ', parameters('dockerComposeVer'), ' ', parameters('adminUserName'), ' ', parameters('imageSku'), ' ', parameters('dockerMachineVer'))]",
+    "diskCaching": "ReadWrite",
+    "sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",
+    "osProfileChosen": "osProfilesshPublicKey",
+    "osProfilesshPublicKey": {
+      "computerName": "[concat(parameters('vmNamePrefix'), '-ucpctrl')]",
+      "adminUsername": "[parameters('adminUsername')]",
+      "linuxConfiguration": {
+        "disablePasswordAuthentication": "true",
+        "ssh": {
+          "publicKeys": [
+            {
+              "keyData": "[parameters('sshPublicKey')]",
+              "path": "[variables('sshKeyPath')]"
+            }
+          ]
+        }
+      }
+    },
+    "nicName": "[concat(parameters('vmNamePrefix'),'-ucpctrl-nic')]",
+    "storageUriProd": "[concat('http://', parameters('storageAccountName'), '.blob.core.windows.net/vhds/')]"
   }
 }
