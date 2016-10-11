@@ -22,8 +22,11 @@ curl --insecure https://$MASTERFQDN/ca > ca.pem
 FPRINT=$(openssl x509 -in ca.pem -noout -sha256 -fingerprint | awk -F= '{ print $2 }' )
 
 echo $(date) " - Loading docker install Tar"
-
-docker load < /opt/ucp/ucp-1.1.3_dtr-2.0.3.tar.gz
+cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
+#cd /opt/ucp && wget https://packages.docker.com/caas/ucp-1.1.4_dtr-2.0.3.tar.gz
+#docker load < /opt/ucp/ucp-1.1.2_dtr-2.0.2.tar.gz
+#docker load < /opt/ucp/ucp-1.1.4_dtr-2.0.3.tar.gz
+docker load < ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
 
 # Start installation of UCP and join agent Nodes to cluster
 
@@ -34,7 +37,7 @@ docker run --rm -i \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -e UCP_ADMIN_USER=admin \
     -e UCP_ADMIN_PASSWORD=$PASSWORD \
-    docker/ucp:1.1.3 \
+    docker/ucp:2.0.0-beta1 \
     join --san $MASTERFQDN --fresh-install --url https://${MASTERFQDN}:443 --fingerprint "${FPRINT}"
 
 if [ $? -eq 0 ]
@@ -67,7 +70,7 @@ curl -k $UCP_URL/ca > ucp-ca.pem
 
 # Install DTR
 docker run -i --rm \
-  docker/dtr:2.0.3 install \
+  docker/dtr:2.1.0-beta1 install \
   --ucp-url $UCP_URL \
   --ucp-node $UCP_NODE \
   --dtr-external-url $DTR_PUBLIC_IP \
@@ -90,7 +93,7 @@ echo $(date) " - Start DTR installation on replica DTR node"
 
 # Install DTR Replica
 docker run -i --rm \
-docker/dtr:2.0.3 join \
+docker/dtr:2.1.0-beta1 join \
 --ucp-url $UCP_URL \
 --ucp-node $UCP_NODE_REP$loop$UCP_NODE_SUF \
 --replica-id $REPLICA_ID$loop \
