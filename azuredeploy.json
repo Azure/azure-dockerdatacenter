@@ -5,106 +5,15 @@
     "baseUrl": {
       "type": "string",
       "metadata": {
-        "description": "Base URL",
+        "description": "Base URL for Marketplace",
         "artifactsBaseUrl": ""
       },
-      "defaultValue": "https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/"
+      "defaultValue": "https://gallery.azure.com/artifact/20151001/docker.dockerdatacenterdocker-datacenter.1.0.9/Artifacts"
     },
-    "imagePublisher": {
+    "location": {
       "type": "string",
-      "defaultValue": "openlogic",
-      "allowedValues": [
-        "Canonical",
-        "openlogic"
-      ],
       "metadata": {
-        "description": "openlogic/Canonical are the respective CentOS/Ubuntu Distributor in Azure Market Place"
-      }
-    },
-    "imageOffer": {
-      "type": "string",
-      "defaultValue": "CentOS",
-      "allowedValues": [
-        "CentOS",
-        "UbuntuServer"
-      ],
-      "metadata": {
-        "description": "New CentOS/UbuntuServer Image Offer"
-      }
-    },
-    "imageSKU": {
-      "type": "string",
-      "defaultValue": "7.2",
-      "allowedValues": [
-        "16.04.0-LTS",
-        "6.5",
-        "6.6",
-        "7.1",
-        "7.2"
-      ],
-      "metadata": {
-        "description": "P.S: OpenLogic CentOS version to use **docker usage Only for 7.1/7.2 kernels 3.10 and above **"
-      }
-    },
-    "mountFolder": {
-      "type": "string",
-      "defaultValue": "/data",
-      "metadata": {
-        "description": "The Folder system to be auto-mounted."
-      }
-    },
-    "dockerVer": {
-      "type": "string",
-      "defaultValue": "1.12.1-1",
-      "metadata": {
-        "description": "The docker version **Only for 7.1/7.2 kernels 3.10 and above **"
-      }
-    },
-    "dockerComposeVer": {
-      "type": "string",
-      "defaultValue": "1.8.0",
-      "metadata": {
-        "description": "The Docker Compose Version **Only for 7.1/7.2 kernels 3.10 and above **"
-      }
-    },
-    "dockerMachineVer": {
-      "type": "string",
-      "defaultValue": "0.8.1",
-      "metadata": {
-        "description": "The docker-machine version **Only for 7.1/7.2 kernels 3.10 and above **"
-      }
-    },
-    "dataDiskSize": {
-      "type": "int",
-      "defaultValue": 10,
-      "metadata": {
-        "description": "The size in GB of each data disk that is attached to the VM.  A MDADM RAID0  is created with all data disks auto-mounted,  that is dataDiskSize * dataDiskCount in size n the Storage ."
-      }
-    },
-    "numDataDisks": {
-      "type": "string",
-      "defaultValue": "4",
-      "allowedValues": [
-        "0",
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        "10",
-        "11",
-        "12",
-        "13",
-        "14",
-        "15",
-        "16"
-      ],
-      "metadata": {
-        "description": "This parameter allows the user to select the number of disks wanted"
+        "description": "Location"
       }
     },
     "clusterPrefix": {
@@ -137,7 +46,7 @@
     },
     "ucpNodeCount": {
       "type": "int",
-      "defaultValue": 6,
+      "defaultValue": 2,
       "metadata": {
         "description": "Number of UCP node VMs"
       }
@@ -163,6 +72,20 @@
         "description": "OS Admin User Name for UCP Controller Nodes, UCP Nodes and DTR Nodes"
       }
     },
+    "authenticationType": {
+      "type": "string",
+      "defaultValue": "password",
+      "metadata": {
+        "description": "Authentication type"
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "defaultValue": "",
+      "metadata": {
+        "description": "OS Admin password"
+      }
+    },
     "sshPublicKey": {
       "type": "string",
       "defaultValue": "",
@@ -179,7 +102,6 @@
     },
     "virtualNetworkAddressPrefix": {
       "type": "string",
-      "defaultValue": "10.2.0.0/16",
       "metadata": {
         "description": "The virtual network address space"
       }
@@ -193,7 +115,6 @@
     },
     "controllerSubnetPrefix": {
       "type": "string",
-      "defaultValue": "10.2.0.0/24",
       "metadata": {
         "description": "The Subnet prefix for UCP Controller Nodes"
       }
@@ -207,7 +128,6 @@
     },
     "nodeSubnetPrefix": {
       "type": "string",
-      "defaultValue": "10.2.1.0/24",
       "metadata": {
         "description": "The Subnet prefix for UCP Nodes and DTR Nodes"
       }
@@ -221,7 +141,6 @@
     },
     "controllerLbPublicIpDnsName": {
       "type": "string",
-      "defaultValue": "clbpipossddc",
       "metadata": {
         "description": "DNS label of Public IP for Controller Load Balancer"
       }
@@ -235,7 +154,6 @@
     },
     "nodeLbPublicIpDnsName": {
       "type": "string",
-      "defaultValue": "nlbpipossddc",
       "metadata": {
         "description": "DNS label for Node Load Balancer"
       }
@@ -249,7 +167,6 @@
     },
     "nodeDtrLbPublicIpDnsName": {
       "type": "string",
-      "defaultValue": "dlbpipossddc",
       "metadata": {
         "description": "DNS label of Public IP for DTR Load Balancer"
       }
@@ -268,54 +185,57 @@
     }
   },
   "variables": {
+    "imagePublisher": "docker",
+    "imageOffer": "docker-datacenter-custom",
+    "imageSKU": "docker_datacenter",
     "apiVersionCompute": "2015-06-15",
     "apiVersionNetwork": "2015-06-15",
     "apiVersionStorage": "2015-06-15",
+    "linkTemplateApiVersion": "2015-01-01",
+    "storageNameAppend": "abcdef",
+    "ucpNamingFix": "[substring(toLower(concat(parameters('clusterPrefix'), variables('storageNameAppend'))),0,8)]",
+    "controllerStorageRandomString": "[uniqueString(concat(resourceGroup().id, 'ctrlsa'))]",
+    "nodeStorageRandomString": "[uniqueString(concat(resourceGroup().id, 'nodesa'))]",
+    "nodeDtrStorageRandomString": "[uniqueString(concat(resourceGroup().id, 'dtrsa'))]",
+    "ucpControllerStorageAccountName": "[concat(variables('ucpNamingFix'), 'csa', variables('controllerStorageRandomString'))]",
+    "ucpNodeStorageAccountName": "[concat(variables('ucpNamingFix'), 'nsa', variables('nodeStorageRandomString'))]",
+    "ucpNodeDtrStorageAccountName": "[concat(variables('ucpNamingFix'), 'dsa', variables('nodeDtrStorageRandomString'))]",
+    "controllerLbName": "[concat(variables('ucpNamingFix'), 'ctrllb')]",
+    "nodeLbName": "[concat(variables('ucpNamingFix'), 'nodelb')]",
+    "nodeDtrLbName": "[concat(variables('ucpNamingFix'), 'nodedtrlb')]",
     "availabilitySetNameUcpControllers": "[concat(variables('ucpNamingFix'), 'ctrl-avail-set')]",
     "availabilitySetNameUcpNodes": "[concat(variables('ucpNamingFix'), 'node-avail-set')]",
     "availabilitySetNameUcpNodesDtr": "[concat(variables('ucpNamingFix'), 'node-dtr-avail-set')]",
-    "commonScriptUri": "[concat(parameters('baseUrl'), '/azuredeploy.sh')]",
-    "controllerLbBackendPoolName": "[concat(parameters('clusterPrefix'), '-ctrl-pool')]",
-    "controllerLbId": "[resourceId('Microsoft.Network/loadBalancers',variables('controllerLbName'))]",
-    "controllerLbIpConfigId": "[concat(variables('controllerLbId'),'/frontendIPConfigurations/', variables('controllerLbIpConfigName'))]",
-    "controllerLbIpConfigName": "[concat(parameters('clusterPrefix'), '-ctrl-lbFrontEnd')]",
-    "controllerLbName": "[concat(variables('ucpNamingFix'), 'ctrllb')]",
-    "controllerStorageRandomString": "[uniqueString(concat(resourceGroup().id, 'ctrlsa'))]",
-    "controllerSubnetRef": "[concat(variables('vnetId'),'/subnets/',parameters('controllerSubnetName'))]",
-    "diskSelection": "[concat(parameters('baseUrl'), '/diskSelection.json')]",
-    "linkTemplateApiVersion": "2015-01-01",
     "networkSecurityGroupUcpControllers": "[concat('nsgucpctrl-', variables('ucpNamingFix'))]",
     "networkSecurityGroupUcpNode": "[concat('nsgucpnode-', variables('ucpNamingFix'))]",
-    "nodeDtrLbBackendPoolName": "[concat(parameters('clusterPrefix'), '-nodeDtr-pool')]",
-    "nodeDtrLbId": "[resourceId('Microsoft.Network/loadBalancers',variables('nodeDtrLbName'))]",
-    "nodeDtrLbIpConfigId": "[concat(variables('nodeDtrLbId'),'/frontendIPConfigurations/', variables('nodeDtrLbIpConfigName'))]",
-    "nodeDtrLbIpConfigName": "[concat(parameters('clusterPrefix'), '-nodeDtr-lbFrontEnd')]",
-    "nodeDtrLbName": "[concat(variables('ucpNamingFix'), 'nodedtrlb')]",
-    "nodeDtrStorageRandomString": "[uniqueString(concat(resourceGroup().id, 'dtrsa'))]",
-    "nodeLbBackendPoolName": "[concat(parameters('clusterPrefix'), '-node-pool')]",
-    "nodeLbId": "[resourceId('Microsoft.Network/loadBalancers',variables('nodeLbName'))]",
-    "nodeLbIpConfigId": "[concat(variables('nodeLbId'),'/frontendIPConfigurations/', variables('nodeLbIpConfigName'))]",
-    "nodeLbIpConfigName": "[concat(parameters('clusterPrefix'), '-node-lbFrontEnd')]",
-    "nodeLbName": "[concat(variables('ucpNamingFix'), 'nodelb')]",
-    "nodeStorageRandomString": "[uniqueString(concat(resourceGroup().id, 'nodesa'))]",
-    "nodeSubnetRef": "[concat(variables('vnetId'),'/subnets/',parameters('nodeSubnetName'))]",
-    "storageNameAppend": "abcdef",
-    "ucpControllerScriptUri": "[concat(parameters('baseUrl'), '/setup-controller.sh')]",
-    "ucpControllerStorageAccountName": "[concat(variables('ucpNamingFix'), 'csa', variables('controllerStorageRandomString'))]",
-    "ucpControllerTemplateLink": "[concat(parameters('baseUrl'), '/ucpcontroller.json')]",
-    "ucpDtrNodeReplicaScriptUri": "[concat(parameters('baseUrl'), '/setup-ucp-dtr-replica.sh')]",
-    "ucpDtrNodeScriptUri": "[concat(parameters('baseUrl'), '/setup-ucp-dtr-node.sh')]",
-    "ucpDtrNodeTemplateLink": "[concat(parameters('baseUrl'), '/ucpdtrnode.json')]",
-    "ucpDtrReplicaCount": "[sub(parameters('ucpDtrNodeCount'), 1)]",
-    "ucpDtrReplicaId": "badf00dcafe",
-    "ucpNamingFix": "[substring(toLower(concat(parameters('clusterPrefix'), variables('storageNameAppend'))),0,8)]",
-    "ucpNodeDtrStorageAccountName": "[concat(variables('ucpNamingFix'), 'dsa', variables('nodeDtrStorageRandomString'))]",
-    "ucpNodeReplicaCount": "[sub(parameters('ucpNodeCount'), 1)]",
-    "ucpNodeScriptUri": "[concat(parameters('baseUrl'), '/setup-ucp-node.sh')]",
-    "ucpNodeStorageAccountName": "[concat(variables('ucpNamingFix'), 'nsa', variables('nodeStorageRandomString'))]",
-    "ucpNodeTemplateLink": "[concat(parameters('baseUrl'), '/ucpnode.json')]",
     "ucpReplicaCount": "[sub(parameters('ucpControllerCount'), 1)]",
+    "ucpNodeReplicaCount": "[sub(parameters('ucpNodeCount'), 1)]",
+    "ucpDtrReplicaCount": "[sub(parameters('ucpDtrNodeCount'), 1)]",
+    "controllerLbId": "[resourceId('Microsoft.Network/loadBalancers',variables('controllerLbName'))]",
+    "controllerLbIpConfigName": "[concat(parameters('clusterPrefix'), '-ctrl-lbFrontEnd')]",
+    "controllerLbIpConfigId": "[concat(variables('controllerLbId'),'/frontendIPConfigurations/', variables('controllerLbIpConfigName'))]",
+    "controllerLbBackendPoolName": "[concat(parameters('clusterPrefix'), '-ctrl-pool')]",
+    "nodeLbId": "[resourceId('Microsoft.Network/loadBalancers',variables('nodeLbName'))]",
+    "nodeLbIpConfigName": "[concat(parameters('clusterPrefix'), '-node-lbFrontEnd')]",
+    "nodeLbIpConfigId": "[concat(variables('nodeLbId'),'/frontendIPConfigurations/', variables('nodeLbIpConfigName'))]",
+    "nodeLbBackendPoolName": "[concat(parameters('clusterPrefix'), '-node-pool')]",
+    "nodeDtrLbId": "[resourceId('Microsoft.Network/loadBalancers',variables('nodeDtrLbName'))]",
+    "nodeDtrLbIpConfigName": "[concat(parameters('clusterPrefix'), '-nodeDtr-lbFrontEnd')]",
+    "nodeDtrLbIpConfigId": "[concat(variables('nodeDtrLbId'),'/frontendIPConfigurations/', variables('nodeDtrLbIpConfigName'))]",
+    "nodeDtrLbBackendPoolName": "[concat(parameters('clusterPrefix'), '-nodeDtr-pool')]",
+    "vnetTemplate": "[concat(parameters('baseUrl'), '/', 'newvnet.json')]",
+    "ucpControllerTemplateLink": "[concat(parameters('baseUrl'), '/ucpcontroller.json')]",
+    "ucpNodeTemplateLink": "[concat(parameters('baseUrl'), '/ucpnode.json')]",
+    "ucpDtrNodeTemplateLink": "[concat(parameters('baseUrl'), '/ucpdtrnode.json')]",
+    "ucpControllerScriptUri": "[concat(parameters('baseUrl'), '/setup-controller.sh')]",
     "ucpReplicaScriptUri": "[concat(parameters('baseUrl'), '/setup-replica.sh')]",
+    "ucpNodeScriptUri": "[concat(parameters('baseUrl'), '/setup-ucp-node.sh')]",
+    "ucpDtrNodeScriptUri": "[concat(parameters('baseUrl'), '/setup-ucp-dtr-node.sh')]",
+    "ucpDtrNodeReplicaScriptUri": "[concat(parameters('baseUrl'), '/setup-ucp-dtr-replica.sh')]",
+    "vnetId": "[resourceId('Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
+    "controllerSubnetRef": "[concat(variables('vnetId'),'/subnets/',parameters('controllerSubnetName'))]",
+    "nodeSubnetRef": "[concat(variables('vnetId'),'/subnets/',parameters('nodeSubnetName'))]",
+    "ucpDtrReplicaId": "badf00dcafe",
     "vmSizesMap": {
       "Standard_D1": {
         "storageAccountType": "Standard_LRS"
@@ -452,36 +372,32 @@
       "Standard_GS5": {
         "storageAccountType": "Premium_LRS"
       }
-    },
-    "vnetId": "[resourceId('Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
-    "vnetTemplate": "[concat(parameters('baseUrl'), '/', 'newvnet.json')]",
-      "baseSetupScriptFolder": "CustomScripts",
-      "baseSetupScriptFileName": "baseSetup.sh"
+    }
   },
   "resources": [
     {
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[variables('availabilitySetNameUcpControllers')]",
       "apiVersion": "[variables('apiVersionCompute')]",
-      "location": "[resourceGroup().location]"
+      "location": "[parameters('location')]"
     },
     {
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[variables('availabilitySetNameUcpNodes')]",
       "apiVersion": "[variables('apiVersionCompute')]",
-      "location": "[resourceGroup().location]"
+      "location": "[parameters('location')]"
     },
     {
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[variables('availabilitySetNameUcpNodesDtr')]",
       "apiVersion": "[variables('apiVersionCompute')]",
-      "location": "[resourceGroup().location]"
+      "location": "[parameters('location')]"
     },
     {
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('ucpControllerStorageAccountName')]",
       "apiVersion": "[variables('apiVersionStorage')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "properties": {
         "accountType": "[variables('vmSizesMap')[parameters('ucpControllerSize')].storageAccountType]"
       }
@@ -490,7 +406,7 @@
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('ucpNodeStorageAccountName')]",
       "apiVersion": "[variables('apiVersionStorage')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "properties": {
         "accountType": "[variables('vmSizesMap')[parameters('ucpNodeSize')].storageAccountType]"
       }
@@ -499,7 +415,7 @@
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('ucpNodeDtrStorageAccountName')]",
       "apiVersion": "[variables('apiVersionStorage')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "properties": {
         "accountType": "[variables('vmSizesMap')[parameters('ucpDtrNodeSize')].storageAccountType]"
       }
@@ -508,7 +424,7 @@
       "apiVersion": "[variables('apiVersionNetwork')]",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[parameters('controllerLbPublicIpAddress')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "properties": {
         "publicIPAllocationMethod": "Dynamic",
         "dnsSettings": {
@@ -520,7 +436,7 @@
       "apiVersion": "[variables('apiVersionNetwork')]",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[parameters('nodeLbPublicIpAddress')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "properties": {
         "publicIPAllocationMethod": "Dynamic",
         "dnsSettings": {
@@ -532,7 +448,7 @@
       "apiVersion": "[variables('apiVersionNetwork')]",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[parameters('nodeDtrLbPublicIpAddress')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "properties": {
         "publicIPAllocationMethod": "Dynamic",
         "dnsSettings": {
@@ -552,7 +468,7 @@
         },
         "parameters": {
           "location": {
-            "value": "[resourceGroup().location]"
+            "value": "[parameters('location')]"
           },
           "virtualNetworkName": {
             "value": "[parameters('virtualNetworkName')]"
@@ -582,7 +498,7 @@
       "apiVersion": "[variables('apiVersionNetwork')]",
       "name": "[variables('controllerLbName')]",
       "type": "Microsoft.Network/loadBalancers",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', parameters('controllerLbPublicIpAddress'))]"
       ],
@@ -640,7 +556,7 @@
       "apiVersion": "[variables('apiVersionNetwork')]",
       "type": "Microsoft.Network/loadBalancers/inboundNatRules",
       "name": "[concat(variables('controllerLbName'), '/', 'SSH-', parameters('clusterPrefix'), '0')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "dependsOn": [
         "[variables('controllerLbId')]"
       ],
@@ -658,7 +574,7 @@
       "apiVersion": "[variables('apiVersionNetwork')]",
       "type": "Microsoft.Network/loadBalancers/inboundNatRules",
       "name": "[concat(variables('controllerLbName'), '/', 'SSH-', parameters('clusterPrefix'), copyIndex(1))]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "copy": {
         "name": "controllerLbLoopNode",
         "count": "[sub(parameters('ucpControllerCount'),1)]"
@@ -681,7 +597,7 @@
       "apiVersion": "[variables('apiVersionNetwork')]",
       "name": "[variables('nodeLbName')]",
       "type": "Microsoft.Network/loadBalancers",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', parameters('nodeLbPublicIpAddress'))]"
       ],
@@ -767,7 +683,7 @@
       "apiVersion": "[variables('apiVersionNetwork')]",
       "type": "Microsoft.Network/loadBalancers/inboundNatRules",
       "name": "[concat(variables('nodeLbName'), '/', 'SSH-', parameters('clusterPrefix'), '0')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "dependsOn": [
         "[variables('nodeLbId')]"
       ],
@@ -785,7 +701,7 @@
       "apiVersion": "[variables('apiVersionNetwork')]",
       "type": "Microsoft.Network/loadBalancers/inboundNatRules",
       "name": "[concat(variables('nodeLbName'), '/', 'SSH-', parameters('clusterPrefix'), copyIndex(1))]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "copy": {
         "name": "nodeLbLoopNode",
         "count": "[sub(parameters('ucpNodeCount'),1)]"
@@ -808,7 +724,7 @@
       "apiVersion": "[variables('apiVersionNetwork')]",
       "name": "[variables('nodeDtrLbName')]",
       "type": "Microsoft.Network/loadBalancers",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', parameters('nodeDtrLbPublicIpAddress'))]"
       ],
@@ -866,7 +782,7 @@
       "apiVersion": "[variables('apiVersionNetwork')]",
       "type": "Microsoft.Network/loadBalancers/inboundNatRules",
       "name": "[concat(variables('nodeDtrLbName'), '/', 'SSH-', parameters('clusterPrefix'), '0')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "dependsOn": [
         "[variables('nodeDtrLbId')]"
       ],
@@ -884,7 +800,7 @@
       "apiVersion": "[variables('apiVersionNetwork')]",
       "type": "Microsoft.Network/loadBalancers/inboundNatRules",
       "name": "[concat(variables('nodeDtrLbName'), '/', 'SSH-', parameters('clusterPrefix'), copyIndex(1))]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "copy": {
         "name": "nodeDtrLbLoopNode",
         "count": "[sub(parameters('ucpDtrNodeCount'),1)]"
@@ -926,46 +842,34 @@
         },
         "parameters": {
           "imagePublisher": {
-            "value": "[parameters('imagePublisher')]"
+            "value": "[variables('imagePublisher')]"
           },
           "imageOffer": {
-            "value": "[parameters('imageOffer')]"
+            "value": "[variables('imageOffer')]"
           },
           "imageSKU": {
-            "value": "[parameters('imageSKU')]"
+            "value": "[variables('imageSKU')]"
           },
           "apiVersionCompute": {
             "value": "[variables('apiVersionCompute')]"
-          },
-          "numDataDisks": {
-            "value": "[parameters('numDataDisks')]"
-          },
-          "dataDiskSize": {
-            "value": "[parameters('dataDiskSize')]"
-          },
-          "dockerMachineVer": {
-            "value": "[parameters('dockerMachineVer')]"
-          },
-          "dockerComposeVer": {
-            "value": "[parameters('dockerComposeVer')]"
-          },
-          "dockerVer": {
-            "value": "[parameters('dockerVer')]"
-          },
-          "mountFolder": {
-            "value": "[parameters('mountFolder')]"
           },
           "apiVersionNetwork": {
             "value": "[variables('apiVersionNetwork')]"
           },
           "location": {
-            "value": "[resourceGroup().location]"
+            "value": "[parameters('location')]"
           },
           "vmNamePrefix": {
             "value": "[concat(parameters('clusterPrefix'), copyindex())]"
           },
           "adminUsername": {
             "value": "[parameters('adminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "authenticationType": {
+            "value": "[parameters('authenticationType')]"
           },
           "sshPublicKey": {
             "value": "[parameters('sshPublicKey')]"
@@ -1014,31 +918,13 @@
         },
         "parameters": {
           "imagePublisher": {
-            "value": "[parameters('imagePublisher')]"
+            "value": "[variables('imagePublisher')]"
           },
           "imageOffer": {
-            "value": "[parameters('imageOffer')]"
+            "value": "[variables('imageOffer')]"
           },
           "imageSKU": {
-            "value": "[parameters('imageSKU')]"
-          },
-          "numDataDisks": {
-            "value": "[parameters('numDataDisks')]"
-          },
-          "dataDiskSize": {
-            "value": "[parameters('dataDiskSize')]"
-          },
-          "dockerMachineVer": {
-            "value": "[parameters('dockerMachineVer')]"
-          },
-          "dockerComposeVer": {
-            "value": "[parameters('dockerComposeVer')]"
-          },
-          "dockerVer": {
-            "value": "[parameters('dockerVer')]"
-          },
-          "mountFolder": {
-            "value": "[parameters('mountFolder')]"
+            "value": "[variables('imageSKU')]"
           },
           "apiVersionCompute": {
             "value": "[variables('apiVersionCompute')]"
@@ -1047,13 +933,19 @@
             "value": "[variables('apiVersionNetwork')]"
           },
           "location": {
-            "value": "[resourceGroup().location]"
+            "value": "[parameters('location')]"
           },
           "vmNamePrefix": {
             "value": "[concat(parameters('clusterPrefix'), copyindex())]"
           },
           "adminUsername": {
             "value": "[parameters('adminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "authenticationType": {
+            "value": "[parameters('authenticationType')]"
           },
           "sshPublicKey": {
             "value": "[parameters('sshPublicKey')]"
@@ -1102,31 +994,13 @@
         },
         "parameters": {
           "imagePublisher": {
-            "value": "[parameters('imagePublisher')]"
+            "value": "[variables('imagePublisher')]"
           },
           "imageOffer": {
-            "value": "[parameters('imageOffer')]"
+            "value": "[variables('imageOffer')]"
           },
           "imageSKU": {
-            "value": "[parameters('imageSKU')]"
-          },
-          "numDataDisks": {
-            "value": "[parameters('numDataDisks')]"
-          },
-          "dataDiskSize": {
-            "value": "[parameters('dataDiskSize')]"
-          },
-          "dockerMachineVer": {
-            "value": "[parameters('dockerMachineVer')]"
-          },
-          "dockerComposeVer": {
-            "value": "[parameters('dockerComposeVer')]"
-          },
-          "dockerVer": {
-            "value": "[parameters('dockerVer')]"
-          },
-          "mountFolder": {
-            "value": "[parameters('mountFolder')]"
+            "value": "[variables('imageSKU')]"
           },
           "apiVersionCompute": {
             "value": "[variables('apiVersionCompute')]"
@@ -1135,13 +1009,19 @@
             "value": "[variables('apiVersionNetwork')]"
           },
           "location": {
-            "value": "[resourceGroup().location]"
+            "value": "[parameters('location')]"
           },
           "vmNamePrefix": {
             "value": "[concat(parameters('clusterPrefix'), copyindex())]"
           },
           "adminUsername": {
             "value": "[parameters('adminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "authenticationType": {
+            "value": "[parameters('authenticationType')]"
           },
           "sshPublicKey": {
             "value": "[parameters('sshPublicKey')]"
@@ -1171,14 +1051,14 @@
       "apiVersion": "[variables('apiVersionCompute')]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(parameters('clusterPrefix'), '0-ucpctrl/ucpControllerConfig')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "dependsOn": [
         "ucpController0"
       ],
       "properties": {
-        "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScript",
-        "typeHandlerVersion": "2.0",
+        "publisher": "Microsoft.OSTCExtensions",
+        "type": "CustomScriptForLinux",
+        "typeHandlerVersion": "1.5",
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
@@ -1194,7 +1074,7 @@
       "apiVersion": "[variables('apiVersionCompute')]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(parameters('clusterPrefix'), copyIndex(1), '-ucpctrl/ucpControllerConfig')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "copy": {
         "name": "ucpReplicaScriptSet",
         "count": "[variables('ucpReplicaCount')]"
@@ -1204,9 +1084,9 @@
         "[resourceId('Microsoft.Compute/virtualMachines/extensions', concat(parameters('clusterPrefix'), '0-ucpdtrnode'), 'ucpDtrNodeConfig')]"
       ],
       "properties": {
-        "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScript",
-        "typeHandlerVersion": "2.0",
+        "publisher": "Microsoft.OSTCExtensions",
+        "type": "CustomScriptForLinux",
+        "typeHandlerVersion": "1.5",
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
@@ -1222,7 +1102,7 @@
       "apiVersion": "[variables('apiVersionCompute')]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(parameters('clusterPrefix'), copyindex(), '-ucpnode/ucpNodeConfig')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "copy": {
         "name": "ucpNodeScriptSet",
         "count": "[parameters('ucpNodeCount')]"
@@ -1232,9 +1112,9 @@
         "[resourceId('Microsoft.Compute/virtualMachines/extensions', concat(parameters('clusterPrefix'), '0-ucpctrl'), 'ucpControllerConfig')]"
       ],
       "properties": {
-        "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScript",
-        "typeHandlerVersion": "2.0",
+        "publisher": "Microsoft.OSTCExtensions",
+        "type": "CustomScriptForLinux",
+        "typeHandlerVersion": "1.5",
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
@@ -1250,16 +1130,16 @@
       "apiVersion": "[variables('apiVersionCompute')]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(parameters('clusterPrefix'), '0-ucpdtrnode/ucpDtrNodeConfig')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "dependsOn": [
         "ucpDtrNode0",
         "[resourceId('Microsoft.Compute/virtualMachines/extensions', concat(parameters('clusterPrefix'), variables('ucpNodeReplicaCount'), '-ucpnode'), 'ucpNodeConfig')]",
         "[resourceId('Microsoft.Compute/virtualMachines/extensions', concat(parameters('clusterPrefix'), '0-ucpctrl'), 'ucpControllerConfig')]"
       ],
       "properties": {
-        "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScript",
-        "typeHandlerVersion": "2.0",
+        "publisher": "Microsoft.OSTCExtensions",
+        "type": "CustomScriptForLinux",
+        "typeHandlerVersion": "1.5",
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
@@ -1275,7 +1155,7 @@
       "apiVersion": "[variables('apiVersionCompute')]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(parameters('clusterPrefix'), copyindex(1), '-ucpdtrnode/ucpDtrNodeConfig')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "copy": {
         "name": "ucpDtrNodeScriptSet",
         "count": "[variables('ucpDtrReplicaCount')]"
@@ -1285,9 +1165,9 @@
         "[resourceId('Microsoft.Compute/virtualMachines/extensions', concat(parameters('clusterPrefix'), '0-ucpctrl'), 'ucpControllerConfig')]"
       ],
       "properties": {
-        "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScript",
-        "typeHandlerVersion": "2.0",
+        "publisher": "Microsoft.OSTCExtensions",
+        "type": "CustomScriptForLinux",
+        "typeHandlerVersion": "1.5",
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
