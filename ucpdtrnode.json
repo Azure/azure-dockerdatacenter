@@ -3,31 +3,31 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "imagePublisher": {
-      "value": "[parameters('imagePublisher')]"
+      "type": "string"
     },
     "imageOffer": {
-      "value": "[parameters('imageOffer')]"
+      "type": "string"
     },
     "imageSKU": {
-      "value": "[parameters('imageSKU')]"
+      "type": "string"
     },
     "numDataDisks": {
-      "value": "[parameters('numDataDisks')]"
+      "type": "string"
     },
     "dataDiskSize": {
-      "value": "[parameters('dataDiskSize')]"
+      "type": "int"
     },
     "dockerMachineVer": {
-      "value": "[parameters('dockerMachineVer')]"
+      "type": "string"
     },
     "dockerComposeVer": {
-      "value": "[parameters('dockerComposeVer')]"
+      "type": "string"
     },
     "dockerVer": {
-      "value": "[parameters('dockerVer')]"
+      "type": "string"
     },
     "mountFolder": {
-      "value": "[parameters('mountFolder')]"
+      "type": "string"
     },
     "apiVersionCompute": {
       "type": "string",
