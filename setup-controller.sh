@@ -53,7 +53,7 @@ cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta1_dtr-2.1.0-b
 #cd /opt/ucp && wget https://packages.docker.com/caas/ucp-1.1.4_dtr-2.0.3.tar.gz
 #docker load < /opt/ucp/ucp-1.1.2_dtr-2.0.2.tar.gz
 #docker load < /opt/ucp/ucp-1.1.4_dtr-2.0.3.tar.gz
-docker load < https://packages.docker.com/caas/ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
+docker load < ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
 
 # Start installation of UCP with master Controller
 
