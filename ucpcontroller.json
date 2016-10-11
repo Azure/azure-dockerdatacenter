@@ -1,17 +1,23 @@
 {
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
-  "outputs": {
-    "privateIp": {
-      "value": "[reference(variables('nicName')).ipConfigurations[0].properties.privateIpAddress]",
-      "type": "string"
-    }
-  },
   "parameters": {
-    "adminUsername": {
+    "imagePublisher": {
       "type": "string",
       "metadata": {
-        "description": "Admin user name"
+        "description": "Image Publisher Name"
+      }
+    },
+    "imageOffer": {
+      "type": "string",
+      "metadata": {
+        "description": "Image Offer Name"
+      }
+    },
+    "imageSKU": {
+      "type": "string",
+      "metadata": {
+        "description": "Image SKU Name"
       }
     },
     "apiVersionCompute": {
@@ -26,10 +32,58 @@
         "description": "Network API Version"
       }
     },
+    "location": {
+      "type": "string",
+      "metadata": {
+        "description": "Location where to create the resources"
+      }
+    },
+    "vmNamePrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Cluster Name (Prefix)"
+      }
+    },
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "Admin user name"
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Admin password"
+      }
+    },
+    "authenticationType": {
+      "type": "string",
+      "metadata": {
+        "description": "Authentication type"
+      }
+    },
+    "sshPublicKey": {
+      "type": "string",
+      "metadata": {
+        "description": "SSH public key"
+      }
+    },
+    "vmSize": {
+      "type": "string",
+      "metadata": {
+        "description": "Master VM Size"
+      }
+    },
     "availabilitySetName": {
       "type": "string",
       "metadata": {
         "description": "Availability Set Name"
+      }
+    },
+    "controllerSubnetRef": {
+      "type": "string",
+      "metadata": {
+        "description": "Subnet reference"
       }
     },
     "controllerLbBackendPoolName": {
@@ -44,102 +98,38 @@
         "description": "Load balancer name"
       }
     },
-    "controllerSubnetRef": {
-      "type": "string",
-      "metadata": {
-        "description": "Subnet reference"
-      }
-    },
-    "imagePublisher": {
-      "type": "string"
-    },
-    "imageOffer": {
-      "type": "string"
-    },
-    "imageSKU": {
-      "type": "string"
-    },
-    "numDataDisks": {
-      "type": "string"
-    },
-    "dataDiskSize": {
-      "type": "int"
-    },
-    "dockerMachineVer": {
-      "type": "string"
-    },
-    "dockerComposeVer": {
-      "type": "string"
-    },
-    "dockerVer": {
-      "type": "string"
-    },
-    "mountFolder": {
-      "type": "string"
-    },
-    "location": {
-      "type": "string",
-      "metadata": {
-        "description": "Location where to create the resources"
-      }
-    },
-    "mountFolder": {
-      "type": "string",
-      "defaultValue": "/data",
-      "metadata": {
-        "description": "The Folder system to be auto-mounted."
-      }
-    },
-    "numDataDisks": {
-      "type": "string",
-      "defaultValue": "4",
-      "allowedValues": [
-        "0",
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        "10",
-        "11",
-        "12",
-        "13",
-        "14",
-        "15",
-        "16"
-      ],
-      "metadata": {
-        "description": "This parameter allows the user to select the number of disks wanted"
-      }
-    },
-    "sshPublicKey": {
-      "type": "string",
-      "metadata": {
-        "description": "SSH public key"
-      }
-    },
     "storageAccountName": {
       "type": "string",
       "metadata": {
         "description": "Storage account name"
       }
-    },
-    "vmNamePrefix": {
-      "type": "string",
-      "metadata": {
-        "description": "Cluster Name (Prefix)"
-      }
-    },
-    "vmSize": {
-      "type": "string",
-      "metadata": {
-        "description": "Master VM Size"
-      }
     }
+  },
+  "variables": {
+    "sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",
+    "osProfileChosen": "[concat('osProfile', parameters('authenticationType'))]",
+    "osProfilesshPublicKey": {
+      "computerName": "[concat(parameters('vmNamePrefix'), '-ucpctrl')]",
+      "adminUsername": "[parameters('adminUsername')]",
+      "linuxConfiguration": {
+        "disablePasswordAuthentication": "true",
+        "ssh": {
+          "publicKeys": [
+            {
+              "keyData": "[parameters('sshPublicKey')]",
+              "path": "[variables('sshKeyPath')]"
+            }
+          ]
+        }
+      }
+    },
+    "osProfilepassword": {
+      "computerName": "[concat(parameters('vmNamePrefix'), '-ucpctrl')]",
+      "adminUsername": "[parameters('adminUsername')]",
+      "adminPassword": "[parameters('adminPassword')]"
+    },
+    "nicName": "[concat(parameters('vmNamePrefix'),'-ucpctrl-nic')]",
+    "storageUriProd": "[concat('http://', parameters('storageAccountName'), '.blob.core.windows.net/vhds/')]"
   },
   "resources": [
     {
@@ -204,12 +194,6 @@
             "name": "[concat(parameters('vmNamePrefix'),'-ucpctrl-osDisk')]",
             "caching": "ReadWrite",
             "createOption": "FromImage",
-            "imageReference": {
-              "offer": "[parameters('imageOffer')]",
-              "publisher": "[parameters('imagePublisher')]",
-              "sku": "[parameters('imageSKU')]",
-              "version": "latest"
-            },
             "vhd": {
               "uri": "[concat(variables('storageUriProd'), parameters('vmNamePrefix'),'-ucpctrl-osDisk.vhd')]"
             }
@@ -223,77 +207,12 @@
           ]
         }
       }
-    },
-    {
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(concat(parameters('vmNamePrefix'), '-ucpctrl'), '/Installation')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [],
-      "properties": {
-        "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScript",
-        "typeHandlerVersion": "2.0",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "commandToExecute": "[variables('installationCLI')]",
-          "fileUris": [
-            "[concat(parameters('location'), 'azuredeploy.sh')]"
-          ]
-        }
-      }
-    },
-    {
-      "apiVersion": "2015-01-01",
-      "name": "diskSelection",
-      "type": "Microsoft.Resources/deployments",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[concat(parameters('location'), 'diskSelection', '.json')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "numDataDisks": {
-            "value": "[parameters('numDataDisks')]"
-          },
-          "diskStorageAccountName": {
-            "value": "[parameters('storageAccountName')]"
-          },
-          "diskCaching": {
-            "value": "[variables('diskCaching')]"
-          },
-          "diskSizeGB": {
-            "value": "[parameters('dataDiskSize')]"
-          },
-          "masterName": {
-            "value": "[concat(parameters('vmNamePrefix'), '-ucpctrl')]"
-          }
-        }
-      }
     }
   ],
-  "variables": {
-    "installationCLI": "[concat('bash azuredeploy.sh ', concat(parameters('vmNamePrefix'), '-ucpctrl'), ' ', parameters('mountFolder'), ' ', parameters('numDataDisks'), ' ', parameters('dockerVer'), ' ', parameters('dockerComposeVer'), ' ', parameters('adminUsername'), ' ', parameters('imageSKU'), ' ', parameters('dockerMachineVer'))]",
-    "diskCaching": "ReadWrite",
-    "sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",
-    "osProfileChosen": "osProfilesshPublicKey",
-    "osProfilesshPublicKey": {
-      "computerName": "[concat(parameters('vmNamePrefix'), '-ucpctrl')]",
-      "adminUsername": "[parameters('adminUsername')]",
-      "linuxConfiguration": {
-        "disablePasswordAuthentication": "true",
-        "ssh": {
-          "publicKeys": [
-            {
-              "keyData": "[parameters('sshPublicKey')]",
-              "path": "[variables('sshKeyPath')]"
-            }
-          ]
-        }
-      }
-    },
-    "nicName": "[concat(parameters('vmNamePrefix'),'-ucpctrl-nic')]",
-    "storageUriProd": "[concat('http://', parameters('storageAccountName'), '.blob.core.windows.net/vhds/')]"
+  "outputs": {
+    "privateIp": {
+      "value": "[reference(variables('nicName')).ipConfigurations[0].properties.privateIpAddress]",
+      "type": "string"
+    }
   }
 }
