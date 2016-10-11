@@ -64,7 +64,7 @@ docker run --rm -i \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v /opt/ucp/docker_subscription.lic:/docker_subscription.lic \
     -e UCP_ADMIN_PASSWORD=$PASSWORD \
-    docker/ucp:2.0.0-beta1 \
+    docker/ucp:1.1.2 \
     install -D --fresh-install --san $MASTERFQDN
 
 if [ $? -eq 0 ]
@@ -83,7 +83,7 @@ docker run -d \
  -v ucp-node-certs:/certs \
  -p 8080:8080 \
  --restart=always \
- ehazlett/interlock:dev \
+ ehazlett/interlock:1.2.0 \
  -D run
 
 if [ $? -eq 0 ]
