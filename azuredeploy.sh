@@ -297,7 +297,9 @@ install_docker_ubuntu()
 		setup_shares
                 install_docker_ubuntu
                 install_docker_apps
+		mkdir -p /opt/ucp/
 	elif [ "$skuName" == "6.5" ] || [ "$skuName" == "6.6" ] || [ "$skuName" == "7.2" ] || [ "$skuName" == "7.1" ] ; then
 		install_pkgs_all
 		setup_shares
+		mkdir -p /opt/ucp/
 	fi
