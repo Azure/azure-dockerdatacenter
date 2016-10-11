@@ -265,26 +265,7 @@
       "metadata": {
         "description": "Password for UCP Admin Account"
       }
-    },
-      "_artifactsLocation": {
-          "type": "string",
-          "metadata": {
-              "description": "Auto-generated container in staging storage account to receive post-build staging folder upload"
-          }
-      },
-      "_artifactsLocationSasToken": {
-          "type": "securestring",
-          "metadata": {
-              "description": "Auto-generated token to access _artifactsLocation"
-          }
-      },
-      "baseSetup_MicrosoftComputevirtualMachines_ucpcontroller_name": {
-          "type": "string"
-      },
-      "baseSetup_MicrosoftComputevirtualMachines_ucpcontroller_location": {
-          "type": "string",
-          "defaultValue": "[resourceGroup().location]"
-      }
+    }
   },
   "variables": {
     "apiVersionCompute": "2015-06-15",
