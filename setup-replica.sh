@@ -50,11 +50,8 @@ echo $FPRINT
 # Load the predownloaded Tar File
 
 echo $(date) " - Loading docker install Tar"
-cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
-#cd /opt/ucp && wget https://packages.docker.com/caas/ucp-1.1.4_dtr-2.0.3.tar.gz
-#docker load < /opt/ucp/ucp-1.1.2_dtr-2.0.2.tar.gz
-#docker load < /opt/ucp/ucp-1.1.4_dtr-2.0.3.tar.gz
-docker load < https://packages.docker.com/caas/ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
+
+docker load < /opt/ucp/ucp-1.1.3_dtr-2.0.3.tar.gz
 
 # Start installation of UCP and join Controller replica to master Controller
 
@@ -65,7 +62,7 @@ docker run --rm -i \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -e UCP_ADMIN_USER=admin \
     -e UCP_ADMIN_PASSWORD=$PASSWORD \
-    docker/ucp:1.1.2 \
+    docker/ucp:1.1.3 \
     join --replica --san $MASTERFQDN --url https://${MASTERFQDN}:443 --fingerprint "${FPRINT}"
 
 if [ $? -eq 0 ]
@@ -94,4 +91,3 @@ echo $(date) " - NginX and interlock config complete"
 else
  echo $(date) " -- NginX and interlock config failed"
 fi
-
