@@ -3,31 +3,31 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "imagePublisher": {
-      "value": "[parameters('imagePublisher')]"
+      "type": "string"
     },
     "imageOffer": {
-      "value": "[parameters('imageOffer')]"
+      "type": "string"
     },
     "imageSKU": {
-      "value": "[parameters('imageSKU')]"
+      "type": "string"
     },
     "numDataDisks": {
-      "value": "[parameters('numDataDisks')]"
+      "type": "string"
     },
     "dataDiskSize": {
-      "value": "[parameters('dataDiskSize')]"
+      "type": "int"
     },
     "dockerMachineVer": {
-      "value": "[parameters('dockerMachineVer')]"
+      "type": "string"
     },
     "dockerComposeVer": {
-      "value": "[parameters('dockerComposeVer')]"
+      "type": "string"
     },
     "dockerVer": {
-      "value": "[parameters('dockerVer')]"
+      "type": "string"
     },
     "mountFolder": {
-      "value": "[parameters('mountFolder')]"
+      "type": "string"
     },
     "apiVersionCompute": {
       "type": "string",
@@ -223,16 +223,16 @@
         "[concat('Microsoft.Compute/virtualMachines/', concat(parameters('vmNamePrefix'), '-ucpctrl'))]"
       ],
       "properties": {
-        "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScript",
-        "typeHandlerVersion": "2.0",
         "autoUpgradeMinorVersion": true,
+        "publisher": "Microsoft.Azure.Extensions",
         "settings": {
           "commandToExecute": "[variables('installationCLI')]",
           "fileUris": [
             "[concat(parameters('location'), 'azuredeploy.sh')]"
           ]
-        }
+        },
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0"
       }
     },
     {
