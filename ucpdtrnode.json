@@ -95,7 +95,7 @@
   },
   "variables": {
     "sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",
-    "osProfileChosen": "[concat('osProfile', parameters('authenticationType'))]",
+    "osProfileChosen": "[concat('osProfile', 'sshPublicKey')]",
     "osProfilesshPublicKey": {
       "computerName": "[concat(parameters('vmNamePrefix'), '-ucpdtrnode')]",
       "adminUsername": "[parameters('adminUsername')]",
