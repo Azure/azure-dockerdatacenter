@@ -81,7 +81,7 @@ docker run --rm -i \
     -v /opt/ucp/docker_subscription.lic:/docker_subscription.lic \
     -e UCP_ADMIN_PASSWORD=$PASSWORD \
     docker/ucp:2.0.0-beta1 \
-    install -D --host-address $MASTERPRIVATEIP
+    install -D --host-address $MASTERFQDN
 
 if [ $? -eq 0 ]
 then
