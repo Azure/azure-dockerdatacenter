@@ -132,7 +132,7 @@
         },
         "controllerLbPublicIpDnsName": {
             "type": "string",
-            "defaultValue": "clbpipossddc",
+            "defaultValue": "clbpipddcdev01",
             "metadata": {
                 "description": "DNS label of Public IP for Controller Load Balancer"
             }
@@ -146,7 +146,7 @@
         },
         "nodeLbPublicIpDnsName": {
             "type": "string",
-            "defaultValue": "nlbpipossddc",
+            "defaultValue": "nlbpipddcdev01",
             "metadata": {
                 "description": "DNS label for Node Load Balancer"
             }
@@ -160,7 +160,7 @@
         },
         "nodeDtrLbPublicIpDnsName": {
             "type": "string",
-            "defaultValue": "dlbpipossddc",
+            "defaultValue": "dlbpipddcdev01",
             "metadata": {
                 "description": "DNS label of Public IP for DTR Load Balancer"
             }
