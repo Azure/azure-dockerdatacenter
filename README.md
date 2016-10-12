@@ -35,6 +35,6 @@ Please report bugs  by opening an issue in the [GitHub Issue Tracker](https://gi
 Patches can be submitted as GitHub pull requests. If using GitHub please make sure your branch applies to the current master as a 'fast forward' merge (i.e. without creating a merge commit). Use the `git rebase` command to update your branch to the current master if necessary.
 
 ## Pre-Req
-**~~[Create a free account for MS Azure Operational Management Suite with workspaceID](https://www.microsoft.com/en-us/cloud-platform/operations-management-suite-trial)~~**
+**~~[Create a free account for MS Azure Operational Management Suite with workspaceID]**
 
-**Docker DataCenter License as used as-is (parameterized license - lic file) in this project CANNOT be obtained from [here], which is the GA request list. (https://www.docker.com/products/docker-datacenter)**
+**Docker DataCenter License as used as-is (parameterized license - lic file) in this project CANNOT be obtained from from the GA request list. **
