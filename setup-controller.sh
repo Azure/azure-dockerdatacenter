@@ -38,7 +38,17 @@ SSLProtocols = "SSLv3 TLSv1 TLSv1.1 TLSv1.2"'
 cat > /opt/ucp/docker_subscription.lic <<EOF
 '$FILEURI'
 EOF
-     
+
+# System Update and docker version update
+DEBIAN_FRONTEND=noninteractiv apt-get update -y
+apt-get install -y apt-transport-https ca-certificates
+apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+echo 'deb https://apt.dockerproject.org/repo ubuntu-trusty main' >> /etc/apt/sources.list.d/docker.list
+apt-cache -y policy docker-engine
+DEBIAN_FRONTEND=noninteractiv apt-get update -y
+
+# removing a special character from subscription.lic
+sed -i -- "s/'//g" /opt/ucp/docker_subscription.lic     
 #wget "$FILEURI" -O /opt/ucp/docker_subscription.lic
 
 # Fix for Docker Daemon when cloning a base image
