@@ -49,7 +49,11 @@ DEBIAN_FRONTEND=noninteractive apt-get -y update
 DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
 
 # removing a special character from subscription.lic
-sed -i -- "s/'//g" /opt/ucp/docker_subscription.lic     
+sed -i -- "s/'//g" /opt/ucp/docker_subscription.lic
+sed -i -- "s/{/{\"/g" /opt/ucp/docker_subscription.lic
+sed -i -- "s/}/\"}/g" /opt/ucp/docker_subscription.lic
+sed -i -- "s/:/\":/g" /opt/ucp/docker_subscription.lic
+sed -i -- "s/,\ /,\ \"/g" /opt/ucp/docker_subscription.lic   
 #wget "$FILEURI" -O /opt/ucp/docker_subscription.lic
 
 # Fix for Docker Daemon when cloning a base image
