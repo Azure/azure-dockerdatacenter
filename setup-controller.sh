@@ -1,9 +1,9 @@
 
-
 echo $(date) " - Starting Script"
 
 PASSWORD=$1
 MASTERFQDN=$2
+# Key not FILEURI - to be changed
 FILEURI=$3
 MASTERPRIVATEIP=$4
 
@@ -45,7 +45,7 @@ EOF
 # rm  /etc/docker/key.json  
 # service docker restart
 
-# Load the predownloaded Tar File
+# Load the downloaded Tar File
 
 echo $(date) " - Loading docker install Tar"
 cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
