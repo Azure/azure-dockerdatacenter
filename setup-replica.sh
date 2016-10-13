@@ -51,32 +51,32 @@ DEBIAN_FRONTEND=noninteractive apt-get -y update
 DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
 
 # Retrieve Fingerprint from Master Controller
-#curl --insecure https://$MASTERFQDN/ca > ca.pem
-#FPRINT=$(openssl x509 -in ca.pem -noout -sha256 -fingerprint | awk -F= '{ print $2 }' )
-#echo $FPRINT
+curl --insecure https://ucpclus0-ucpctrl/ca > ca.pem
+FPRINT=$(openssl x509 -in ca.pem -noout -sha256 -fingerprint | awk -F= '{ print $2 }' )
+echo $FPRINT
 
 # Load the downloaded Tar File
 
 #echo $(date) " - Loading docker install Tar"
-#cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
-#docker load < ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
+cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
+docker load < ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
 
 # Start installation of UCP and join Controller replica to master Controller
 
-#docker run --rm -i \
-#    --name ucp \
-#    -v /var/run/docker.sock:/var/run/docker.sock \
-#    -e UCP_ADMIN_USER=admin \
-#    -e UCP_ADMIN_PASSWORD=$PASSWORD \
-#    docker/ucp:2.0.0-beta1 \
-#    join --replica --san $MASTERFQDN --url https://${MASTERFQDN}:443 --fingerprint "${FPRINT}"
+docker run --rm -i \
+    --name ucp \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -e UCP_ADMIN_USER=admin \
+    -e UCP_ADMIN_PASSWORD=$PASSWORD \
+    docker/ucp:2.0.0-beta1 \
+    join --replica --san ucpclus0-ucpctrl --url https://ucpclus0-ucpctrl:443 --fingerprint "${FPRINT}"
 
-#if [ $? -eq 0 ]
-#then
-#echo $(date) " - UCP installed and started on the master(replica) Controller"
-#else
-# echo $(date) " -- UCP installation failed"
-#fi
+if [ $? -eq 0 ]
+then
+echo $(date) " - UCP installed and started on the master(replica) Controller"
+else
+ echo $(date) " -- UCP installation failed"
+fi
 
 
 # Configure NginX for Interlock  
