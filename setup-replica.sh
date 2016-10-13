@@ -101,10 +101,10 @@ fi
 echo $(date) " - Staring Swarm Join as Manager to Leader UCP Controller"
 apt-get -y update && apt-get install -y curl jq
 # Create an environment variable with the user security token
-AUTHTOKEN=$(curl -sk -d '{"username":"admin","password":"'"$PASSWORD"'"}' https://10.2.0.6/auth/login | jq -r .auth_token)
+AUTHTOKEN=$(curl -sk -d '{"username":"admin","password":"'"$PASSWORD"'"}' https://ucpclus0-ucpctrl/auth/login | jq -r .auth_token)
 echo "$AUTHTOKEN"
 # Download the client certificate bundle
-curl -k -H "Authorization: Bearer ${AUTHTOKEN}" https://10.2.0.6/api/clientbundle -o bundle.zip
+curl -k -H "Authorization: Bearer ${AUTHTOKEN}" https://ucpclus0-ucpctrl/api/clientbundle -o bundle.zip
 unzip bundle.zip && chmod 755 env.sh && source env.sh
 docker swarm join-token manager|sed '1d'|sed '1d'|sed '$ d'>swarmjoin.sh
 unset DOCKER_TLS_VERIFY
