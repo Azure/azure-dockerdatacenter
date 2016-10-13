@@ -24,40 +24,32 @@ echo $(date) "Sleeping for $SLEEP"
 sleep $SLEEP
 
 # Retrieve Fingerprint from Master Controller
-
-curl --insecure https://$MASTERFQDN/ca > ca.pem
-
-FPRINT=$(openssl x509 -in ca.pem -noout -sha256 -fingerprint | awk -F= '{ print $2 }' )
-
-echo $FPRINT
+#curl --insecure https://$MASTERFQDN/ca > ca.pem
+#FPRINT=$(openssl x509 -in ca.pem -noout -sha256 -fingerprint | awk -F= '{ print $2 }' )
+#echo $FPRINT
 
 # Load the downloaded Tar File
 
-echo $(date) " - Loading docker install Tar"
-cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
-#cd /opt/ucp && wget https://packages.docker.com/caas/ucp-1.1.4_dtr-2.0.3.tar.gz
-#docker load < /opt/ucp/ucp-1.1.2_dtr-2.0.2.tar.gz
-#docker load < /opt/ucp/ucp-1.1.4_dtr-2.0.3.tar.gz
-docker load < ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
+#echo $(date) " - Loading docker install Tar"
+#cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
+#docker load < ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
 
 # Start installation of UCP and join agent Nodes to cluster
+#echo $(date) " - Loading complete.  Starting UCP Install of agent node"
+#docker run --rm -i \
+#    --name ucp \
+#    -v /var/run/docker.sock:/var/run/docker.sock \
+#    -e UCP_ADMIN_USER=admin \
+#    -e UCP_ADMIN_PASSWORD=$PASSWORD \
+#    docker/ucp:2.0.0-beta1 \
+#    join --san $MASTERFQDN --fresh-install --url https://${MASTERFQDN}:443 --fingerprint "${FPRINT}"
 
-echo $(date) " - Loading complete.  Starting UCP Install of agent node"
-
-docker run --rm -i \
-    --name ucp \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -e UCP_ADMIN_USER=admin \
-    -e UCP_ADMIN_PASSWORD=$PASSWORD \
-    docker/ucp:2.0.0-beta1 \
-    join --san $MASTERFQDN --fresh-install --url https://${MASTERFQDN}:443 --fingerprint "${FPRINT}"
-
-if [ $? -eq 0 ]
-then
- echo $(date) " - UCP installed and started on the agent node"
-else
- echo $(date) " -- UCP installation failed on agent node"
-fi
+#if [ $? -eq 0 ]
+#then
+# echo $(date) " - UCP installed and started on the agent node"
+#else
+#echo $(date) " -- UCP installation failed on agent node"
+#fi
 
 # Configure NginX
 
@@ -77,3 +69,17 @@ then
 else
  echo $(date) " -- NginX Install failed"
 fi
+echo $(date) " - Staring Swarm Join as worker UCP Controller"
+apt-get -y update && apt-get install -y curl jq
+# Create an environment variable with the user security token
+AUTHTOKEN=$(curl -sk -d '{"username":"admin","password":"'"$PASSWORD"'"}' https://10.2.0.6/auth/login | jq -r .auth_token)
+echo "$AUTHTOKEN"
+# Download the client certificate bundle
+curl -k -H "Authorization: Bearer ${AUTHTOKEN}" https://10.2.0.6/api/clientbundle -o bundle.zip
+unzip bundle.zip && chmod 755 env.sh && source env.sh
+docker swarm join-token worker|sed '1d'|sed '1d'|sed '$ d'>swarmjoin.sh
+unset DOCKER_TLS_VERIFY
+unset DOCKER_CERT_PATH
+unset DOCKER_HOST
+chmod 755 swarmjoin.sh
+source swarmjoin.sh
