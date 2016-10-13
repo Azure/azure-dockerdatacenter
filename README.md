@@ -1,10 +1,10 @@
 # azure-dockerdatacenter
-Docker DataCenter Templates on Azure with more automation on top of the 1.0.7 Gallery Templates- sample experiments with new Swarm Mode
+Docker DataCenter Templates on Azure with more automation on top of the 1.0.9 Gallery Templates- sample experiments with new Swarm Mode
+
 
 
 Please see the [LICENSE file](https://github.com/Azure/azure-dockerdatacenter/blob/master/LICENSE) for licensing information. 
-Docker DataCenter License as used as-is (parameterized license - lic file) in this project may be obtained from [here](https://www.docker.com/products/docker-datacenter)
-
+Docker DataCenter License as used as-is (parameterized or to be uploaded license - lic file) in this project for UCP 2.0.0 Beta1 and DTR 2.1.0 Beta1 can only be obtained presently for the private beta. Please refer to [this post](https://forums.docker.com/t/docker-datacenter-on-engine-1-12-private-beta/23232/1) in the docker forum. Please sign up [here](https://goo.gl/UTG895) for GA Waiting list.
 
 This project has adopted the [Microsoft Open Source Code of
 Conduct](https://opensource.microsoft.com/codeofconduct/). For more information
@@ -14,6 +14,8 @@ FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact
 questions or comments.
 
 **This repo is based on and top of the [Azure Marketplace Gallery Docker DDC 1.0.9 template(s)](https://gallery.azure.com/artifact/20151001/docker.dockerdatacenterdocker-datacenter.1.0.9/Artifacts/mainTemplate.json)**
+
+**Uses the new public tar.gz from [here](https://packages.docker.com/caas/ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz) for changes using the Raft Protocol and Auto HA for private beta (to be GAed DDC) and native swarm mode orchestration on MS Azure. DDC Private Beta docs are [here](https://beta.docker.com/docs/ddc)**
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-dockerdatacenter%2Fmaster%2Fazuredeploy.json" target="_blank">
    <img alt="Deploy to Azure" src="http://azuredeploy.net/deploybutton.png"/>
@@ -37,4 +39,3 @@ Patches can be submitted as GitHub pull requests. If using GitHub please make su
 ## Pre-Req
 **~~[Create a free account for MS Azure Operational Management Suite with workspaceID]**
 
-**Docker DataCenter License as used as-is (parameterized license - lic file) in this project CANNOT be obtained from from the GA request list. **
