@@ -28,7 +28,9 @@ DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
 
 # Implement delay timer to stagger joining of Agent Nodes to cluster
 
-joinucp() {
+installbundle ()
+{
+
 echo $(date) "Sleeping for $SLEEP"
 sleep $SLEEP
 echo $(date) " - Staring Swarm Join as worker UCP Controller"
@@ -39,6 +41,9 @@ echo "$AUTHTOKEN"
 # Download the client certificate bundle
 curl -k -H "Authorization: Bearer ${AUTHTOKEN}" https://ucpclus0-ucpctrl/api/clientbundle -o bundle.zip
 unzip bundle.zip && chmod 755 env.sh && source env.sh
+}
+joinucp() {
+installbundle;
 docker swarm join-token worker|sed '1d'|sed '1d'|sed '$ d'>swarmjoin.sh
 unset DOCKER_TLS_VERIFY
 unset DOCKER_CERT_PATH
@@ -47,17 +52,22 @@ chmod 755 swarmjoin.sh
 source swarmjoin.sh
 }
 
-
-
-joinucp;
-# Install DTR
+installdtr() {
+installbundle;
 docker run --rm -i \
   dockerhubenterprise/dtr:2.1.0-beta1 install \
-  --ucp-node $UCP_NODE \
+  --ucp-node ucpclus0-ucpdtrnode \
   --ucp-insecure-tls \
-  --dtr-external-url $DTR_PUBLIC_IP  \
+  --dtr-external-url https://clbpipddcdev01.westeurope.cloudapp.azure.com  \
   --ucp-url https://ucpclus0-ucpctrl \
   --ucp-username admin --ucp-password $PASSWORD
+  }
+joinucp;
+# Install DTR
+installdtr;
+
+
+
  
  
  # Install DTR
