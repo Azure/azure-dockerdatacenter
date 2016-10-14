@@ -51,14 +51,13 @@ source swarmjoin.sh
 
 joinucp;
 # Install DTR
-docker run -it --rm \
+docker run --rm -i \
   dockerhubenterprise/dtr:2.1.0-beta1 install \
   --ucp-node $UCP_NODE \
   --ucp-insecure-tls \
   --dtr-external-url $DTR_PUBLIC_IP  \
   --ucp-url https://ucpclus0-ucpctrl \
   --ucp-username admin --ucp-password $PASSWORD \
-  --replica-id $REPLICA_ID"0" 
  
  
  # Install DTR
