@@ -55,7 +55,7 @@ docker run -it --rm \
   dockerhubenterprise/dtr:2.1.0-beta1 install \
   --ucp-node $UCP_NODE \
   --ucp-insecure-tls \
-  --dtr-external-url https://dlbpipddcdev01.westeurope.cloudapp.azure.com:443  \
+  --dtr-external-url $DTR_PUBLIC_IP  \
   --ucp-url https://ucpclus0-ucpctrl \
   --ucp-username admin --ucp-password $PASSWORD \
   --replica-id $REPLICA_ID"0" 
