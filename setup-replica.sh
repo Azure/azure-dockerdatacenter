@@ -12,32 +12,32 @@ SLEEP=$4
 echo $(date) "Sleeping for $SLEEP"
 sleep $SLEEP
 
-INTERLOCK_CONFIG='
-ListenAddr = ":8080"
-DockerURL = "'$MASTERPRIVATEIP':2376"
-TLSCACert = "/certs/ca.pem"
-TLSCert = "/certs/cert.pem"
-TLSKey = "/certs/key.pem"
-PollInterval = "2s"
-[[Extensions]]
-Name = "nginx"
-ConfigPath = "/etc/nginx/nginx.conf"
-PidPath = "/etc/nginx/nginx.pid"
-MaxConn = 1024
-Port = 80
-SSLCertPath = ""
-SSLCert = ""
-SSLPort = 443
-SSLOpts = ""
-User = "www-data"
-WorkerProcesses = 2
-RLimitNoFile = 65535
-ProxyConnectTimeout = 600
-ProxySendTimeout = 600
-ProxyReadTimeout = 600
-SendTimeout = 600
-SSLCiphers = "HIGH:!aNULL:!MD5"
-SSLProtocols = "SSLv3 TLSv1 TLSv1.1 TLSv1.2"'
+#INTERLOCK_CONFIG='
+#ListenAddr = ":8080"
+#DockerURL = "'$MASTERPRIVATEIP':2376"
+#TLSCACert = "/certs/ca.pem"
+#TLSCert = "/certs/cert.pem"
+#TLSKey = "/certs/key.pem"
+#PollInterval = "2s"
+#[[Extensions]]
+#Name = "nginx"
+#ConfigPath = "/etc/nginx/nginx.conf"
+#PidPath = "/etc/nginx/nginx.pid"
+#MaxConn = 1024
+#Port = 80
+#SSLCertPath = ""
+#SSLCert = ""
+#SSLPort = 443
+#SSLOpts = ""
+#User = "www-data"
+#WorkerProcesses = 2
+#RLimitNoFile = 65535
+#ProxyConnectTimeout = 600
+#ProxySendTimeout = 600
+#ProxyReadTimeout = 600
+#SendTimeout = 600
+#SSLCiphers = "HIGH:!aNULL:!MD5"
+#SSLProtocols = "SSLv3 TLSv1 TLSv1.1 TLSv1.2"'
 
 # System Update and docker version update
 DEBIAN_FRONTEND=noninteractive apt-get -y update
@@ -81,22 +81,22 @@ fi
 
 # Configure NginX for Interlock  
 
-echo $(date) " - Initiating NginX and interlock configuration on the master"
+#echo $(date) " - Initiating NginX and interlock configuration on the master"
 
-docker run -d \
- -e INTERLOCK_CONFIG="$INTERLOCK_CONFIG" \
- -v ucp-node-certs:/certs \
- -p 8080:8080 \
- --restart=always \
- ehazlett/interlock:1.2.0 \
- -D run
+#docker run -d \
+# -e INTERLOCK_CONFIG="$INTERLOCK_CONFIG" \
+# -v ucp-node-certs:/certs \
+# -p 8080:8080 \
+# --restart=always \
+# ehazlett/interlock:1.2.0 \
+# -D run
 
-if [ $? -eq 0 ]
-then
-echo $(date) " - NginX and interlock config complete"
-else
- echo $(date) " -- NginX and interlock config failed"
-fi
+#if [ $? -eq 0 ]
+#then
+#echo $(date) " - NginX and interlock config complete"
+#else
+# echo $(date) " -- NginX and interlock config failed"
+#fi
 
 echo $(date) " - Staring Swarm Join as Manager to Leader UCP Controller"
 apt-get -y update && apt-get install -y curl jq
