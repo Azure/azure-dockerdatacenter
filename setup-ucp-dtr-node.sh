@@ -57,7 +57,7 @@ docker run --rm -i \
   --ucp-insecure-tls \
   --dtr-external-url $DTR_PUBLIC_IP  \
   --ucp-url https://ucpclus0-ucpctrl \
-  --ucp-username admin --ucp-password $PASSWORD \
+  --ucp-username admin --ucp-password $PASSWORD
  
  
  # Install DTR
