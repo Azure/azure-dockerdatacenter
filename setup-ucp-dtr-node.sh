@@ -63,9 +63,6 @@ unset DOCKER_HOST
 chmod 755 swarmjoin.sh
 source swarmjoin.sh
 }
-echo $(date) "Sleeping for 200"
-sleep 200;
-
 installdtr() {
 installbundle;
 docker run --rm -i \
@@ -77,6 +74,8 @@ docker run --rm -i \
   --ucp-username admin --ucp-password $PASSWORD
   }
 joinucp;
+echo $(date) "Sleeping for 200"
+sleep 200;
 # Install DTR
 installdtr;
 
