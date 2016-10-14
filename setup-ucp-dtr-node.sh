@@ -48,10 +48,10 @@ sleep $SLEEP
 echo $(date) " - Staring Swarm Join as worker UCP Controller"
 apt-get -y update && apt-get install -y curl jq
 # Create an environment variable with the user security token
-AUTHTOKEN=$(curl -sk -d '{"username":"admin","password":"'"$PASSWORD"'"}' https://$2/auth/login | jq -r .auth_token)
+AUTHTOKEN=$(curl -sk -d '{"username":"admin","password":"'"$PASSWORD"'"}' https://ucpclus0-ucpctrl/auth/login | jq -r .auth_token)
 echo "$AUTHTOKEN"
 # Download the client certificate bundle
-curl -k -H "Authorization: Bearer ${AUTHTOKEN}" https://$2/api/clientbundle -o bundle.zip
+curl -k -H "Authorization: Bearer ${AUTHTOKEN}" https://ucpclus0-ucpctrl/api/clientbundle -o bundle.zip
 unzip -o bundle.zip && chmod 755 env.sh && source env.sh
 }
 joinucp() {
@@ -70,7 +70,7 @@ docker run --rm -i \
   --ucp-node $UCP_NODE \
   --ucp-insecure-tls \
   --dtr-external-url $DTR_PUBLIC_URL  \
-  --ucp-url https://$2 \
+  --ucp-url https://ucpclus0-ucpctrl \
   --ucp-username admin --ucp-password $PASSWORD
   }
 joinucp;
