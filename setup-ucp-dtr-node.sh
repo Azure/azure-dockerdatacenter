@@ -14,6 +14,7 @@ UCP_NODE_REP=$6
 UCP_NODE_SUF=-ucpdtrnode
 COUNT=$7
 SLEEP=$8
+DTR_PUBLIC_URL=https://$3
 
 # System Update and docker version update
 DEBIAN_FRONTEND=noninteractive apt-get -y update
@@ -69,9 +70,9 @@ installdtr() {
 installbundle;
 docker run --rm -i \
   dockerhubenterprise/dtr:2.1.0-beta1 install \
-  --ucp-node ucpclus0-ucpdtrnode \
+  --ucp-node $UCP_NODE \
   --ucp-insecure-tls \
-  --dtr-external-url https://${DTR_PUBLIC_IP}  \
+  --dtr-external-url $DTR_PUBLIC_URL  \
   --ucp-url https://ucpclus0-ucpctrl \
   --ucp-username admin --ucp-password $PASSWORD
   }
