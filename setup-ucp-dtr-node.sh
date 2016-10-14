@@ -51,7 +51,7 @@ AUTHTOKEN=$(curl -sk -d '{"username":"admin","password":"'"$PASSWORD"'"}' https:
 echo "$AUTHTOKEN"
 # Download the client certificate bundle
 curl -k -H "Authorization: Bearer ${AUTHTOKEN}" https://ucpclus0-ucpctrl/api/clientbundle -o bundle.zip
-unzip bundle.zip && chmod 755 env.sh && source env.sh
+unzip -o bundle.zip && chmod 755 env.sh && source env.sh
 }
 joinucp() {
 installbundle;
@@ -64,7 +64,7 @@ source swarmjoin.sh
 }
 
 installdtr() {
-source env.sh
+installbundle;
 docker run --rm -i \
   dockerhubenterprise/dtr:2.1.0-beta1 install \
   --ucp-node ucpclus0-ucpdtrnode \
