@@ -50,6 +50,7 @@ unset DOCKER_CERT_PATH
 unset DOCKER_HOST
 chmod 755 swarmjoin.sh
 source swarmjoin.sh
+rm -rf bundle.zip
 }
 
 installdtr() {
