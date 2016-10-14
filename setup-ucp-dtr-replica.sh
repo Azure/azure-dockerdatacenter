@@ -23,22 +23,7 @@ apt-cache policy docker-engine
 DEBIAN_FRONTEND=noninteractive apt-get -y update
 DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
 
-
 # Implement delay timer to stagger joining of Agent Nodes to cluster
-
-echo $(date) "Sleeping for $SLEEP"
-sleep $SLEEP
-
-# Retrieve Fingerprint from Master Controller
-
-curl --insecure https://$MASTERFQDN/ca > ca.pem
-
-FPRINT=$(openssl x509 -in ca.pem -noout -sha256 -fingerprint | awk -F= '{ print $2 }' )
-
-echo $FPRINT
-
-# Load the downloaded Tar File
-
 echo $(date) " - Loading docker install Tar"
 cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
 #cd /opt/ucp && wget https://packages.docker.com/caas/ucp-1.1.4_dtr-2.0.3.tar.gz
@@ -46,17 +31,49 @@ cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta1_dtr-2.1.0-b
 #docker load < /opt/ucp/ucp-1.1.4_dtr-2.0.3.tar.gz
 docker load < ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
 
-# Start installation of UCP and join agent Nodes to cluster
+# Start installation of UCP with master Controller
 
-echo $(date) " - Loading complete.  Starting UCP Install of agent node"
+echo $(date) " - Loading complete.  Starting UCP Install"
 
+
+installbundle ()
+{
+
+echo $(date) "Sleeping for $SLEEP"
+sleep $SLEEP
+echo $(date) " - Staring Swarm Join as worker UCP Controller"
+apt-get -y update && apt-get install -y curl jq
+# Create an environment variable with the user security token
+AUTHTOKEN=$(curl -sk -d '{"username":"admin","password":"'"$PASSWORD"'"}' https://ucpclus0-ucpctrl/auth/login | jq -r .auth_token)
+echo "$AUTHTOKEN"
+# Download the client certificate bundle
+curl -k -H "Authorization: Bearer ${AUTHTOKEN}" https://ucpclus0-ucpctrl/api/clientbundle -o bundle.zip
+unzip -o bundle.zip && chmod 755 env.sh && source env.sh
+}
+joinucp() {
+installbundle;
+docker swarm join-token worker|sed '1d'|sed '1d'|sed '$ d'>swarmjoin.sh
+unset DOCKER_TLS_VERIFY
+unset DOCKER_CERT_PATH
+unset DOCKER_HOST
+chmod 755 swarmjoin.sh
+source swarmjoin.sh
+}
+installdtr() {
+installbundle;
 docker run --rm -i \
-    --name ucp \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -e UCP_ADMIN_USER=admin \
-    -e UCP_ADMIN_PASSWORD=$PASSWORD \
-    docker/ucp:2.0.0-beta1 \
-    join --san $MASTERFQDN --fresh-install --url https://${MASTERFQDN}:443 --fingerprint "${FPRINT}"
+  dockerhubenterprise/dtr:2.1.0-beta1 install \
+  --ucp-node $UCP_NODE \
+  --ucp-insecure-tls \
+  --dtr-external-url $DTR_PUBLIC_URL  \
+  --ucp-url https://ucpclus0-ucpctrl \
+  --ucp-username admin --ucp-password $PASSWORD
+  }
+joinucp;
+#echo $(date) "Sleeping for 200"
+#sleep 200;
+# Install DTR
+#installdtr;
 
 if [ $? -eq 0 ]
 then
