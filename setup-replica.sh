@@ -69,7 +69,7 @@ docker run --rm -i \
     -e UCP_ADMIN_USER=admin \
     -e UCP_ADMIN_PASSWORD=$PASSWORD \
     docker/ucp:2.0.0-beta1 \
-    join --replica --san ucpclus0-ucpctrl --url https://ucpclus0-ucpctrl:443 --fingerprint "${FPRINT}"
+    join --replica --san $2 --url https://$2 --fingerprint "${FPRINT}"
 
 if [ $? -eq 0 ]
 then
