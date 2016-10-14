@@ -62,6 +62,8 @@ unset DOCKER_HOST
 chmod 755 swarmjoin.sh
 source swarmjoin.sh
 }
+echo $(date) "Sleeping for 200"
+sleep 200;
 
 installdtr() {
 installbundle;
