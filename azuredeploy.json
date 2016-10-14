@@ -58,11 +58,7 @@
         },
         "ucpDtrNodeCount": {
             "type": "int",
-            "defaultValue": 3,
-            "allowedValues": [
-                3,
-                5
-            ],
+            "defaultValue": 2,
             "metadata": {
                 "description": "Number of DTR node VMs"
             }
