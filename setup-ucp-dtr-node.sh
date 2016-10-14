@@ -53,19 +53,20 @@ echo "$AUTHTOKEN"
 curl -k -H "Authorization: Bearer ${AUTHTOKEN}" https://ucpclus0-ucpctrl/api/clientbundle -o bundle.zip
 unzip bundle.zip && chmod 755 env.sh && source env.sh
 }
-joinucp() {
-installbundle;
+joinucp() {installbundle;
 docker swarm join-token worker|sed '1d'|sed '1d'|sed '$ d'>swarmjoin.sh
 unset DOCKER_TLS_VERIFY
 unset DOCKER_CERT_PATH
 unset DOCKER_HOST
 chmod 755 swarmjoin.sh
 source swarmjoin.sh
-rm -rf bundle.zip
 }
 
 installdtr() {
+mkdir installdtr
+cd installdtr
 installbundle;
+
 docker run --rm -i \
   dockerhubenterprise/dtr:2.1.0-beta1 install \
   --ucp-node ucpclus0-ucpdtrnode \
