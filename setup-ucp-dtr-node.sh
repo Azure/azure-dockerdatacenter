@@ -67,10 +67,10 @@ installdtr() {
 installbundle;
 docker run --rm -i \
   dockerhubenterprise/dtr:2.1.0-beta1 install \
-  --ucp-node ucpclus0-ucpdtrnode \
+  --ucp-node $UCP_NODE \
   --ucp-insecure-tls \
-  --dtr-external-url $DTR_PUBLIC_IP  \
-  --ucp-url https://ucpclus0-ucpctrl \
+  --dtr-external-url https://${DTR_PUBLIC_IP}  \
+  --ucp-url https://${MASTERFQDN} \
   --ucp-username admin --ucp-password $PASSWORD
   }
 joinucp;
