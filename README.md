@@ -37,9 +37,9 @@ Patches can be submitted as GitHub pull requests. If using GitHub please make su
 ## Pre-Req
 ~~Create a free account for MS Azure Operational Management Suite with workspaceID~~
 
-![Azure Subscription Icon](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/Azure.png)
 
 
-:heart: :penguin: :whale:
+
+:heart: ![Azure Subscription Icon](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/Azure.png) :penguin: :whale:
 
 
