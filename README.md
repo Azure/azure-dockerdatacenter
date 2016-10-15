@@ -1,4 +1,4 @@
- 
+  
 
 # azure-dockerdatacenter
 Docker DataCenter Templates on Azure with more automation on top of the 1.0.9 Gallery Templates- sample experiments with new Swarm Mode
@@ -42,4 +42,4 @@ Patches can be submitted as GitHub pull requests. If using GitHub please make su
 ~~Create a free account for MS Azure Operational Management Suite with workspaceID~~
 
 
-:heart: :whale:
+:heart: :penguin: :whale:
