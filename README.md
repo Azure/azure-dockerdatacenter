@@ -1,8 +1,7 @@
   
 
 # azure-dockerdatacenter
-Docker DataCenter Templates on Azure with more automation on top of the 1.0.9 Gallery Templates- sample experiments with new Swarm Mode
-
+Azure Docker DataCenter Templates for the to-be GAed Docker DataCenter with  ucp:2.0.0-Beta1 (native Swarm with Raft) and dtr:2.1.0-Beta1 Azure initially based on the "legacy" Docker 1.x 1.0.9 Azure MarketPlace Gallery Templates. For Raft, [please view ContainerCon, Europe (Berlin, October 4-9, 2016) Slides](for UCP 2.0.0 Beta1 and DTR 2.1.0 Beta1) .
 
 
 Please see the [LICENSE file](https://github.com/Azure/azure-dockerdatacenter/blob/master/LICENSE) for licensing information. 
@@ -30,9 +29,10 @@ This project is hosted at:
 
   * https://github.com/Azure/azure-dockerdatacenter
   
-  ## Reporting bugs
+## Reporting bugs
 
 Please report bugs  by opening an issue in the [GitHub Issue Tracker](https://github.com/Azure/azure-dockerdatacenter/issues)
+
 
 ## Patches and pull requests
 
