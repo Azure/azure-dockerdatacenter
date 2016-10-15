@@ -83,7 +83,7 @@ installdtr;
 
  
  
- # Install DTR
+ # Install DTR for replica placeholder
  #docker run -it --rm \
  #  dockerhubenterprise/dtr:2.1.0-beta1 install \
  #  --ucp-node $UCP_NODE \
@@ -102,8 +102,8 @@ installdtr;
   echo $(date) " - DTR installation on master DTR node failed"
  fi
 
- ##################
- # WIP - TBC for BETA
+ ###########################
+ # WIP - TBC for BETA and/or GA (UCP 2.0.0 and DTR 2.10
  ###########################
  for ((loop=1; loop<=$COUNT; loop++))
  do
