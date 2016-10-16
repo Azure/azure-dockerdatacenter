@@ -33,7 +33,7 @@ A Minimal Fresh topology with minimum 3 Worker Managers, minimum 2 worker nodes,
 ### The Minimal Topology (Minimum 3 Worker Manager Nodes for valid Raft HA and minimum 2 worker nodes with 2 extra for DTR and Replica)
  As from https://resources.azure.com 
  
-<img src="https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/MinimalTopology.png" width="623" height="1200" />
+<img src="https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/MinimalTopology.png" width="416" height="800" />
  
 ## Reporting bugs
 
