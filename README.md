@@ -18,7 +18,8 @@
 * **Uses the new public tar.gz from [here](https://packages.docker.com/caas/ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz) for changes using the Raft Protocol and Auto HA for private beta (to be GAed DDC) and native swarm mode orchestration on MS Azure. DDC Private Beta docs are [here](https://beta.docker.com/docs/ddc)**
 
 * New [Go-based Linux CustomScript Extension beind used](https://github.com/Azure/custom-script-extension-linux) 
-*	Changes in Template besides Autoupgrade = 2 are :
+Changes in Template besides Autoupgrade = 2 are :
+
 <code>
 -        "publisher": "Microsoft.OSTCExtensions",     +        "publisher": "Microsoft.Azure.Extensions",  
 -        "type": "CustomScriptForLinux",              +        "type": "CustomScript",  
