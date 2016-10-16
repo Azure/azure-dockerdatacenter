@@ -19,6 +19,12 @@
 
 * New [Go-based Linux CustomScript Extension being used](https://github.com/Azure/custom-script-extension-linux) 
 
+* Dashboard URL
+*  http://<UCP Controller Nodes LoadBalancer Full DNS IP name>.<region of the Resource Group>.cloudapp.azure.com
+*   The Above is the FQDN of the LBR or Public IP
+*  http://<DTR worker Nodes LoadBalancer Full DNS IP name>.<region of the Resource Group>.cloudapp.azure.com
+*   The Above is the FQDN of the LBR or Public IP
+
 ## Deploy and Visualize
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-dockerdatacenter%2Fmaster%2Fazuredeploy.json" target="_blank"><img alt="Deploy to Azure" src="http://azuredeploy.net/deploybutton.png" /></a>
 
