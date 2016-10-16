@@ -20,9 +20,9 @@
 * New [Go-based Linux CustomScript Extension being used](https://github.com/Azure/custom-script-extension-linux) 
 
 * Dashboard URL
-*  http://<UCP Controller Nodes LoadBalancer Full DNS IP name>.<region of the Resource Group>.cloudapp.azure.com
+*  <code>http://<<UCP Controller Nodes LoadBalancer Full DNS IP name>>.<<region of the Resource Group>>.cloudapp.azure.com </code>
 *   The Above is the FQDN of the LBR or Public IP
-*  http://<DTR worker Nodes LoadBalancer Full DNS IP name>.<region of the Resource Group>.cloudapp.azure.com
+*  <code>http://<<DTR worker Nodes LoadBalancer Full DNS IP name>>.<<region of the Resource Group>>.cloudapp.azure.com </code>
 *   The Above is the FQDN of the LBR or Public IP
 
 ## Deploy and Visualize
