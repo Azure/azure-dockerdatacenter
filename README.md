@@ -2,10 +2,12 @@
 
 # Azure Docker Datacenter
 
-Azure Docker DataCenter Templates for the to-be GAed Docker DataCenter with  ucp:2.0.0-Beta1 (native Swarm with Raft) and dtr:2.1.0-Beta1 initially based on the "legacy" Docker DataCenter 1.x Azure MarketPlace Gallery Templates (1.0.9). For Raft, [please view ContainerCon, Europe (Berlin, October 4-9, 2016) Slides](http://events.linuxfoundation.org/events/containercon-europe/program/slides) .
+* Azure Docker DataCenter Templates for the to-be GAed Docker DataCenter with  ucp:2.0.0-Beta1 (native Swarm with Raft) and dtr:2.1.0-Beta1 initially based on the "legacy" Docker DataCenter 1.x Azure MarketPlace Gallery Templates (1.0.9). 
 
-Please see the [LICENSE file](https://github.com/Azure/azure-dockerdatacenter/blob/master/LICENSE) for licensing information. 
-Docker DataCenter License as used as-is (parameterized or to be uploaded license - lic file) in this project for UCP 2.0.0 Beta1 and DTR 2.1.0 Beta1 can only be obtained presently for the private beta. Please refer to [this post](https://forums.docker.com/t/docker-datacenter-on-engine-1-12-private-beta/23232/1) in the docker forum. Please sign up [here](https://goo.gl/UTG895) for GA Waiting list.
+* For Raft, please view [Docker Orchestration: Beyond the Basics](http://events.linuxfoundation.org/sites/events/files/slides/Docker_Orchestration-Aaron_Lehmann.pdf) By Aaron Lehmann at the [ContainerCon, Europe]((http://events.linuxfoundation.org/events/containercon-europe/program/slides))- Berlin, October 4-9, 2016.
+
+* Please see the [LICENSE file](https://github.com/Azure/azure-dockerdatacenter/blob/master/LICENSE) for licensing information. 
+ * Docker DataCenter License as used as-is (parameterized or to be uploaded license - lic file) in this project for UCP 2.0.0 Beta1 and DTR 2.1.0 Beta1 can only be obtained presently for the private beta. Please refer to [this post](https://forums.docker.com/t/docker-datacenter-on-engine-1-12-private-beta/23232/1) in the docker forum. Please sign up [here](https://goo.gl/UTG895) for GA Waiting list.
 
 This project has adopted the [Microsoft Open Source Code of
 Conduct](https://opensource.microsoft.com/codeofconduct/). For more information
