@@ -1,4 +1,4 @@
- # azure-dockerdatacenter
+ #azure-dockerdatacenter
  
 Azure Docker DataCenter Templates for the to-be GAed Docker DataCenter with  ucp:2.0.0-Beta1 (native Swarm with Raft) and dtr:2.1.0-Beta1 initially based on the "legacy" Docker DataCenter 1.x Azure MarketPlace Gallery Templates (1.0.9). For Raft, [please view ContainerCon, Europe (Berlin, October 4-9, 2016) Slides](http://events.linuxfoundation.org/events/containercon-europe/program/slides) .
 
@@ -26,6 +26,12 @@ This project is hosted at:
 
 <a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-dockerdatacenter%2Fmaster%2Fazuredeploy.json" target="_blank">  
 <img src="http://armviz.io/visualizebutton.png"/> </a> 
+
+## Topologies
+
+A Minimal Fresh topology with minimum 3 Worker Managers, minimum 2 worker nodes, one DTR with local storage and another as replica would look like the following
+
+![Azure DDC Miminal Topology](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/MinimalFresh.png)
  
 ## Reporting bugs
 
