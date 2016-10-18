@@ -48,10 +48,10 @@ sleep $SLEEP
 echo $(date) " - Staring Swarm Join as worker UCP Controller"
 apt-get -y update && apt-get install -y curl jq
 # Create an environment variable with the user security token
-AUTHTOKEN=$(curl -sk -d '{"username":"admin","password":"'"$PASSWORD"'"}' https://$MASTERPRIVATEIP/auth/login | jq -r .auth_token)
+AUTHTOKEN=$(curl -sk -d '{"username":"admin","password":"'"$PASSWORD"'"}' https://$MASTERFQDN/auth/login | jq -r .auth_token)
 echo "$AUTHTOKEN"
 # Download the client certificate bundle
-curl -k -H "Authorization: Bearer ${AUTHTOKEN}" https://$MASTERPRIVATEIP/api/clientbundle -o bundle.zip
+curl -k -H "Authorization: Bearer ${AUTHTOKEN}" https://$MASTERFQDN/api/clientbundle -o bundle.zip
 unzip -o bundle.zip && chmod 755 env.sh && source env.sh
 }
 joinucp() {
@@ -63,7 +63,7 @@ unset DOCKER_HOST
 chmod 755 swarmjoin.sh
 source swarmjoin.sh
 }
-## Insecure TLS as self signed will fail -- Failed to get bootstrap client: Failed to get UCP CA: Get https://10.2.0.5/ca: x509: certificate signed by unknown authority
+## Insecure TLS as self signed will fail -- Failed to get bootstrap client: Failed to get UCP CA: Get https://blahblah/ca: x509: certificate signed by unknown authority
 installdtr() {
 installbundle;
 docker run --rm -i \
@@ -71,7 +71,7 @@ docker run --rm -i \
   --ucp-node $UCP_NODE \
   --ucp-insecure-tls \
   --dtr-external-url $DTR_PUBLIC_URL  \
-  --ucp-url https://$MASTERPRIVATEIP \
+  --ucp-url https://$MASTERFQDN \
   --ucp-username admin --ucp-password $PASSWORD
   }
 joinucp;
