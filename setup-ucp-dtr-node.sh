@@ -63,11 +63,13 @@ unset DOCKER_HOST
 chmod 755 swarmjoin.sh
 source swarmjoin.sh
 }
+## Insecure TLS as self signed will fail -- Failed to get bootstrap client: Failed to get UCP CA: Get https://10.2.0.5/ca: x509: certificate signed by unknown authority
 installdtr() {
 installbundle;
 docker run --rm -i \
   dockerhubenterprise/dtr:2.1.0-beta1 install \
   --ucp-node $UCP_NODE \
+  --ucp-insecure-tls \
   --dtr-external-url $DTR_PUBLIC_URL  \
   --ucp-url https://$MASTERPRIVATEIP \
   --ucp-username admin --ucp-password $PASSWORD
