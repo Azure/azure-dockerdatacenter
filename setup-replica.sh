@@ -26,7 +26,7 @@ DEBIAN_FRONTEND=noninteractive apt-get -y update
 DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
 
 # Retrieve Fingerprint from Master Controller
-curl --insecure https://ucpclus0-ucpctrl/ca > ca.pem
+curl --insecure https://$MASTERPRIVATEIP/ca > ca.pem
 FPRINT=$(openssl x509 -in ca.pem -noout -sha256 -fingerprint | awk -F= '{ print $2 }' )
 echo $FPRINT
 
@@ -44,7 +44,7 @@ docker run --rm -i \
     -e UCP_ADMIN_USER=admin \
     -e UCP_ADMIN_PASSWORD=$PASSWORD \
     docker/ucp:2.0.0-beta1 \
-    join --replica --san ucpclus0-ucpctrl --url https://ucpclus0-ucpctrl --fingerprint "${FPRINT}"
+    join --replica --san $MASTERPRIVATEIP --url https://$MASTERPRIVATEIP --fingerprint "${FPRINT}"
 
 if [ $? -eq 0 ]
 then
@@ -57,10 +57,10 @@ fi
 echo $(date) " - Staring Swarm Join as Manager to Leader UCP Controller"
 apt-get -y update && apt-get install -y curl jq
 # Create an environment variable with the user security token
-AUTHTOKEN=$(curl -sk -d '{"username":"admin","password":"'"$PASSWORD"'"}' https://ucpclus0-ucpctrl/auth/login | jq -r .auth_token)
+AUTHTOKEN=$(curl -sk -d '{"username":"admin","password":"'"$PASSWORD"'"}' https://$MASTERPRIVATEIP/auth/login | jq -r .auth_token)
 echo "$AUTHTOKEN"
 # Download the client certificate bundle
-curl -k -H "Authorization: Bearer ${AUTHTOKEN}" https://ucpclus0-ucpctrl/api/clientbundle -o bundle.zip
+curl -k -H "Authorization: Bearer ${AUTHTOKEN}" https://$MASTERPRIVATEIP/api/clientbundle -o bundle.zip
 unzip bundle.zip && chmod 755 env.sh && source env.sh
 docker swarm join-token manager|sed '1d'|sed '1d'|sed '$ d'>swarmjoin.sh
 unset DOCKER_TLS_VERIFY
