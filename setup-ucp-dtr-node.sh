@@ -16,8 +16,8 @@ COUNT=$7
 SLEEP=$8
 DTR_PUBLIC_URL=https://$3
 omsworkspaceid=$9
-omsworkspacekey=$10
-omslnxagentver=$11
+#omsworkspacekey=$10
+#omslnxagentver=$11
 
 # System Update and docker version update
 DEBIAN_FRONTEND=noninteractive apt-get -y update
@@ -138,10 +138,10 @@ dockerhubenterprise/dtr:2.1.0-beta1 join \
 echo $(date) " - Completed DTR installation on Master and all replica DTR nodes"
 installomsagent()
 {
-wget https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_Ignite2016_v$omslnxagentver/omsagent-${omslnxagentver}.universal.x64.sh
-chmod +x ./omsagent-${omslnxagentver}.universal.x64.sh
-md5sum ./omsagent-${omslnxagentver}.universal.x64.sh
-sudo sh ./omsagent-${omslnxagentver}.universal.x64.sh --upgrade -w $omsworkspaceid -s $omsworkspacekey
+wget https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_Ignite2016_v${11}/omsagent-${11}.universal.x64.sh
+chmod +x ./omsagent-${11}.universal.x64.sh
+md5sum ./omsagent-${11}.universal.x64.sh
+sudo sh ./omsagent-${11}.universal.x64.sh --upgrade -w $omsworkspaceid -s ${10}
 }
 instrumentfluentd_docker()
 {
