@@ -86,14 +86,14 @@ then
 else
  echo $(date) " -- UCP installation failed on DTR node"
 fi
+
 installomsagent()
 {
-wget https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_Ignite2016_v$omslnxagentver/omsagent-$omslnxagent.universal.x64.sh
-chmod +x ./omsagent-$omslnxagent.universal.x64.sh
-md5sum ./omsagent-$omslnxagent.universal.x64.sh
-sudo sh ./omsagent-$omslnxagent.universal.x64.sh --upgrade -w $omsworkspaceid -s $omsworkspacekey
+wget https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_Ignite2016_v$omslnxagentver/omsagent-${omslnxagentver}.universal.x64.sh
+chmod +x ./omsagent-${omslnxagentver}.universal.x64.sh
+md5sum ./omsagent-${omslnxagentver}.universal.x64.sh
+sudo sh ./omsagent-${omslnxagentver}.universal.x64.sh --upgrade -w $omsworkspaceid -s $omsworkspacekey
 }
-
 instrumentfluentd_docker()
 {
 cd /etc/systemd/system/multi-user.target.wants/ && sed -i.bak -e '12d' docker.service
