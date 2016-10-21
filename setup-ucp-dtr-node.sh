@@ -15,9 +15,9 @@ UCP_NODE_SUF=-ucpdtrnode
 COUNT=$7
 SLEEP=$8
 DTR_PUBLIC_URL=https://$3
-omsworkspaceid=$9
-omsworkspacekey='echo ${10}'
-omslnxagentver='echo ${11}'
+omsworkspaceid=$( echo "$9" |cut -d\: -f1 )
+omsworkspacekey=$( echo "$9" |cut -d\: -f2 )
+omslnxagentver=$( echo "$9" |cut -d\: -f3 )
 
 # System Update and docker version update
 DEBIAN_FRONTEND=noninteractive apt-get -y update
