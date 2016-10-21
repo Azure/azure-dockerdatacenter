@@ -201,6 +201,7 @@
         "apiVersionNetwork": "2015-06-15",
         "apiVersionStorage": "2015-06-15",
         "linkTemplateApiVersion": "2015-01-01",
+	"omsdet": "[concat(parameters('OMSWorkSpaceId'), ':', parameters('OMSWorkSpaceKey'), ':', parameters('OMSLinuxAgentFullVersion'))]",
         "storageNameAppend": "abcdef",
         "ucpNamingFix": "[substring(toLower(concat(parameters('clusterPrefix'), variables('storageNameAppend'))),0,8)]",
         "controllerStorageRandomString": "[uniqueString(concat(resourceGroup().id, 'ctrlsa'))]",
@@ -1138,7 +1139,7 @@
                     ]
                 },
                 "protectedSettings": {
-                    "commandToExecute": "[concat('bash setup-ucp-dtr-node.sh \"', parameters('ucpAdminPassword'), '\" \"', reference(parameters('controllerLbPublicIpAddress')).dnsSettings.fqdn, '\" \"', reference(parameters('nodeDtrLbPublicIpAddress')).dnsSettings.fqdn, '\" \"', variables('ucpDtrReplicaId'), '\" \"', reference('ucpController0').outputs.privateIp.value, '\" \"', parameters('clusterPrefix'), '\" \"', variables('ucpDtrReplicaCount'), '\" \"', mul(parameters('ucpNodeCount'), 1), '\" \"', parameters('OMSWorkSpaceId'), '\" \"', parameters('OMSWorkSpaceKey'), '\" \"', parameters('OMSLinuxAgentFullVersion'), '\"')]"
+                    "commandToExecute": "[concat('bash setup-ucp-dtr-node.sh \"', parameters('ucpAdminPassword'), '\" \"', reference(parameters('controllerLbPublicIpAddress')).dnsSettings.fqdn, '\" \"', reference(parameters('nodeDtrLbPublicIpAddress')).dnsSettings.fqdn, '\" \"', variables('ucpDtrReplicaId'), '\" \"', reference('ucpController0').outputs.privateIp.value, '\" \"', parameters('clusterPrefix'), '\" \"', variables('ucpDtrReplicaCount'), '\" \"', mul(parameters('ucpNodeCount'), 1), '\" \"', variables('omsdet'), '\"')]"
                 }
             }
         },
