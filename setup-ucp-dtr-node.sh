@@ -151,11 +151,12 @@ dockerhubenterprise/dtr:2.1.0-beta1 join \
 echo $(date) " - Completed DTR installation on Master and all replica DTR nodes"
 installomsagent()
 {
-wget https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_Ignite2016_v$omslnxagentver/omsagent-$omslnxagentver.universal.x64.sh
-chmod +x ./omsagent-$omslnxagentver.universal.x64.sh
-md5sum ./omsagent-$omslnxagentver.universal.x64.sh
-sudo sh ./omsagent-$omslnxagentver.universal.x64.sh --upgrade -w $omsworkspaceid -s $omsworkspacekey
+wget https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_Ignite2016_v$omslnxagentver/omsagent-${omslnxagentver}.universal.x64.sh
+chmod +x ./omsagent-${omslnxagentver}.universal.x64.sh
+md5sum ./omsagent-${omslnxagentver}.universal.x64.sh
+sudo sh ./omsagent-${omslnxagentver}.universal.x64.sh --upgrade -w $omsworkspaceid -s $omsworkspacekey
 }
+
 instrumentfluentd_docker()
 {
 cd /etc/systemd/system/multi-user.target.wants/ && sed -i.bak -e '12d' docker.service
