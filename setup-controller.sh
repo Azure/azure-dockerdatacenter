@@ -1,9 +1,16 @@
+#!/bin/bash
+#should work for all skus
+set -x
+#set -xeuo pipefail
 
+if [[ $(id -u) -ne 0 ]] ; then
+    echo "Must be run as root"
+    exit 1
+fi
 echo $(date) " - Starting Script"
 
 PASSWORD=$1
 MASTERFQDN=$2
-
 FILEURI=$3
 MASTERPRIVATEIP=$4
 omsworkspaceid=$5
