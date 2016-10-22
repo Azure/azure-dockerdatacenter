@@ -59,12 +59,16 @@ unzip -o bundle.zip && chmod 755 env.sh && source env.sh
 }
 joinucp() {
 installbundle;
-docker swarm join-token worker|sed '1d'|sed '1d'|sed '$ d'>swarmjoin.sh
+#docker swarm join-token worker|sed '1d'|sed '1d'|sed '$ d'>swarmjoin.sh
+docker swarm join-token worker|sed '1d'|sed '1d'|sed '$ d'> /usr/local/bin/docker-workerswarmjoin
 unset DOCKER_TLS_VERIFY
 unset DOCKER_CERT_PATH
 unset DOCKER_HOST
-chmod 755 swarmjoin.sh
-source swarmjoin.sh
+#chmod 755 swarmjoin.sh
+chmod +x /usr/local/bin/docker-workerswarmjoin
+export PATH=$PATH:/usr/local/bin/
+docker-workerswarmjoin
+#source swarmjoin.sh
 }
 ## Insecure TLS as self signed will fail -- Failed to get bootstrap client: Failed to get UCP CA: Get https://blahblah/ca: x509: certificate signed by unknown authority
 installdtr() {
