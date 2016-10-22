@@ -92,6 +92,7 @@ chmod +x ./omsagent-${omslnxagentver}.universal.x64.sh
 md5sum ./omsagent-${omslnxagentver}.universal.x64.sh
 sudo sh ./omsagent-${omslnxagentver}.universal.x64.sh --upgrade -w $omsworkspaceid -s $omsworkspacekey
 }
+
 instrumentfluentd_docker()
 {
 cd /etc/systemd/system/multi-user.target.wants/ && sed -i.bak -e '12d' docker.service
