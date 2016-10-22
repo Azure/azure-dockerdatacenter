@@ -65,12 +65,16 @@ echo "$AUTHTOKEN"
 # Download the client certificate bundle
 curl -k -H "Authorization: Bearer ${AUTHTOKEN}" https://$MASTERPRIVATEIP/api/clientbundle -o bundle.zip
 unzip bundle.zip && chmod 755 env.sh && source env.sh
-docker swarm join-token manager|sed '1d'|sed '1d'|sed '$ d'>swarmjoin.sh
+#docker swarm join-token manager|sed '1d'|sed '1d'|sed '$ d'>swarmjoin.sh
+docker swarm join-token manager|sed '1d'|sed '1d'|sed '$ d'> /usr/local/bin/docker-managerswarmjoin
 unset DOCKER_TLS_VERIFY
 unset DOCKER_CERT_PATH
 unset DOCKER_HOST
-chmod 755 swarmjoin.sh
-source swarmjoin.sh
+#chmod 755 swarmjoin.sh
+chmod +x /usr/local/bin/docker-managerswarmjoin
+export PATH=$PATH:/usr/local/bin/
+docker-managerswarmjoin
+#source swarmjoin.sh
 
 installomsagent()
 {
