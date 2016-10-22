@@ -53,7 +53,6 @@ chmod +x /usr/local/bin/docker-workerswarmjoin
 export PATH=$PATH:/usr/local/bin/
 docker-workerswarmjoin
 #source swarmjoin.sh
-
 installomsagent()
 {
 wget https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_Ignite2016_v$omslnxagentver/omsagent-${omslnxagentver}.universal.x64.sh
