@@ -34,12 +34,17 @@ echo "$AUTHTOKEN"
 # Download the client certificate bundle
 curl -k -H "Authorization: Bearer ${AUTHTOKEN}" https://$MASTERPRIVATEIP/api/clientbundle -o bundle.zip
 unzip bundle.zip && chmod 755 env.sh && source env.sh
-docker swarm join-token worker|sed '1d'|sed '1d'|sed '$ d'>swarmjoin.sh
+#docker swarm join-token worker|sed '1d'|sed '1d'|sed '$ d'>swarmjoin.sh
+docker swarm join-token worker|sed '1d'|sed '1d'|sed '$ d'> /usr/local/bin/docker-workerswarmjoin
 unset DOCKER_TLS_VERIFY
 unset DOCKER_CERT_PATH
 unset DOCKER_HOST
-chmod 755 swarmjoin.sh
-source swarmjoin.sh
+#chmod 755 swarmjoin.sh
+chmod +x /usr/local/bin/docker-workerswarmjoin
+export PATH=$PATH:/usr/local/bin/
+docker-workerswarmjoin
+#source swarmjoin.sh
+
 installomsagent()
 {
 wget https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_Ignite2016_v$omslnxagentver/omsagent-${omslnxagentver}.universal.x64.sh
