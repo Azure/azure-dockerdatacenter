@@ -7,7 +7,7 @@ if [[ $(id -u) -ne 0 ]] ; then
     echo "Must be run as root"
     exit 1
 fi
-echo $(date) " - Starting Script"
+echo " - Starting Script"
 
 PASSWORD=$1
 MASTERFQDN=$2
@@ -48,7 +48,7 @@ sed -i -- "s/,\ /,\ \"/g" /opt/ucp/docker_subscription.lic
 
 # Load the downloaded Tar File
 
-echo $(date) " - Loading docker install Tar"
+echo  " - Loading docker install Tar"
 cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
 #cd /opt/ucp && wget https://packages.docker.com/caas/ucp-1.1.4_dtr-2.0.3.tar.gz
 #docker load < /opt/ucp/ucp-1.1.2_dtr-2.0.2.tar.gz
@@ -57,7 +57,7 @@ docker load < ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
 
 # Start installation of UCP with master Controller
 
-echo $(date) " - Loading complete.  Starting UCP Install"
+echo " - Loading complete.  Starting UCP Install"
 
 docker run --rm -i \
     --name ucp \
@@ -69,16 +69,16 @@ docker run --rm -i \
 
 if [ $? -eq 0 ]
 then
- echo $(date) " - UCP installed and started on the master Controller"
+ echo  " - UCP installed and started on the master Controller"
 else
- echo $(date) " -- UCP installation failed"
+ echo " -- UCP installation failed"
 fi
 installomsagent()
 {
-wget https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_Ignite2016_v$omslnxagentver/omsagent-$omslnxagentver.universal.x64.sh
-chmod +x ./omsagent-$omslnxagentver.universal.x64.sh
-md5sum ./omsagent-$omslnxagentver.universal.x64.sh
-sudo sh ./omsagent-$omslnxagentver.universal.x64.sh --upgrade -w $omsworkspaceid -s $omsworkspacekey
+wget https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_Ignite2016_v$omslnxagentver/omsagent-${omslnxagentver}.universal.x64.sh
+chmod +x ./omsagent-${omslnxagentver}.universal.x64.sh
+md5sum ./omsagent-${omslnxagentver}.universal.x64.sh
+sudo sh ./omsagent-${omslnxagentver}.universal.x64.sh --upgrade -w $omsworkspaceid -s $omsworkspacekey
 }
 
 instrumentfluentd_docker()
