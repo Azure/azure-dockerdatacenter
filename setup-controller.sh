@@ -7,7 +7,7 @@ if [[ $(id -u) -ne 0 ]] ; then
     echo "Must be run as root"
     exit 1
 fi
-echo " - Starting Script"
+echo $(date) " - Starting Script"
 
 PASSWORD=$1
 MASTERFQDN=$2
@@ -16,6 +16,10 @@ MASTERPRIVATEIP=$4
 omsworkspaceid=$5
 omsworkspacekey=$6
 omslnxagentver=$7
+echo  "MASTER FQDN is" $MASTERFQDN
+echo  "omsworkspaceid is" $omsworkspaceid
+echo  "omsworkspacekey is" $omsworkspacekey
+echo  "omslnxagentver is" $omslnxagentver
 
 
 #copy license key to /opt/ucp/ucp
