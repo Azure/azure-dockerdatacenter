@@ -1,12 +1,5 @@
 #!/bin/bash
-#should work for all skus
-set -x
-#set -xeuo pipefail
 
-if [[ $(id -u) -ne 0 ]] ; then
-    echo "Must be run as root"
-    exit 1
-fi
 # We need four params: (1) PASSWORD (2) MASTERFQDN (3) MASTERPRIVATEIP (4) SLEEP
 
 echo $(date) " - Starting Script"
