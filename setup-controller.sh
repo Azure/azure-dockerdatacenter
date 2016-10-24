@@ -11,16 +11,16 @@ echo $(date) " - Starting Script"
 
 PASSWORD=$1
 MASTERFQDN=$2
-FILEURI=$3
-MASTERPRIVATEIP=$4
+#FILEURI=$3
+MASTERPRIVATEIP=$3
 
-omsworkspaceid=$5
+omsworkspaceid=$4
 
-omsworkspacekey=$6
+omsworkspacekey=$5
 
-omslnxagentver=$7
+omslnxagentver=$6
 
-echo "All are respectively " $1 $2 $3 $4 $5 $6 $7
+echo "All are respectively " $1 $2 $3 $4 $5 $6
 
 
 echo  "MASTER FQDN is" $MASTERFQDN
@@ -30,9 +30,9 @@ echo  "omslnxagentver is" $omslnxagentver
 
 
 #copy license key to /opt/ucp/ucp
-cat > /opt/ucp/docker_subscription.lic <<EOF
-'$FILEURI'
-EOF
+#cat > /opt/ucp/docker_subscription.lic <<EOF
+#'$FILEURI'
+#EOF
 
 # System Update and docker version update
 DEBIAN_FRONTEND=noninteractive apt-get -y update
@@ -46,11 +46,11 @@ DEBIAN_FRONTEND=noninteractive apt-get -y update
 DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
 
 # removing a special character from subscription.lic
-sed -i -- "s/'//g" /opt/ucp/docker_subscription.lic
-sed -i -- "s/{/{\"/g" /opt/ucp/docker_subscription.lic
-sed -i -- "s/}/\"}/g" /opt/ucp/docker_subscription.lic
-sed -i -- "s/:/\":/g" /opt/ucp/docker_subscription.lic
-sed -i -- "s/,\ /,\ \"/g" /opt/ucp/docker_subscription.lic   
+#sed -i -- "s/'//g" /opt/ucp/docker_subscription.lic
+#sed -i -- "s/{/{\"/g" /opt/ucp/docker_subscription.lic
+#sed -i -- "s/}/\"}/g" /opt/ucp/docker_subscription.lic
+#sed -i -- "s/:/\":/g" /opt/ucp/docker_subscription.lic
+#sed -i -- "s/,\ /,\ \"/g" /opt/ucp/docker_subscription.lic   
 #wget "$FILEURI" -O /opt/ucp/docker_subscription.lic
 
 # Fix for Docker Daemon when cloning a base image
@@ -70,10 +70,17 @@ docker load < ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
 
 echo " - Loading complete.  Starting UCP Install"
 
+#docker run --rm -i \
+#    --name ucp \
+#    -v /var/run/docker.sock:/var/run/docker.sock \
+#    -v /opt/ucp/docker_subscription.lic:/docker_subscription.lic \
+#    -e UCP_ADMIN_PASSWORD=$PASSWORD \
+#    docker/ucp:2.0.0-beta1 \
+#    install -D --host-address eth0
+    
 docker run --rm -i \
     --name ucp \
     -v /var/run/docker.sock:/var/run/docker.sock \
-    -v /opt/ucp/docker_subscription.lic:/docker_subscription.lic \
     -e UCP_ADMIN_PASSWORD=$PASSWORD \
     docker/ucp:2.0.0-beta1 \
     install -D --host-address eth0
