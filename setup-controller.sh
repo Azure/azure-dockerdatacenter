@@ -20,6 +20,8 @@ omsworkspacekey=$6
 
 omslnxagentver=$7
 
+echo "All are respectively " $1 $2 $3 $4 $5 $6 $7
+
 
 echo  "MASTER FQDN is" $MASTERFQDN
 echo  "omsworkspaceid is" $omsworkspaceid
