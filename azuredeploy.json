@@ -161,12 +161,6 @@
                 "description": "DNS label of Public IP for DTR Load Balancer"
             }
         },
-        "ucpLicenseKey": {
-            "type": "string",
-            "metadata": {
-                "description": "License Key Contents for UCP 2.0 Beta/GA "
-            }
-        },
         "ucpAdminPassword": {
             "type": "securestring",
             "metadata": {
@@ -1058,7 +1052,7 @@
                     ]
                 },
                 "protectedSettings": {
-                    "commandToExecute": "[concat('bash setup-controller.sh \"', parameters('ucpAdminPassword'), '\" \"', reference(parameters('controllerLbPublicIpAddress')).dnsSettings.fqdn, '\" \"', parameters('ucpLicenseKey'), '\" \"', reference('ucpController0').outputs.privateIp.value, '\" \"', parameters('OMSWorkSpaceId'), '\" \"', parameters('OMSWorkSpaceKey'), '\" \"', parameters('OMSLinuxAgentFullVersion'), '\"')]"
+                    "commandToExecute": "[concat('bash setup-controller.sh \"', parameters('ucpAdminPassword'), '\" \"', reference(parameters('controllerLbPublicIpAddress')).dnsSettings.fqdn, '\" \"', reference('ucpController0').outputs.privateIp.value, '\" \"', parameters('OMSWorkSpaceId'), '\" \"', parameters('OMSWorkSpaceKey'), '\" \"', parameters('OMSLinuxAgentFullVersion'), '\"')]"
                 }
             }
         },
