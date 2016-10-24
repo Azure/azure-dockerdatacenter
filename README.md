@@ -10,22 +10,17 @@
 * This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information, see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 * This project is hosted at: https://github.com/Azure/azure-dockerdatacenter
 * **This repo is initially based on the "legacy" [Docker DataCenter 1.x Azure MarketPlace Gallery Templates (1.0.9)](https://gallery.azure.com/artifact/20151001/docker.dockerdatacenterdocker-datacenter.1.0.9/Artifacts/mainTemplate.json)**
-
 * **Uses the new public tar.gz from [here](https://packages.docker.com/caas/ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz) for changes using the Raft Protocol and Auto HA for private beta (to be GAed DDC) and native swarm mode orchestration on MS Azure. DDC Private Beta docs are [here](https://beta.docker.com/docs/ddc)**
 * New [Go-based Linux CustomScript Extension being used](https://github.com/Azure/custom-script-extension-linux) 
 * Uses the [Docker CS 1.12 Engine support for OMS Linux Agents](https://github.com/Microsoft/OMS-Agent-for-Linux/releases)
 * Latest [docker-compose](https://github.com/docker/machine/releases) and [docker-machine](https://github.com/docker/machine/releases) available.
-
-
 * Dashboard URL
  * http://{{UCP Controller Nodes LoadBalancer Full DNS IP name}}.{{region of the Resource Group}}.cloudapp.azure.com
    * The Above is the FQDN of the LBR or Public IP for UCP Controller or Managers
  * http://{{DTR worker Nodes LoadBalancer Full DNS IP name}}.{{region of the Resource Group}}.cloudapp.azure.com
    * The Above is the FQDN of the LBR or Public IP for DTR
-
 ## Deploy and Visualize
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-dockerdatacenter%2Fmaster%2Fazuredeploy.json" target="_blank"><img alt="Deploy to Azure" src="http://azuredeploy.net/deploybutton.png" /></a>
-
 <a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-dockerdatacenter%2Fmaster%2Fazuredeploy.json" target="_blank">  <img src="http://armviz.io/visualizebutton.png" /> </a> 
 
 ## Topologies
