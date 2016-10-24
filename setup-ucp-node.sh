@@ -64,7 +64,7 @@ service docker restart
 install_docker_tools()
 {
 curl -L https://github.com/docker/compose/releases/download/1.9.0-rc1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-curl -L https://github.com/docker/machine/releases/download/v0.8.2r/docker-machine-`uname -s`-`uname -m` >/usr/local/bin/docker-machine
+curl -L https://github.com/docker/machine/releases/download/v0.8.2/docker-machine-`uname -s`-`uname -m` >/usr/local/bin/docker-machine
 chmod +x /usr/local/bin/docker-machine
 chmod +x /usr/local/bin/docker-compose
 export PATH=$PATH:/usr/local/bin/
