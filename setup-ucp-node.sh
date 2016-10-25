@@ -8,9 +8,14 @@ PASSWORD=$1
 MASTERFQDN=$2
 MASTERPRIVATEIP=$3
 SLEEP=$4
+if [ ! -z "$5" ]; then
 omsworkspaceid=$5
 omsworkspacekey=$6
 omslnxagentver=$7
+echo  "omsworkspaceid is" $omsworkspaceid
+else
+echo "All are respectively " $1 $2 $3 $4
+fi
 
 # System Update and docker version update
 DEBIAN_FRONTEND=noninteractive apt-get -y update
@@ -74,8 +79,10 @@ service docker restart
 }
 sleep 60;
 install_docker_tools;
+if [ ! -z "$5" ]; then
 sleep 60;
 instrumentfluentd_docker;
 sleep 30;
 installomsagent;
+fi
 
