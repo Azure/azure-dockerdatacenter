@@ -169,16 +169,16 @@
         },
 	"OMSWorkSpaceId": {
 		    "type": "string",
-		    "defaultValue": "Optional- Keep Field Blank if not used or put The OMS WS Id",
+		    "defaultValue": "",
 		    "metadata": {
-			"description": "The Workspace ID for the OMS Portal Workspace."
+			"description": "(Optional- Keep Blank if not used)The Workspace ID for the OMS Portal Workspace."
 		    }
 		},
 	"OMSWorkSpaceKey": {
 		    "type": "string",
-		    "defaultValue": "Optional- Keep Field Blank if not used or put The OMS WS Key",
+		    "defaultValue": "",
 		    "metadata": {
-			"description": "The OMS Portal Workspace key"
+			"description": "(Optional- Keep Blank if not used) The OMS Portal Workspace key"
 		    }
 		},
 	"OMSLinuxAgentFullVersion": {
