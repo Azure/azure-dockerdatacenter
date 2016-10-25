@@ -87,7 +87,7 @@ docker-workerswarmjoin
 installdtr() {
 installbundle;
 docker run --rm -i \
-  dockerhubenterprise/dtr:2.1.0-beta3 install \
+  docker/dtr:2.1.0-beta3 install \
   --ucp-node $UCP_NODE \
   --ucp-insecure-tls \
   --dtr-external-url $DTR_PUBLIC_URL  \
@@ -132,7 +132,7 @@ installdtr;
  #joinucp()
  # Install DTR Replica
 docker run -it --rm \
-dockerhubenterprise/dtr:2.1.0-beta3 join \
+docker/dtr:2.1.0-beta3 join \
  --ucp-url $UCP_URL \
  --ucp-node $UCP_NODE_REP$loop$UCP_NODE_SUF \
    --ucp-insecure-tls \
