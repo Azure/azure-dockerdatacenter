@@ -174,7 +174,7 @@
 		    }
 		},
 	"OMSWorkSpaceKey": {
-		    "type": "string",
+		    "type": "securestring",
 		    "defaultValue": "",
 		    "metadata": {
 			"description": "(Optional- Keep Blank if not used) The OMS Portal Workspace key"
