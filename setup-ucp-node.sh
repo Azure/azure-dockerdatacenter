@@ -35,7 +35,7 @@ AUTHTOKEN=$(curl -sk -d '{"username":"admin","password":"'"$PASSWORD"'"}' https:
 echo "$AUTHTOKEN"
 # Download the client certificate bundle
 curl -k -H "Authorization: Bearer ${AUTHTOKEN}" https://$MASTERPRIVATEIP/api/clientbundle -o bundle.zip
-unzip bundle.zip && chmod 755 env.sh && source env.sh
+unzip bundle.zip && chmod +x env.sh && source env.sh
 #docker swarm join-token worker|sed '1d'|sed '1d'|sed '$ d'>swarmjoin.sh
 docker swarm join-token worker|sed '1d'|sed '1d'|sed '$ d'> /usr/local/bin/docker-workerswarmjoin
 unset DOCKER_TLS_VERIFY
