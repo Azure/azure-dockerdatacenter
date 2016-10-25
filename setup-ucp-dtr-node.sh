@@ -96,7 +96,7 @@ docker run --rm -i \
   }
 joinucp;
 echo $(date) "Sleeping for 200"
-sleep 200;
+sleep 60;
 # Install DTR
 installdtr;
 
