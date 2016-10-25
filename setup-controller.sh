@@ -60,7 +60,7 @@ DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
 
 echo  " - Loading docker install Tar"
 #cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
-cd /opt/ucp && https://s3.amazonaws.com/packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
+cd /opt/ucp && wget https://s3.amazonaws.com/packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
 #cd /opt/ucp && wget https://packages.docker.com/caas/ucp-1.1.4_dtr-2.0.3.tar.gz
 #docker load < /opt/ucp/ucp-1.1.2_dtr-2.0.2.tar.gz
 #docker load < /opt/ucp/ucp-1.1.4_dtr-2.0.3.tar.gz
