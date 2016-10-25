@@ -14,20 +14,20 @@ MASTERFQDN=$2
 #FILEURI=$3
 MASTERPRIVATEIP=$3
 
+if [ ! -z "$4" ]; then
 omsworkspaceid=$4
 
 omsworkspacekey=$5
 
 omslnxagentver=$6
 
-if [ ! -z "$omsworkspaceid" ]; then
 echo "All are respectively " $1 $2 $3 $4 $5 $6
 echo  "MASTER FQDN is" $MASTERFQDN
 echo  "omsworkspaceid is" $omsworkspaceid
 echo  "omsworkspacekey is" $omsworkspacekey
 echo  "omslnxagentver is" $omslnxagentver
 else
-echo "All are respectively " $1 $2 $3 $4 
+echo "All are respectively " $1 $2 $3
 echo  "MASTER FQDN is" $MASTERFQDN
 fi
 
@@ -123,7 +123,7 @@ service docker restart
 }
 sleep 60;
 install_docker_tools;
-if [ ! -z "$omsworkspaceid" ]; then
+if [ ! -z "$4" ]; then
 sleep 60;
 instrumentfluentd_docker;
 sleep 30;
