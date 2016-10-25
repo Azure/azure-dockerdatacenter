@@ -51,7 +51,7 @@ AUTHTOKEN=$(curl -sk -d '{"username":"admin","password":"'"$PASSWORD"'"}' https:
 echo "$AUTHTOKEN"
 # Download the client certificate bundle
 curl -k -H "Authorization: Bearer ${AUTHTOKEN}" https://$MASTERPRIVATEIP/api/clientbundle -o bundle.zip
-unzip -o bundle.zip && chmod 755 env.sh && source env.sh
+unzip -o bundle.zip && chmod +x env.sh && source env.sh
 }
 joinucp() {
 installbundle;
