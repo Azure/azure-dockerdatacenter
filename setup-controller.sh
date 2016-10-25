@@ -83,7 +83,7 @@ docker run --rm -i \
     --name ucp \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -e UCP_ADMIN_PASSWORD=$PASSWORD \
-    docker/2.0.0-beta3 \
+    docker/ucp:2.0.0-beta3 \
     install -D --host-address eth0
 
 if [ $? -eq 0 ]
