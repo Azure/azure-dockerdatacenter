@@ -62,7 +62,7 @@ docker run --rm -i \
    -v /var/run/docker.sock:/var/run/docker.sock \
    -e UCP_ADMIN_USER=admin \
    -e UCP_ADMIN_PASSWORD=$PASSWORD \
-    docker/2.0.0-beta3 \
+    docker/ucp:2.0.0-beta3 \
     join --replica --san $MASTERPRIVATEIP --url https://$MASTERPRIVATEIP --fingerprint "${FPRINT}"
 
 if [ $? -eq 0 ]
