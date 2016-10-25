@@ -15,9 +15,18 @@ PASSWORD=$1
 MASTERFQDN=$2
 MASTERPRIVATEIP=$3
 SLEEP=$4
+if [ ! -z "$5" ]; then
 omsworkspaceid=$5
 omsworkspacekey=$6
 omslnxagentver=$7
+
+echo "All are respectively " $1 $2 $3 $4 $5 $6 $7
+echo  "omsworkspaceid is" $omsworkspaceid
+echo  "omsworkspacekey is" $omsworkspacekey
+echo  "omslnxagentver is" $omslnxagentver
+else
+echo "All are respectively " $1 $2 $3 $4
+fi
 
 # Implement delay timer to stagger joining of Controller replicas to cluster
 
@@ -120,7 +129,9 @@ service docker restart
 }
 sleep 60;
 install_docker_tools;
+if [ ! -z "$5" ]; then
 sleep 60;
 instrumentfluentd_docker;
 sleep 30;
 installomsagent;
+fi
