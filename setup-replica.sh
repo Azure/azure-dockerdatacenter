@@ -44,18 +44,25 @@ echo $FPRINT
 
 # Load the downloaded Tar File
 
-#echo $(date) " - Loading docker install Tar"
-cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
-docker load < ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
+cd /opt/ucp && https://s3.amazonaws.com/packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
+docker load < ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
 
 # Start installation of UCP and join Controller replica to master Controller
 
+#docker run --rm -i \
+#   --name ucp \
+#    -v /var/run/docker.sock:/var/run/docker.sock \
+#    -e UCP_ADMIN_USER=admin \
+#    -e UCP_ADMIN_PASSWORD=$PASSWORD \
+#    docker/ucp:2.0.0-beta1 \
+#    join --replica --san $MASTERPRIVATEIP --url https://$MASTERPRIVATEIP --fingerprint "${FPRINT}"
+
 docker run --rm -i \
-    --name ucp \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -e UCP_ADMIN_USER=admin \
-    -e UCP_ADMIN_PASSWORD=$PASSWORD \
-    docker/ucp:2.0.0-beta1 \
+   --name ucp \
+   -v /var/run/docker.sock:/var/run/docker.sock \
+   -e UCP_ADMIN_USER=admin \
+   -e UCP_ADMIN_PASSWORD=$PASSWORD \
+    docker/2.0.0-beta3 \
     join --replica --san $MASTERPRIVATEIP --url https://$MASTERPRIVATEIP --fingerprint "${FPRINT}"
 
 if [ $? -eq 0 ]
