@@ -76,15 +76,15 @@
          },
          "OMSWorkSpaceId": {
 	   "value": "Optional-OMS WS Id",
-	   "required": false
+	   "required": "false"
 	 },
 	 "OMSWorkSpaceKey": {
 	   "value": "Optional-OMS WS key",
-	   "required": false
+	   "required": "false"
 	 },
 	 "OMSLinuxAgentFullVersion": {
 	   "value": "1.2.0-75",
-	   "required": false
+	   "required": "false"
          }
        }
 }
