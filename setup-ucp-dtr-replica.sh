@@ -14,9 +14,14 @@ MASTERPRIVATEIP=$4
 DTRNODE=$5
 SLEEP= $6
 
+if [ ! -z "$6" ]; then
 omsworkspaceid=$6
 omsworkspacekey=$7
 omslnxagentver=$8
+echo  "omsworkspaceid is" $omsworkspaceid
+else
+echo "All are respectively " $1 $2 $3 $4 $5
+fi
 
 # System Update and docker version update
 DEBIAN_FRONTEND=noninteractive apt-get -y update
@@ -118,7 +123,9 @@ service docker restart
 }
 sleep 60;
 install_docker_tools;
+if [ ! -z "$6" ]; then
 sleep 60;
 instrumentfluentd_docker;
 sleep 30;
 installomsagent;
+fi
