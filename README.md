@@ -47,6 +47,7 @@ Patches can be submitted as GitHub pull requests. If using GitHub please make su
 
 ## ~~Pre-Req and or~~ Optional
 **OMS Setup is optional and the OMS Workspace Id and OMS Workspace Key can either be kept blank or populated post the steps below.**
+
 [Create a free account for MS Azure Operational Management Suite with workspaceName](https://login.mms.microsoft.com/signin.aspx?signUp=on&ref=ms_mms)
 * Provide a Name for the OMS Workspace.
 * Link your Subscription to the OMS Portal.
