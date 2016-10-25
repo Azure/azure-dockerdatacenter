@@ -169,18 +169,21 @@
         },
 	"OMSWorkSpaceId": {
 		    "type": "string",
+		    "required": "false",
 		    "metadata": {
 			"description": "The Workspace ID for the OMS Portal Workspace."
 		    }
 		},
 	"OMSWorkSpaceKey": {
 		    "type": "securestring",
+		    "required": "false",
 		    "metadata": {
 			"description": "The OMS Portal Workspace key"
 		    }
 		},
 	"OMSLinuxAgentFullVersion": {
 			    "type": "string",
+		            "required": "false",
 			    "defaultValue": "1.2.0-75",
 			    "metadata": {
 				"description": "The OMS Agent x64 version will update and register with OMS Workspace for DDC"
