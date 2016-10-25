@@ -27,6 +27,13 @@ DTR_PUBLIC_URL=https://$3
 omsworkspaceid=$( echo "$9" |cut -d\: -f1 )
 omsworkspacekey=$( echo "$9" |cut -d\: -f2 )
 omslnxagentver=$( echo "$9" |cut -d\: -f3 )
+if [ ! -z "$omsworkspaceid" ]; then
+
+echo  "omsworkspaceid is" $omsworkspaceid
+else
+echo "All are respectively " $1 $2 $3 $4
+fi
+
 
 # System Update and docker version update
 DEBIAN_FRONTEND=noninteractive apt-get -y update
@@ -174,7 +181,9 @@ service docker restart
 }
 sleep 60;
 install_docker_tools;
+if [ ! -z "$omsworkspaceid" ]; then
 sleep 60;
 instrumentfluentd_docker;
 sleep 30;
 installomsagent;
+fi
