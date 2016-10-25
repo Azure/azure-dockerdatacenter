@@ -20,13 +20,16 @@ omsworkspacekey=$5
 
 omslnxagentver=$6
 
+if [ ! -z "$omsworkspaceid" ]; then
 echo "All are respectively " $1 $2 $3 $4 $5 $6
-
-
 echo  "MASTER FQDN is" $MASTERFQDN
 echo  "omsworkspaceid is" $omsworkspaceid
 echo  "omsworkspacekey is" $omsworkspacekey
 echo  "omslnxagentver is" $omslnxagentver
+else
+echo "All are respectively " $1 $2 $3 $4 
+echo  "MASTER FQDN is" $MASTERFQDN
+fi
 
 
 #copy license key to /opt/ucp/ucp
@@ -120,7 +123,9 @@ service docker restart
 }
 sleep 60;
 install_docker_tools;
+if [ ! -z "$omsworkspaceid" ]; then
 sleep 60;
 instrumentfluentd_docker;
 sleep 30;
 installomsagent;
+fi
