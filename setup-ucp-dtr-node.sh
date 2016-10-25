@@ -41,7 +41,7 @@ DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
 
 # Implement delay timer to stagger joining of Agent Nodes to cluster
 echo $(date) " - Loading docker install Tar"
-cd /opt/ucp && https://s3.amazonaws.com/packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
+cd /opt/ucp && wget https://s3.amazonaws.com/packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
 docker load < ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
 
 # Start installation of UCP with master Controller
@@ -61,7 +61,7 @@ AUTHTOKEN=$(curl -sk -d '{"username":"admin","password":"'"$PASSWORD"'"}' https:
 echo "$AUTHTOKEN"
 # Download the client certificate bundle
 curl -k -H "Authorization: Bearer ${AUTHTOKEN}" https://$MASTERPRIVATEIP/api/clientbundle -o bundle.zip
-unzip -o bundle.zip && chmod 755 env.sh && source env.sh
+unzip -o bundle.zip && chmod +x env.sh && source env.sh
 }
 joinucp() {
 installbundle;
