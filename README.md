@@ -1,3 +1,13 @@
+Table of Contents
+=================
+
+   * [Azure Docker Datacenter](#azure-docker-datacenter)
+      * [Deploy and Visualize](#deploy-and-visualize)
+      * [Topologies](#topologies)
+         * [The Minimal Topology (Minimum 3 Worker Manager Nodes for valid Raft HA and minimum 2 worker nodes with 2 extra for DTR and Replica)](#the-minimal-topology-minimum-3-worker-manager-nodes-for-valid-raft-ha-and-minimum-2-worker-nodes-with-2-extra-for-dtr-and-replica)
+      * [Reporting bugs](#reporting-bugs)
+      * [Patches and pull requests](#patches-and-pull-requests)
+      * [<del>Pre-Req and or</del> Optional](#pre-req-and-or-optional)
 
 
 # Azure Docker Datacenter
