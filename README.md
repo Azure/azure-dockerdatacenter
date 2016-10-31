@@ -40,7 +40,7 @@ Table of Contents
 
 A Minimal Fresh topology with minimum 3 Worker Managers, minimum 2 worker nodes, one DTR with local storage and another as replica would look like the following
 
-![Azure DDC Miminal Topology](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/MinimalFresh.png)
+![Azure DDC Miminal Topology](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/MinimalFresh1.png)
 
 ### The Minimal Topology (Minimum 3 Worker Manager Nodes for valid Raft HA and minimum 2 worker nodes with 2 extra for DTR and Replica)
  As from https://resources.azure.com 
