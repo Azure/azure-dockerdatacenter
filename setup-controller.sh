@@ -31,20 +31,21 @@ echo "All are respectively " $1 $2 $3
 echo  "MASTER FQDN is" $MASTERFQDN
 fi
 
-
+install_license()
+{
 #copy license key to /opt/ucp/ucp
-#cat > /opt/ucp/docker_subscription.lic <<EOF
-#'$FILEURI'
-#EOF
+cat > /opt/ucp/docker_subscription.lic <<EOF
+'$FILEURI'
+EOF
 
 # removing a special character from subscription.lic
-#sed -i -- "s/'//g" /opt/ucp/docker_subscription.lic
-#sed -i -- "s/{/{\"/g" /opt/ucp/docker_subscription.lic
-#sed -i -- "s/}/\"}/g" /opt/ucp/docker_subscription.lic
-#sed -i -- "s/:/\":/g" /opt/ucp/docker_subscription.lic
-#sed -i -- "s/,\ /,\ \"/g" /opt/ucp/docker_subscription.lic   
+sed -i -- "s/'//g" /opt/ucp/docker_subscription.lic
+sed -i -- "s/{/{\"/g" /opt/ucp/docker_subscription.lic
+sed -i -- "s/}/\"}/g" /opt/ucp/docker_subscription.lic
+sed -i -- "s/:/\":/g" /opt/ucp/docker_subscription.lic
+sed -i -- "s/,\ /,\ \"/g" /opt/ucp/docker_subscription.lic   
 #wget "$FILEURI" -O /opt/ucp/docker_subscription.lic
-
+}
 
 installomsagent()
 {
