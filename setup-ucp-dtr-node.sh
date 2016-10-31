@@ -116,7 +116,7 @@ docker-workerswarmjoin
 ## Insecure TLS as self signed will fail -- Failed to get bootstrap client: Failed to get UCP CA: Get https://blahblah/ca: x509: certificate signed by unknown authority
 installdtr() {
 installbundle;
-docker run --rm -i \
+docker run --rm  \
   docker/dtr:2.1.0-beta3 install \
   --ucp-node $UCP_NODE \
   --ucp-insecure-tls \
