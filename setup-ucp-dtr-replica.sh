@@ -23,6 +23,24 @@ else
 echo "All are respectively " $1 $2 $3 $4 $5
 fi
 
+installomsagent()
+{
+wget https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_Ignite2016_v$omslnxagentver/omsagent-${omslnxagentver}.universal.x64.sh
+chmod +x ./omsagent-${omslnxagentver}.universal.x64.sh
+md5sum ./omsagent-${omslnxagentver}.universal.x64.sh
+sudo sh ./omsagent-${omslnxagentver}.universal.x64.sh --upgrade -w $omsworkspaceid -s $omsworkspacekey
+}
+
+instrumentfluentd_docker()
+{
+cd /etc/systemd/system/multi-user.target.wants/ && sed -i.bak -e '12d' docker.service
+cd /etc/systemd/system/multi-user.target.wants/ && sed -i '12iEnvironment="DOCKER_OPTS=--log-driver=fluentd --log-opt fluentd-address=localhost:25225"' docker.service
+cd /etc/systemd/system/multi-user.target.wants/ && sed -i '13iExecStart=/usr/bin/dockerd -H fd:// $DOCKER_OPTS' docker.service
+service docker restart
+}
+install_docker_tools()
+{
+
 # System Update and docker version update
 DEBIAN_FRONTEND=noninteractive apt-get -y update
 apt-get install -y apt-transport-https ca-certificates
@@ -33,6 +51,22 @@ echo 'deb https://packages.docker.com/1.12/apt/repo ubuntu-trusty main' >> /etc/
 apt-cache policy docker-engine
 DEBIAN_FRONTEND=noninteractive apt-get -y update
 DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
+curl -L https://github.com/docker/compose/releases/download/1.9.0-rc1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+curl -L https://github.com/docker/machine/releases/download/v0.8.2/docker-machine-`uname -s`-`uname -m` >/usr/local/bin/docker-machine
+chmod +x /usr/local/bin/docker-machine
+chmod +x /usr/local/bin/docker-compose
+export PATH=$PATH:/usr/local/bin/
+groupadd docker
+usermod -aG docker ucpadmin
+service docker restart
+}
+install_docker_tools;
+if [ ! -z "$6" ]; then
+sleep 45;
+instrumentfluentd_docker;
+sleep 30;
+installomsagent;
+fi
 
 # Implement delay timer to stagger joining of Agent Nodes to cluster
 echo $(date) " - Loading docker install Tar"
@@ -42,7 +76,6 @@ docker load < ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
 # Start installation of UCP with master Controller
 
 echo $(date) " - Loading complete.  Starting UCP Install"
-
 
 installbundle ()
 {
@@ -82,6 +115,7 @@ docker run --rm -i \
   --ucp-url https://$MASTERPRIVATEIP \
   --ucp-username admin --ucp-password $PASSWORD
   }
+sleep 45;
 joinucp;
 #echo $(date) "Sleeping for 200"
 #sleep 200;
@@ -93,39 +127,4 @@ then
  echo $(date) " - UCP installed and started on the agent node to be used for DTR replica"
 else
  echo $(date) " -- UCP installation failed on DTR node"
-fi
-
-installomsagent()
-{
-wget https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_Ignite2016_v$omslnxagentver/omsagent-${omslnxagentver}.universal.x64.sh
-chmod +x ./omsagent-${omslnxagentver}.universal.x64.sh
-md5sum ./omsagent-${omslnxagentver}.universal.x64.sh
-sudo sh ./omsagent-${omslnxagentver}.universal.x64.sh --upgrade -w $omsworkspaceid -s $omsworkspacekey
-}
-
-instrumentfluentd_docker()
-{
-cd /etc/systemd/system/multi-user.target.wants/ && sed -i.bak -e '12d' docker.service
-cd /etc/systemd/system/multi-user.target.wants/ && sed -i '12iEnvironment="DOCKER_OPTS=--log-driver=fluentd --log-opt fluentd-address=localhost:25225"' docker.service
-cd /etc/systemd/system/multi-user.target.wants/ && sed -i '13iExecStart=/usr/bin/dockerd -H fd:// $DOCKER_OPTS' docker.service
-service docker restart
-}
-install_docker_tools()
-{
-curl -L https://github.com/docker/compose/releases/download/1.9.0-rc1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-curl -L https://github.com/docker/machine/releases/download/v0.8.2/docker-machine-`uname -s`-`uname -m` >/usr/local/bin/docker-machine
-chmod +x /usr/local/bin/docker-machine
-chmod +x /usr/local/bin/docker-compose
-export PATH=$PATH:/usr/local/bin/
-groupadd docker
-usermod -aG docker ucpadmin
-service docker restart
-}
-sleep 60;
-install_docker_tools;
-if [ ! -z "$6" ]; then
-sleep 60;
-instrumentfluentd_docker;
-sleep 30;
-installomsagent;
 fi
