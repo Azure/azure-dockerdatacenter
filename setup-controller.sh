@@ -37,6 +37,32 @@ fi
 #'$FILEURI'
 #EOF
 
+# removing a special character from subscription.lic
+#sed -i -- "s/'//g" /opt/ucp/docker_subscription.lic
+#sed -i -- "s/{/{\"/g" /opt/ucp/docker_subscription.lic
+#sed -i -- "s/}/\"}/g" /opt/ucp/docker_subscription.lic
+#sed -i -- "s/:/\":/g" /opt/ucp/docker_subscription.lic
+#sed -i -- "s/,\ /,\ \"/g" /opt/ucp/docker_subscription.lic   
+#wget "$FILEURI" -O /opt/ucp/docker_subscription.lic
+
+
+installomsagent()
+{
+wget https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_Ignite2016_v$omslnxagentver/omsagent-${omslnxagentver}.universal.x64.sh
+chmod +x ./omsagent-${omslnxagentver}.universal.x64.sh
+md5sum ./omsagent-${omslnxagentver}.universal.x64.sh
+sudo sh ./omsagent-${omslnxagentver}.universal.x64.sh --upgrade -w $omsworkspaceid -s $omsworkspacekey
+}
+
+instrumentfluentd_docker()
+{
+cd /etc/systemd/system/multi-user.target.wants/ && sed -i.bak -e '12d' docker.service
+cd /etc/systemd/system/multi-user.target.wants/ && sed -i '12iEnvironment="DOCKER_OPTS=--log-driver=fluentd --log-opt fluentd-address=localhost:25225"' docker.service
+cd /etc/systemd/system/multi-user.target.wants/ && sed -i '13iExecStart=/usr/bin/dockerd -H fd:// $DOCKER_OPTS' docker.service
+service docker restart
+}
+install_docker_tools()
+{
 # System Update and docker version update
 DEBIAN_FRONTEND=noninteractive apt-get -y update
 apt-get install -y apt-transport-https ca-certificates
@@ -47,20 +73,28 @@ echo 'deb https://packages.docker.com/1.12/apt/repo ubuntu-trusty main' >> /etc/
 apt-cache policy docker-engine
 DEBIAN_FRONTEND=noninteractive apt-get -y update
 DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
-
-# removing a special character from subscription.lic
-#sed -i -- "s/'//g" /opt/ucp/docker_subscription.lic
-#sed -i -- "s/{/{\"/g" /opt/ucp/docker_subscription.lic
-#sed -i -- "s/}/\"}/g" /opt/ucp/docker_subscription.lic
-#sed -i -- "s/:/\":/g" /opt/ucp/docker_subscription.lic
-#sed -i -- "s/,\ /,\ \"/g" /opt/ucp/docker_subscription.lic   
-#wget "$FILEURI" -O /opt/ucp/docker_subscription.lic
+curl -L https://github.com/docker/compose/releases/download/1.9.0-rc1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+curl -L https://github.com/docker/machine/releases/download/v0.8.2/docker-machine-`uname -s`-`uname -m` >/usr/local/bin/docker-machine
+chmod +x /usr/local/bin/docker-machine
+chmod +x /usr/local/bin/docker-compose
+export PATH=$PATH:/usr/local/bin/
+groupadd docker
+usermod -aG docker ucpadmin
+service docker restart
+}
+install_docker_tools;
+if [ ! -z "$4" ]; then
+sleep 45;
+instrumentfluentd_docker;
+sleep 30;
+installomsagent;
+fi
 
 # Fix for Docker Daemon when cloning a base image
 # rm  /etc/docker/key.json  
 # service docker restart
 # Load the downloaded Tar File
-
+sleep 45;
 echo  " - Loading docker install Tar"
 #cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
 cd /opt/ucp && wget https://s3.amazonaws.com/packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
@@ -95,37 +129,4 @@ then
 else
  echo " -- UCP installation failed"
 fi
-installomsagent()
-{
-wget https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_Ignite2016_v$omslnxagentver/omsagent-${omslnxagentver}.universal.x64.sh
-chmod +x ./omsagent-${omslnxagentver}.universal.x64.sh
-md5sum ./omsagent-${omslnxagentver}.universal.x64.sh
-sudo sh ./omsagent-${omslnxagentver}.universal.x64.sh --upgrade -w $omsworkspaceid -s $omsworkspacekey
-}
 
-instrumentfluentd_docker()
-{
-cd /etc/systemd/system/multi-user.target.wants/ && sed -i.bak -e '12d' docker.service
-cd /etc/systemd/system/multi-user.target.wants/ && sed -i '12iEnvironment="DOCKER_OPTS=--log-driver=fluentd --log-opt fluentd-address=localhost:25225"' docker.service
-cd /etc/systemd/system/multi-user.target.wants/ && sed -i '13iExecStart=/usr/bin/dockerd -H fd:// $DOCKER_OPTS' docker.service
-service docker restart
-}
-install_docker_tools()
-{
-curl -L https://github.com/docker/compose/releases/download/1.9.0-rc1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-curl -L https://github.com/docker/machine/releases/download/v0.8.2/docker-machine-`uname -s`-`uname -m` >/usr/local/bin/docker-machine
-chmod +x /usr/local/bin/docker-machine
-chmod +x /usr/local/bin/docker-compose
-export PATH=$PATH:/usr/local/bin/
-groupadd docker
-usermod -aG docker ucpadmin
-service docker restart
-}
-sleep 60;
-install_docker_tools;
-if [ ! -z "$4" ]; then
-sleep 60;
-instrumentfluentd_docker;
-sleep 30;
-installomsagent;
-fi
