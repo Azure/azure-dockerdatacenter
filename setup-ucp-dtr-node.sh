@@ -77,16 +77,6 @@ sleep 30;
 installomsagent;
 fi
 
-# Implement delay timer to stagger joining of Agent Nodes to cluster
-echo $(date) " - Loading docker install Tar"
-#cd /opt/ucp && wget https://s3.amazonaws.com/packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
-cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
-docker load < ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
-
-# Start installation of UCP with master Controller
-
-echo $(date) " - Loading complete.  Starting UCP Install"
-
 installbundle ()
 {
 
@@ -116,6 +106,13 @@ docker-workerswarmjoin
 }
 ## Insecure TLS as self signed will fail -- Failed to get bootstrap client: Failed to get UCP CA: Get https://blahblah/ca: x509: certificate signed by unknown authority
 installdtr() {
+# Implement delay timer to stagger joining of Agent Nodes to cluster
+echo $(date) " - Loading docker install Tar"
+#cd /opt/ucp && wget https://s3.amazonaws.com/packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
+cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
+docker load < ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
+# Start installation of UCP with master Controller
+echo $(date) " - Loading complete.  Starting UCP Install"
 installbundle;
 docker run --rm  \
   docker/dtr:2.1.0-beta3 install \
