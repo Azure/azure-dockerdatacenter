@@ -85,7 +85,8 @@ echo $FPRINT
 
 # Load the downloaded Tar File
 
-cd /opt/ucp && wget https://s3.amazonaws.com/packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
+#cd /opt/ucp && wget https://s3.amazonaws.com/packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
+cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
 docker load < ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
 
 # Start installation of UCP and join Controller replica to master Controller
