@@ -30,7 +30,8 @@ Table of Contents
    * The Above is the FQDN of the LBR or Public IP for UCP Controller or Managers
  * http://{{DTR worker Nodes LoadBalancer Full DNS IP name}}.{{region of the Resource Group}}.cloudapp.azure.com
    * The Above is the FQDN of the LBR or Public IP for DTR
-* All passwords have been disabled in the nodes and one can only use public rsa_id to ssh to the nodes. 
+* All passwords have been disabled in the nodes and one can only use public rsa_id to ssh to the nodes.
+
 ## Deploy and Visualize
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-dockerdatacenter%2Fmaster%2Fazuredeploy.json" target="_blank"><img alt="Deploy to Azure" src="http://azuredeploy.net/deploybutton.png" /></a>
 
