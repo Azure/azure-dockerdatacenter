@@ -106,14 +106,15 @@ docker-workerswarmjoin
 }
 ## Insecure TLS as self signed will fail -- Failed to get bootstrap client: Failed to get UCP CA: Get https://blahblah/ca: x509: certificate signed by unknown authority
 installdtr() {
-# Implement delay timer to stagger joining of Agent Nodes to cluster
+installbundle;
 echo $(date) " - Loading docker install Tar"
 #cd /opt/ucp && wget https://s3.amazonaws.com/packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
 cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
 docker load < ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
-# Start installation of UCP with master Controller
+# Implement delay timer to stagger load of the bits - docker.com CDN Dependent
+sleep 45;
 echo $(date) " - Loading complete.  Starting UCP Install"
-installbundle;
+# Start installation of UCP with master Controller
 docker run --rm  \
   docker/dtr:2.1.0-beta3 install \
   --ucp-node $UCP_NODE \
@@ -123,12 +124,18 @@ docker run --rm  \
   --ucp-username admin --ucp-password $PASSWORD
   }
 joinucp;
+# Implement delay timer to stagger joining of Agent Nodes to cluster
 echo $(date) "Sleeping for 45"
-sleep 45;
+sleep 60;
 # Install DTR
 installdtr;
 
-
+ if [ $? -eq 0 ]
+ then
+ echo $(date) " - Completed DTR installation on master DTR node"
+ else
+  echo $(date) " - DTR installation on master DTR node failed"
+ fi
  
  
  # Install DTR for replica placeholder
@@ -143,12 +150,7 @@ installdtr;
   
   
   
- if [ $? -eq 0 ]
- then
- echo $(date) " - Completed DTR installation on master DTR node"
- else
-  echo $(date) " - DTR installation on master DTR node failed"
- fi
+
 
  ###########################
  # WIP - TBC for BETA and/or GA (UCP 2.0.0 and DTR 2.10
