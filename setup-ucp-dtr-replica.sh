@@ -51,7 +51,7 @@ echo 'deb https://packages.docker.com/1.12/apt/repo ubuntu-trusty main' >> /etc/
 apt-cache policy docker-engine
 DEBIAN_FRONTEND=noninteractive apt-get -y update
 DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
-curl -L https://github.com/docker/compose/releases/download/1.9.0-rc1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+curl -L https://github.com/docker/compose/releases/download/1.9.0-rc3/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
 curl -L https://github.com/docker/machine/releases/download/v0.8.2/docker-machine-`uname -s`-`uname -m` >/usr/local/bin/docker-machine
 chmod +x /usr/local/bin/docker-machine
 chmod +x /usr/local/bin/docker-compose
