@@ -113,7 +113,7 @@ docker run --rm -i \
   --ucp-node $UCP_NODE \
   --ucp-insecure-tls \
   --dtr-external-url $DTR_PUBLIC_URL  \
-  --ucp-url https://$MASTERPRIVATEIP \
+  --ucp-url https://$MASTERFQDN \
   --ucp-username admin --ucp-password $PASSWORD
   }
 sleep 45;
