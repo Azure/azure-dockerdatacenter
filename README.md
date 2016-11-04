@@ -8,6 +8,7 @@ Table of Contents
       * [Reporting bugs](#reporting-bugs)
       * [Patches and pull requests](#patches-and-pull-requests)
       * [<del>Pre-Req and or</del> Optional](#pre-req-and-or-optional)
+         * [Fluentd usage](#fluentd-usage)
 
 
 # Azure Docker Datacenter
