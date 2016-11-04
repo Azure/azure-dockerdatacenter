@@ -74,7 +74,8 @@ Patches can be submitted as GitHub pull requests. If using GitHub please make su
 
 ![OMS Container](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/OMSContainer.png)
 
-
+### Fluentd usage
+![OMS Fluentd](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/OMS.png)
 
 :heart: ![Azure Subscription Icon](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/Azure.png) :penguin: :whale:
 
