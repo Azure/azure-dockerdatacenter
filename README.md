@@ -11,7 +11,7 @@ Table of Contents
          * [Fluentd usage](#fluentd-usage)
 
 
-# Azure Docker Datacenter
+### Azure Docker Datacenter
 
 * Azure Docker DataCenter Templates for the to-be GAed Docker DataCenter with  **ucp:2.0.0-Beta3** (native Swarm with Raft) and **dtr:2.1.0-Beta3** initially based on the "legacy" Docker DataCenter 1.x Azure MarketPlace Gallery Templates (1.0.9). 
 * For Raft, please view [Docker Orchestration: Beyond the Basics](http://events.linuxfoundation.org/sites/events/files/slides/Docker_Orchestration-Aaron_Lehmann.pdf) By Aaron Lehmann at the [ContainerCon, Europe](http://events.linuxfoundation.org/events/containercon-europe/program/slides) - Berlin, October 4-9, 2016.
@@ -34,31 +34,31 @@ and [Swarm Raft Page](https://docs.docker.com/engine/swarm/raft/).
    * The Above is the FQDN of the LBR or Public IP for DTR
 * All passwords have been disabled in the nodes and one can only use public rsa_id to ssh to the nodes.
 
-## Deploy and Visualize
+#### Deploy and Visualize
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-dockerdatacenter%2Fmaster%2Fazuredeploy.json" target="_blank"><img alt="Deploy to Azure" src="http://azuredeploy.net/deploybutton.png" /></a>
 
 <a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-dockerdatacenter%2Fmaster%2Fazuredeploy.json" target="_blank">  <img src="http://armviz.io/visualizebutton.png" /> </a> 
 
-## Topologies
+#### Topologies
 
 A Minimal Fresh topology with minimum 3 Worker Managers, minimum 2 worker nodes, one DTR with local storage and another as replica would look like the following
 
 ![Azure DDC Miminal Topology](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/MinimalFresh1.png)
 
-### The Minimal Topology (Minimum 3 Worker Manager Nodes for valid Raft HA and minimum 2 worker nodes with 2 extra for DTR and Replica)
+##### The Minimal Topology (Minimum 3 Worker Manager Nodes for valid Raft HA and minimum 2 worker nodes with 2 extra for DTR and Replica)
  As from https://resources.azure.com 
  
 <img src="https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/MinimalTopology.png" width="416" height="800" />
  
-## Reporting bugs
+#### Reporting bugs
 
 Please report bugs  by opening an issue in the [GitHub Issue Tracker](https://github.com/Azure/azure-dockerdatacenter/issues)
 
-## Patches and pull requests
+#### Patches and pull requests
 
 Patches can be submitted as GitHub pull requests. If using GitHub please make sure your branch applies to the current master as a 'fast forward' merge (i.e. without creating a merge commit). Use the `git rebase` command to update your branch to the current master if necessary.
 
-## ~~Pre-Req and or~~ Optional
+#### ~~Pre-Req and or~~ Optional
 **OMS Setup is optional and the OMS Workspace Id and OMS Workspace Key can either be kept blank or populated post the steps below.**
 
 [Create a free account for MS Azure Operational Management Suite with workspaceName](https://login.mms.microsoft.com/signin.aspx?signUp=on&ref=ms_mms)
@@ -76,8 +76,9 @@ Patches can be submitted as GitHub pull requests. If using GitHub please make su
 
 ![OMS Container](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/OMSContainer.png)
 
-### Fluentd usage
+##### Fluentd usage
 ![OMS Fluentd](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/OMS.png)
+
 
 :heart: ![Azure Subscription Icon](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/Azure.png) :penguin: :whale:
 
