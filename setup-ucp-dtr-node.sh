@@ -118,7 +118,6 @@ echo $(date) " - Loading complete.  Starting UCP Install"
 docker run --rm  \
   docker/dtr:2.1.0-beta3 install \
   --ucp-node $UCP_NODE \
-  --ucp-insecure-tls \
   --dtr-external-url $DTR_PUBLIC_URL  \
   --ucp-url https://$MASTERFQDN \
   --ucp-username admin --ucp-password $PASSWORD
