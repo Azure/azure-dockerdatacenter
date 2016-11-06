@@ -105,7 +105,7 @@ docker run --rm -i \
    -e UCP_ADMIN_USER=admin \
    -e UCP_ADMIN_PASSWORD=$PASSWORD \
     docker/ucp:2.0.0-beta3 \
-    join --replica --san $MASTERPRIVATEIP --url https://$MASTERPRIVATEIP --fingerprint "${FPRINT}"
+    join --replica --san $MASTERFQDN--url https://$MASTERFQDN --fingerprint "${FPRINT}"
 
 if [ $? -eq 0 ]
 then
