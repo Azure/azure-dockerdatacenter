@@ -13,6 +13,7 @@ PASSWORD=$1
 MASTERFQDN=$2
 #FILEURI=$3
 MASTERPRIVATEIP=$3
+DTRFQDN=$7
 
 if [ ! -z "$4" ]; then
 omsworkspaceid=$4
@@ -123,7 +124,7 @@ docker run --rm -i \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -e UCP_ADMIN_PASSWORD=$PASSWORD \
     docker/ucp:2.0.0-beta3 \
-    install -D --san $MASTERFQDN --host-address eth0
+    install -D --san $MASTERFQDN --san $DTRFQDN --host-address eth0
 
 if [ $? -eq 0 ]
 then
