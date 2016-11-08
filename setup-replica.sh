@@ -88,8 +88,8 @@ echo $FPRINT
 # Load the downloaded Tar File
 
 #cd /opt/ucp && wget https://s3.amazonaws.com/packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
-cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
-docker load < ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
+cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta4_dtr-2.1.0-beta4.tar.gz
+docker load < ucp-2.0.0-beta4_dtr-2.1.0-beta4.tar.gz
 
 # Start installation of UCP and join Controller replica to master Controller
 
@@ -106,7 +106,7 @@ docker run --rm -i \
    -v /var/run/docker.sock:/var/run/docker.sock \
    -e UCP_ADMIN_USER=admin \
    -e UCP_ADMIN_PASSWORD=$PASSWORD \
-    docker/ucp:2.0.0-beta3 \
+    docker/ucp:2.0.0-beta4 \
     join --replica --san $MASTERFQDN --san $DTRFQDN --san $NFQDN --url https://$MASTERFQDN --fingerprint "${FPRINT}"
 
 if [ $? -eq 0 ]
