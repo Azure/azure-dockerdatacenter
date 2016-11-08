@@ -101,12 +101,12 @@ sleep 45;
 echo  " - Loading docker install Tar"
 #cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
 #cd /opt/ucp && wget https://s3.amazonaws.com/packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
-cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
+cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta4_dtr-2.1.0-beta4.tar.gz
 #cd /opt/ucp && wget https://packages.docker.com/caas/ucp-1.1.4_dtr-2.0.3.tar.gz
 #docker load < /opt/ucp/ucp-1.1.2_dtr-2.0.2.tar.gz
 #docker load < /opt/ucp/ucp-1.1.4_dtr-2.0.3.tar.gz
 #docker load < ucp-2.0.0-beta1_dtr-2.1.0-beta1.tar.gz
-docker load < ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
+docker load < ucp-2.0.0-beta4_dtr-2.1.0-beta4.tar.gz
 
 # Start installation of UCP with master Controller
 
@@ -124,7 +124,7 @@ docker run --rm -i \
     --name ucp \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -e UCP_ADMIN_PASSWORD=$PASSWORD \
-    docker/ucp:2.0.0-beta3 \
+    docker/ucp:2.0.0-beta4 \
     install -D --san $MASTERFQDN --san $DTRFQDN --san $NFQDN --host-address $MASTERFQDN
 
 if [ $? -eq 0 ]
