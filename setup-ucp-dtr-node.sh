@@ -109,14 +109,14 @@ installdtr() {
 installbundle;
 echo $(date) " - Loading docker install Tar"
 #cd /opt/ucp && wget https://s3.amazonaws.com/packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
-cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
-docker load < ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
+cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta4_dtr-2.1.0-beta4.tar.gz
+docker load < ucp-2.0.0-beta4_dtr-2.1.0-beta4.tar.gz
 # Implement delay timer to stagger load of the bits - docker.com CDN Dependent
 sleep 45;
 echo $(date) " - Loading complete.  Starting UCP Install"
 # Start installation of UCP with master Controller
 docker run --rm  \
-  docker/dtr:2.1.0-beta3 install \
+  docker/dtr:2.1.0-beta4 install \
   --ucp-node $UCP_NODE \
   --ucp-insecure-tls \
   --dtr-external-url $DTR_PUBLIC_URL  \
@@ -162,7 +162,7 @@ installdtr;
  #joinucp()
  # Install DTR Replica
 docker run -it --rm \
-docker/dtr:2.1.0-beta3 join \
+docker/dtr:2.1.0-beta4 join \
  --ucp-url $UCP_URL \
  --ucp-node $UCP_NODE_REP$loop$UCP_NODE_SUF \
    --ucp-insecure-tls \
