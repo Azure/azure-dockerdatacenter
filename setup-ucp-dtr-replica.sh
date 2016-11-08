@@ -71,8 +71,8 @@ fi
 # Implement delay timer to stagger joining of Agent Nodes to cluster
 echo $(date) " - Loading docker install Tar"
 #cd /opt/ucp && wget https://s3.amazonaws.com/packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
-cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
-docker load < ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
+cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta4_dtr-2.1.0-beta4.tar.gz
+docker load < ucp-2.0.0-beta4_dtr-2.1.0-beta4.tar.gz
 
 # Start installation of UCP with master Controller
 
@@ -109,7 +109,7 @@ installdtr() {
 installbundle;
 ## Insecure TLS as self signed will fail -- Failed to get bootstrap client: Failed to get UCP CA: Get https://blablah/ca: x509: certificate signed by unknown authority
 docker run --rm -i \
-  docker/dtr:2.1.0-beta3 install \
+  docker/dtr:2.1.0-beta4 install \
   --ucp-node $UCP_NODE \
   --ucp-insecure-tls \
   --dtr-external-url $DTR_PUBLIC_URL  \
