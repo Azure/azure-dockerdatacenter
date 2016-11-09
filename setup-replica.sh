@@ -14,8 +14,19 @@ echo $(date) " - Starting Script"
 PASSWORD=$1
 MASTERFQDN=$2
 MASTERPRIVATEIP=$3
-DTRFQDN=$8
-NFQDN=$9
+#DTRFQDN=$8
+#NFQDN=$9
+FQDNDET=$8
+DOCKERDET=$9
+
+DTRFQDN=$( echo "$8" |cut -d\: -f2 )
+NFQDN=$( echo "$8" |cut -d\: -f3 )
+DOCKERVER=$( echo "$9" |cut -d\: -f1 )
+DOCKERCOMPVER=$( echo "$9" |cut -d\: -f2 )
+DOCKERMCVER=$( echo "$9" |cut -d\: -f3 )
+TRUSTYREPO=$( echo "$9" |cut -d\: -f4 )
+DOCKERDCVER=$( echo "$9" |cut -d\: -f5 )
+
 SLEEP=$4
 if [ ! -z "$5" ]; then
 omsworkspaceid=$5
