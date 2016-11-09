@@ -13,8 +13,18 @@ PASSWORD=$1
 MASTERFQDN=$2
 #FILEURI=$3
 MASTERPRIVATEIP=$3
-DTRFQDN=$7
-NFQDN=$8
+FQDNDET=$7
+#DTRFQDN=$7
+#NFQDN=$8
+DOCKERDET=$8
+
+DTRFQDN=$( echo "$7" |cut -d\: -f2 )
+NFQDN=$( echo "$7" |cut -d\: -f3 )
+DOCKERVER=$( echo "$8" |cut -d\: -f1 )
+DOCKERCOMPVER=$( echo "$8" |cut -d\: -f2 )
+DOCKERMCVER=$( echo "$8" |cut -d\: -f3 )
+TRUSTYREPO=$( echo "$8" |cut -d\: -f4 )
+DOCKERDCVER=$( echo "$8" |cut -d\: -f5 )
 
 if [ ! -z "$4" ]; then
 omsworkspaceid=$4
