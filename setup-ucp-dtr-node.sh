@@ -13,20 +13,29 @@ echo $(date) " - Starting Script"
 
 USER=admin
 PASSWORD=$1
-MASTERFQDN=$2
-UCP_URL=https://$2
 UCP_NODE=$(hostname)
-DTR_PUBLIC_IP=$3
-REPLICA_ID=$4
-MASTERPRIVATEIP=$5
-UCP_NODE_REP=$6
+FQDNDET=$2
+MASTERFQDN=$( echo "$2" |cut -d\: -f1 )
+DTR_PUBLIC_IP=$( echo "$2" |cut -d\: -f2 )
+UCP_URL=https://$MASTERFQDN
+REPLICA_ID=$3
+MASTERPRIVATEIP=$4
+UCP_NODE_REP=$5
 UCP_NODE_SUF=-ucpdtrnode
-COUNT=$7
-SLEEP=$8
-DTR_PUBLIC_URL=https://$3
-omsworkspaceid=$( echo "$9" |cut -d\: -f1 )
-omsworkspacekey=$( echo "$9" |cut -d\: -f2 )
-omslnxagentver=$( echo "$9" |cut -d\: -f3 )
+COUNT=$6
+SLEEP=$7
+DTR_PUBLIC_URL=https://$DTR_PUBLIC_IP
+omsworkspaceid=$( echo "$8" |cut -d\: -f1 )
+omsworkspacekey=$( echo "$8" |cut -d\: -f2 )
+omslnxagentver=$( echo "$8" |cut -d\: -f3 )
+
+DOCKERDET=$9
+DOCKERVER=$( echo "$9" |cut -d\: -f1 )
+DOCKERCOMPVER=$( echo "$9" |cut -d\: -f2 )
+DOCKERMCVER=$( echo "$9" |cut -d\: -f3 )
+TRUSTYREPO=$( echo "$9" |cut -d\: -f4 )
+DOCKERDCVER=$( echo "$9" |cut -d\: -f5 )
+
 if [ ! -z "$omsworkspaceid" ]; then
 
 echo  "omsworkspaceid is" $omsworkspaceid
