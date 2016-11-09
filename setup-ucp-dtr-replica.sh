@@ -22,6 +22,12 @@ echo  "omsworkspaceid is" $omsworkspaceid
 else
 echo "All are respectively " $1 $2 $3 $4 $5
 fi
+DOCKERDET=$9
+DOCKERVER=$( echo "$9" |cut -d\: -f1 )
+DOCKERCOMPVER=$( echo "$9" |cut -d\: -f2 )
+DOCKERMCVER=$( echo "$9" |cut -d\: -f3 )
+TRUSTYREPO=$( echo "$9" |cut -d\: -f4 )
+DOCKERDCVER=$( echo "$9" |cut -d\: -f5 )
 
 installomsagent()
 {
