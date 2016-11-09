@@ -8,6 +8,13 @@ PASSWORD=$1
 MASTERFQDN=$2
 MASTERPRIVATEIP=$3
 SLEEP=$4
+DOCKERDET=$8
+DOCKERVER=$( echo "$8" |cut -d\: -f1 )
+DOCKERCOMPVER=$( echo "$8" |cut -d\: -f2 )
+DOCKERMCVER=$( echo "$8" |cut -d\: -f3 )
+TRUSTYREPO=$( echo "$8" |cut -d\: -f4 )
+DOCKERDCVER=$( echo "$8" |cut -d\: -f5 )
+
 if [ ! -z "$5" ]; then
 omsworkspaceid=$5
 omsworkspacekey=$6
