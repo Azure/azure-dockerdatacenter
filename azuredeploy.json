@@ -1202,8 +1202,8 @@
                         "[variables('ucpDtrNodeReplicaScriptUri')]"
                     ]
                 },
-                "protectedSettings": {
-                    "commandToExecute": "[concat('bash setup-ucp-dtr-replica.sh \"', parameters('ucpAdminPassword'), '\" \"', reference(parameters('controllerLbPublicIpAddress')).dnsSettings.fqdn, '\" \"', variables('ucpDtrReplicaId'), '\" \"', reference('ucpController0').outputs.privateIp.value, '\" \"', mul(copyIndex(), 1), '\" \"', parameters('OMSWorkSpaceId'), '\" \"', parameters('OMSWorkSpaceKey'), '\" \"', parameters('OMSLinuxAgentFullVersion'), '\" \"', variables('publicipdet'), '\" \"', variables('dockerdet'), '\"')]"
+                "protectedSettings": {              
+                    "commandToExecute": "[concat('bash setup-ucp-dtr-replica.sh \"', parameters('ucpAdminPassword'), '\" \"', reference(parameters('controllerLbPublicIpAddress')).dnsSettings.fqdn, '\" \"', variables('ucpDtrReplicaId'), '\" \"', reference('ucpController0').outputs.privateIp.value, '\" \"', mul(copyIndex(), 1), '\" \"', parameters('OMSWorkSpaceId'), '\" \"', parameters('OMSWorkSpaceKey'), '\" \"', parameters('OMSLinuxAgentFullVersion'), '\" \"', variables('dockerdet'), '\"')]"
                 }
             }
         }
