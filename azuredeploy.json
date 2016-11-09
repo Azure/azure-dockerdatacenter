@@ -160,6 +160,45 @@
                 "description": "DNS label of Public IP for DTR Load Balancer"
             }
         },
+    "dockerVer": {
+      "type": "string",
+      "defaultValue": "1.12",
+      "metadata": {
+        "description": "The docker version **Change trusty to testing for CS rc **"
+      }
+    },
+    "dockerComposeVer": {
+      "type": "string",
+      "defaultValue": "1.9.0-rc4",
+      "metadata": {
+        "description": "The Docker Compose Version "
+      }
+    },
+    "dockerMachineVer": {
+      "type": "string",
+      "defaultValue": "0.8.2",
+      "metadata": {
+        "description": "The docker-machine version "
+      }
+    },
+    "ubuntuTrustyRepo": {
+      "type": "string",
+      "defaultValue": "testing",
+            "allowedValues": [
+                "testing",
+                "main"
+            ],
+      "metadata": {
+        "description": "The trusty repo"
+      }
+    },
+    "DockerDCVer": {
+      "type": "string",
+      "defaultValue": "ucp-2.0.0-beta4_dtr-2.1.0-beta4",
+      "metadata": {
+        "description": "The Docker DataCenter Beta version "
+      }
+    },
         "ucpAdminPassword": {
             "type": "securestring",
             "metadata": {
