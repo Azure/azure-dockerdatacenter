@@ -267,8 +267,8 @@
         "nodeDtrLbIpConfigName": "[concat(parameters('clusterPrefix'), '-nodeDtr-lbFrontEnd')]",
         "nodeDtrLbIpConfigId": "[concat(variables('nodeDtrLbId'),'/frontendIPConfigurations/', variables('nodeDtrLbIpConfigName'))]",
         "nodeDtrLbBackendPoolName": "[concat(parameters('clusterPrefix'), '-nodeDtr-pool')]",
-	    "dockerdet": "[concat(parameters('dockerVer'), ':', parameters('dockerComposeVer'), ':', parameters('dockerMachineVer'), ':', parameters('ubuntuTrustyRepo'), ':', parameters('DockerDCVer'))]",
-    "publicipdet": "[concat(parameters('dockerVer'), ':', parameters('dockerComposeVer'), ':', parameters('dockerMachineVer'), ':', reference(parameters('nodeDtrLbPublicIpAddress')).dnsSettings.fqdn, ':', reference(parameters('nodeLbPublicIpAddress')).dnsSettings.fqdn)]",
+    "dockerdet": "[concat(parameters('dockerVer'), ':', parameters('dockerComposeVer'), ':', parameters('dockerMachineVer'), ':', parameters('ubuntuTrustyRepo'), ':', parameters('DockerDCVer'))]",
+    "publicipdet": "[concat(reference(parameters('controllerLbPublicIpAddress')).dnsSettings.fqdn, ':', reference(parameters('nodeDtrLbPublicIpAddress')).dnsSettings.fqdn, ':', reference(parameters('nodeLbPublicIpAddress')).dnsSettings.fqdn)]",
         "vnetTemplate": "[concat(parameters('baseUrl'), '/', 'newvnet.json')]",
         "ucpControllerTemplateLink": "[concat(parameters('baseUrl'), '/ucpcontroller.json')]",
         "ucpNodeTemplateLink": "[concat(parameters('baseUrl'), '/ucpnode.json')]",
@@ -1094,7 +1094,7 @@
                     ]
                 },
                 "protectedSettings": {
-                    "commandToExecute": "[concat('bash setup-controller.sh \"', parameters('ucpAdminPassword'), '\" \"', reference(parameters('controllerLbPublicIpAddress')).dnsSettings.fqdn, '\" \"', reference('ucpController0').outputs.privateIp.value, '\" \"', parameters('OMSWorkSpaceId'), '\" \"', parameters('OMSWorkSpaceKey'), '\" \"', parameters('OMSLinuxAgentFullVersion'), '\" \"', variables('publicipdet'), '\"')]"
+                "commandToExecute": "[concat('bash setup-controller.sh \"', parameters('ucpAdminPassword'), '\" \"', reference(parameters('controllerLbPublicIpAddress')).dnsSettings.fqdn, '\" \"', reference('ucpController0').outputs.privateIp.value, '\" \"', parameters('OMSWorkSpaceId'), '\" \"', parameters('OMSWorkSpaceKey'), '\" \"', parameters('OMSLinuxAgentFullVersion'), '\" \"', variables('publicipdet'), '\" \"', variables('dockerdet'), '\"')]"
                 }
             }
         },
@@ -1122,7 +1122,7 @@
                     ]
                 },
                 "protectedSettings": {
-                     "commandToExecute": "[concat('bash setup-replica.sh \"', parameters('ucpAdminPassword'), '\" \"', reference(parameters('controllerLbPublicIpAddress')).dnsSettings.fqdn, '\" \"', reference('ucpController0').outputs.privateIp.value, '\" \"', mul(copyIndex(), 6), '\" \"', parameters('OMSWorkSpaceId'), '\" \"', parameters('OMSWorkSpaceKey'), '\" \"', parameters('OMSLinuxAgentFullVersion'), '\" \"', variables('publicipdet'), '\"')]"
+	        "commandToExecute": "[concat('bash setup-replica.sh \"', parameters('ucpAdminPassword'), '\" \"', reference(parameters('controllerLbPublicIpAddress')).dnsSettings.fqdn, '\" \"', reference('ucpController0').outputs.privateIp.value, '\" \"', mul(copyIndex(), 6), '\" \"', parameters('OMSWorkSpaceId'), '\" \"', parameters('OMSWorkSpaceKey'), '\" \"', parameters('OMSLinuxAgentFullVersion'), '\" \"', variables('publicipdet'), '\" \"', variables('dockerdet'), '\"')]"
                 }
             }
         },
@@ -1150,7 +1150,7 @@
                     ]
                 },
                 "protectedSettings": {
-                    "commandToExecute": "[concat('bash setup-ucp-node.sh \"', parameters('ucpAdminPassword'), '\" \"', reference(parameters('controllerLbPublicIpAddress')).dnsSettings.fqdn, '\" \"', reference('ucpController0').outputs.privateIp.value, '\" \"', mul(copyIndex(), 6), '\" \"', parameters('OMSWorkSpaceId'), '\" \"', parameters('OMSWorkSpaceKey'), '\" \"', parameters('OMSLinuxAgentFullVersion'), '\" \"', variables('publicipdet'), '\"')]"
+"commandToExecute": "[concat('bash setup-ucp-node.sh \"', parameters('ucpAdminPassword'), '\" \"', reference(parameters('controllerLbPublicIpAddress')).dnsSettings.fqdn, '\" \"', reference('ucpController0').outputs.privateIp.value, '\" \"', mul(copyIndex(), 6), '\" \"', parameters('OMSWorkSpaceId'), '\" \"', parameters('OMSWorkSpaceKey'), '\" \"', parameters('OMSLinuxAgentFullVersion'), '\" \"', variables('publicipdet'), '\" \"', variables('dockerdet'), '\"')]"
                 }
             }
         },
@@ -1175,7 +1175,7 @@
                     ]
                 },
                 "protectedSettings": {
-                        "commandToExecute": "[concat('bash setup-ucp-dtr-node.sh \"', parameters('ucpAdminPassword'), '\" \"', variables('publicipdet'), '\" \"', variables('ucpDtrReplicaId'), '\" \"', reference('ucpController0').outputs.privateIp.value, '\" \"', parameters('clusterPrefix'), '\" \"', variables('ucpDtrReplicaCount'), '\" \"', mul(parameters('ucpNodeCount'), 1), '\" \"', variables('omsdet'), '\"')]"
+                    "commandToExecute": "[concat('bash setup-ucp-dtr-node.sh \"', parameters('ucpAdminPassword'), '\" \"', variables('publicipdet'), '\" \"', variables('ucpDtrReplicaId'), '\" \"', reference('ucpController0').outputs.privateIp.value, '\" \"', parameters('clusterPrefix'), '\" \"', variables('ucpDtrReplicaCount'), '\" \"', mul(parameters('ucpNodeCount'), 1), '\" \"', variables('omsdet'), '\" \"', variables('dockerdet'), '\"')]"
                 }
             }
         },
@@ -1203,7 +1203,7 @@
                     ]
                 },
                 "protectedSettings": {
-                    "commandToExecute": "[concat('bash setup-ucp-dtr-replica.sh \"', parameters('ucpAdminPassword'), '\" \"', reference(parameters('controllerLbPublicIpAddress')).dnsSettings.fqdn, '\" \"', variables('ucpDtrReplicaId'), '\" \"', reference('ucpController0').outputs.privateIp.value, '\" \"', mul(copyIndex(), 1), '\" \"', parameters('OMSWorkSpaceId'), '\" \"', parameters('OMSWorkSpaceKey'), '\" \"', parameters('OMSLinuxAgentFullVersion'), '\" \"', variables('publicipdet'), '\"')]"
+                    "commandToExecute": "[concat('bash setup-ucp-dtr-replica.sh \"', parameters('ucpAdminPassword'), '\" \"', reference(parameters('controllerLbPublicIpAddress')).dnsSettings.fqdn, '\" \"', variables('ucpDtrReplicaId'), '\" \"', reference('ucpController0').outputs.privateIp.value, '\" \"', mul(copyIndex(), 1), '\" \"', parameters('OMSWorkSpaceId'), '\" \"', parameters('OMSWorkSpaceKey'), '\" \"', parameters('OMSLinuxAgentFullVersion'), '\" \"', variables('publicipdet'), '\" \"', variables('dockerdet'), '\"')]"
                 }
             }
         }
