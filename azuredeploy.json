@@ -1153,7 +1153,7 @@
                     ]
                 },
                 "protectedSettings": {
-"commandToExecute": "[concat('bash setup-ucp-node.sh \"', parameters('ucpAdminPassword'), '\" \"', reference(parameters('controllerLbPublicIpAddress')).dnsSettings.fqdn, '\" \"', reference('ucpController0').outputs.privateIp.value, '\" \"', mul(copyIndex(), 6), '\" \"', parameters('OMSWorkSpaceId'), '\" \"', parameters('OMSWorkSpaceKey'), '\" \"', parameters('OMSLinuxAgentFullVersion'), '\" \"', variables('publicipdet'), '\" \"', variables('dockerdet'), '\"')]"
+"commandToExecute": "[concat('bash setup-ucp-node.sh \"', parameters('ucpAdminPassword'), '\" \"', reference(parameters('controllerLbPublicIpAddress')).dnsSettings.fqdn, '\" \"', reference('ucpController0').outputs.privateIp.value, '\" \"', mul(copyIndex(), 6), '\" \"', parameters('OMSWorkSpaceId'), '\" \"', parameters('OMSWorkSpaceKey'), '\" \"', parameters('OMSLinuxAgentFullVersion'), '\" \"', variables('dockerdet'), '\"')]"
                 }
             }
         },
