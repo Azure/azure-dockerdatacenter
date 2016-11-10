@@ -221,7 +221,7 @@
 		},
 	"OMSLinuxAgentFullVersion": {
 			    "type": "string",
-			    "defaultValue": "1.2.0-75",
+			    "defaultValue": "1.2.0-148",
 			    "metadata": {
 				"description": "The OMS Agent x64 version will update and register with OMS Workspace for DDC"
 			    }
