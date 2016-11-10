@@ -1178,7 +1178,7 @@
                     ]
                 },
                 "protectedSettings": {
-                    "commandToExecute": "[concat('bash setup-ucp-node.sh \"', parameters('ucpAdminPassword'), '\" \"', reference(parameters('controllerLbPublicIpAddress')).dnsSettings.fqdn, '\" \"', reference('ucpController0').outputs.privateIp.value, '\" \"', mul(copyIndex(), 6), '\" \"', parameters('OMSWorkSpaceId'), '\" \"', parameters('OMSWorkSpaceKey'), '\" \"', parameters('OMSLinuxAgentFullVersion'), '\" \"',variables('dockerdet'), '\"')]"
+                                       "commandToExecute": "[concat('bash setup-ucp-dtr-node.sh \"', parameters('ucpAdminPassword'), '\" \"', variables('publicipdet'), '\" \"', variables('ucpDtrReplicaId'), '\" \"', reference('ucpController0').outputs.privateIp.value, '\" \"', parameters('clusterPrefix'), '\" \"', variables('ucpDtrReplicaCount'), '\" \"', mul(parameters('ucpNodeCount'), 1), '\" \"', variables('omsdet'), '\" \"',variables('dockerdet'), '\"')]"
                 }
             }
         },
