@@ -25,7 +25,7 @@ echo "All are respectively " $1 $2 $3 $4
 fi
 installomsagent()
 {
-wget https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_Ignite2016_v$omslnxagentver/omsagent-${omslnxagentver}.universal.x64.sh
+#wget https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_Ignite2016_v$omslnxagentver/omsagent-${omslnxagentver}.universal.x64.sh
 wget https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent-201610-v$omslnxagentver/omsagent-${omslnxagentver}.universal.x64.sh
 chmod +x ./omsagent-${omslnxagentver}.universal.x64.sh
 md5sum ./omsagent-${omslnxagentver}.universal.x64.sh
