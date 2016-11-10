@@ -65,12 +65,15 @@ apt-get install -y apt-transport-https ca-certificates
 #apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 #echo 'deb https://apt.dockerproject.org/repo ubuntu-trusty main' >> /etc/apt/sources.list.d/docker.list
 curl -s 'https://sks-keyservers.net/pks/lookup?op=get&search=0xee6d536cf7dc86e2d7d56f59a178ac6c6238f52e' | apt-key add --import
-echo 'deb https://packages.docker.com/1.12/apt/repo ubuntu-trusty testing' >> /etc/apt/sources.list.d/docker.list
+#echo 'deb https://packages.docker.com/1.12/apt/repo ubuntu-trusty testing' >> /etc/apt/sources.list.d/docker.list
+echo "deb https://packages.docker.com/${DOCKERVER}/apt/repo ubuntu-trusty ${TRUSTYREPO}" >> /etc/apt/sources.list.d/docker.list
 apt-cache policy docker-engine
 DEBIAN_FRONTEND=noninteractive apt-get -y update
 DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
-curl -L https://github.com/docker/compose/releases/download/1.9.0-rc4/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-curl -L https://github.com/docker/machine/releases/download/v0.8.2/docker-machine-`uname -s`-`uname -m` >/usr/local/bin/docker-machine
+#curl -L https://github.com/docker/compose/releases/download/1.9.0-rc4/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+#curl -L https://github.com/docker/machine/releases/download/v0.8.2/docker-machine-`uname -s`-`uname -m` >/usr/local/bin/docker-machine
+curl -L https://github.com/docker/compose/releases/download/$DOCKERCOMPVER/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+curl -L https://github.com/docker/machine/releases/download/v$DOCKERMCVER/docker-machine-`uname -s`-`uname -m` >/usr/local/bin/docker-machine
 chmod +x /usr/local/bin/docker-machine
 chmod +x /usr/local/bin/docker-compose
 export PATH=$PATH:/usr/local/bin/
@@ -118,8 +121,10 @@ installdtr() {
 installbundle;
 echo $(date) " - Loading docker install Tar"
 #cd /opt/ucp && wget https://s3.amazonaws.com/packages.docker.com/caas/ucp-2.0.0-beta3_dtr-2.1.0-beta3.tar.gz
-cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta4_dtr-2.1.0-beta4.tar.gz
-docker load < ucp-2.0.0-beta4_dtr-2.1.0-beta4.tar.gz
+#cd /opt/ucp && wget https://packages.docker.com/caas/ucp-2.0.0-beta4_dtr-2.1.0-beta4.tar.gz
+cd /opt/ucp && wget https://packages.docker.com/caas/$DOCKERDCVER.tar.gz
+#docker load < ucp-2.0.0-beta4_dtr-2.1.0-beta4.tar.gz
+docker load < $DOCKERDCVER.tar.gz
 # Implement delay timer to stagger load of the bits - docker.com CDN Dependent
 sleep 45;
 echo $(date) " - Loading complete.  Starting UCP Install"
