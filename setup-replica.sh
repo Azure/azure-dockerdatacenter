@@ -125,7 +125,7 @@ docker run --rm -i \
    -v /var/run/docker.sock:/var/run/docker.sock \
    -e UCP_ADMIN_USER=admin \
    -e UCP_ADMIN_PASSWORD=$PASSWORD \
-    docker/ucp:2.0.0-beta4 \
+    docker/${UCPIMAGETAG} \
     join --replica --san $MASTERFQDN --san $DTRFQDN --san $NFQDN --url https://$MASTERFQDN --fingerprint "${FPRINT}"
 
 if [ $? -eq 0 ]
