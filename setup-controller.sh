@@ -142,7 +142,7 @@ docker run --rm -i \
     --name ucp \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -e UCP_ADMIN_PASSWORD=$PASSWORD \
-    docker/ucp:2.0.0-beta4 \
+    docker/${UCPIMAGETAG} \
     install -D --san $MASTERFQDN --san $DTRFQDN --san $NFQDN --host-address eth0
 #docker run --rm -i \
 #    --name ucp \
