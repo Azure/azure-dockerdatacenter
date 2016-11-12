@@ -133,7 +133,7 @@ sleep 45;
 echo $(date) " - Loading complete.  Starting UCP Install"
 # Start installation of UCP with master Controller
 docker run --rm  \
-  docker/dtr:2.1.0-beta4 install \
+  docker/${DTRIMAGETAG} install \
   --ucp-node $UCP_NODE \
   --ucp-insecure-tls \
   --dtr-external-url $DTR_PUBLIC_URL  \
@@ -179,7 +179,7 @@ installdtr;
  #joinucp()
  # Install DTR Replica
 docker run -it --rm \
-docker/dtr:2.1.0-beta4 join \
+docker/${DTRIMAGETAG} join \
  --ucp-url $UCP_URL \
  --ucp-node $UCP_NODE_REP$loop$UCP_NODE_SUF \
    --ucp-insecure-tls \
