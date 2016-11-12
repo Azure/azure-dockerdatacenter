@@ -35,6 +35,8 @@ DOCKERCOMPVER=$( echo "$9" |cut -d\: -f2 )
 DOCKERMCVER=$( echo "$9" |cut -d\: -f3 )
 TRUSTYREPO=$( echo "$9" |cut -d\: -f4 )
 DOCKERDCVER=$( echo "$9" |cut -d\: -f5 )
+UCPIMAGETAG=$( echo "$DOCKERDCVER" |cut -d\_ -f1|sed 's/ucp\-/ucp\:/g')
+DTRIMAGETAG=$( echo "$DOCKERDCVER" |cut -d\_ -f2|sed 's/dtr\-/dtr\:/g')
 
 if [ ! -z "$omsworkspaceid" ]; then
 
