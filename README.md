@@ -13,7 +13,7 @@ Table of Contents
 
 ### Azure Docker Datacenter
 
-* Azure Docker DataCenter Templates for the to-be GAed Docker DataCenter with  **~~ucp:2.0.0-Beta4~~** **ucp:2.0.0** (native Swarm with Raft) and **~~dtr:2.1.0-Beta4~~** **dtr:2.1.0** initially based on the "legacy" Docker DataCenter 1.x Azure MarketPlace Gallery Templates (1.0.9). 
+* Azure Docker DataCenter Templates for the to-be GAed Docker DataCenter with  **~~ucp:2.0.0-Beta4~~** **ucp:2.0.0** (native Swarm with Raft) and **~~dtr:2.1.0-Beta4~~** **dtr:2.1.0** initially based on the "legacy" Docker DataCenter 1.x Azure MarketPlace Gallery Templates (1.0.9).  Read about this [DDC version features blog](https://blog.docker.com/2016/11/docker-datacenter-adds-enterprise-orchestration-security-policy-refreshed-ui/).
 * For Raft, please view [Docker Orchestration: Beyond the Basics](http://events.linuxfoundation.org/sites/events/files/slides/Docker_Orchestration-Aaron_Lehmann.pdf) By Aaron Lehmann at the [ContainerCon, Europe](http://events.linuxfoundation.org/events/containercon-europe/program/slides) - Berlin, October 4-9, 2016.
 and [Swarm Raft Page](https://docs.docker.com/engine/swarm/raft/).
 *  Apps may leverage [swarm mode orchestration on engine 1.12](https://docs.docker.com/engine/swarm/).
