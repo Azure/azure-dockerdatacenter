@@ -194,7 +194,7 @@
     },
     "DockerDCVer": {
       "type": "string",
-      "defaultValue": "ucp-2.0.1_dtr-2.1.0",
+      "defaultValue": "ucp-2.0.1_dtr-2.1.1",
       "metadata": {
         "description": "The Docker DataCenter Beta version "
       }
