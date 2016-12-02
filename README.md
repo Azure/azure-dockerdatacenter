@@ -74,7 +74,7 @@ Patches can be submitted as GitHub pull requests. If using GitHub please make su
 
 * All Docker Engines in this Azure DDC autocluster(s) are automatically instrumented via ExecStart and Specific DOCKER_OPTIONS to share metric with the OMS Workspace during deployment as in the picture below.
 
-![OMS Container](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/OMSContainer1.png)
+![OMS Container](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/OMSContainer2.png)
 
 ##### Fluentd usage
 ![OMS Fluentd](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/OMS.png)
