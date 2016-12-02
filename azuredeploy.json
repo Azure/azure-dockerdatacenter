@@ -164,7 +164,7 @@
       "type": "string",
       "defaultValue": "1.12",
       "metadata": {
-        "description": "The docker version **Change trusty to testing for CS rc **"
+        "description": "The docker version **added testing for trusty for CS rc **"
       }
     },
     "dockerComposeVer": {
@@ -196,7 +196,7 @@
       "type": "string",
       "defaultValue": "ucp-2.0.1_dtr-2.1.1",
       "metadata": {
-        "description": "The Docker DataCenter Beta version "
+        "description": "DDC version - For Beta license usage change to ucp-2.0.0-beta4_dtr-2.1.0-beta4"
       }
     },
         "ucpAdminPassword": {
