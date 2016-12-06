@@ -67,6 +67,7 @@ Patches can be submitted as GitHub pull requests. If using GitHub please make su
 **OMS Setup is optional and the OMS Workspace Id and OMS Workspace Key can either be kept blank or populated post the steps below.**
 
 [Create a free account for MS Azure Operational Management Suite with workspaceName](https://login.mms.microsoft.com/signin.aspx?signUp=on&ref=ms_mms)
+
 * Provide a Name for the OMS Workspace.
 * Link your Subscription to the OMS Portal.
 * Depending upon the region, a Resource Group would be created in the Sunscription like "mms-weu" for "West Europe" and the named OMS Workspace with portal details etc. would be created in the Resource Group.
@@ -85,6 +86,6 @@ Patches can be submitted as GitHub pull requests. If using GitHub please make su
 ![OMS Fluentd](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/OMS.png)
 
 
-:heart: ![Azure Subscription Icon](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/Azure.png) :penguin: :whale:
+![Azure Subscription Icon](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/Azure.png)
 
 
