@@ -16,7 +16,7 @@ Table of Contents
          * [Fluentd usage](#fluentd-usage)
       * [Optional Usage of Azure Container Registry](#optional-usage-of-azure-container-registry)
          * [Create ACR](#create-acr)
-         * [Create Service Principal, tag image and push to ACR](#create-service-principal,-tag-image-and-push-to-acr)
+         * [Create Service Principal tag image and push to ACR](#create-service-principal-tag-image-and-push-to-acr)
 
 
 ### Azure Docker Datacenter
@@ -159,7 +159,7 @@ Use an existing service principal and assign access:
   "type": "Microsoft.ContainerRegistry/registries"
 }
 ```
-##### Create Service Principal, tag image and push to ACR
+##### Create Service Principal tag image and push to ACR
 
 * Subscription Id, App Id, registry Name, Login Server are representational
 * <code> bash-4.3# az ad sp create-for-rbac -scopes /subscriptions/123a1234-1b23-1e00-11c3-123456789d12/resourcegroups/acr/providers/Microsoft.ContainerRegistry/registries/acr12345 --role Owner --password bangbaM23# </code>
