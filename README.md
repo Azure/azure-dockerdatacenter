@@ -107,14 +107,22 @@ Patches can be submitted as GitHub pull requests. If using GitHub please make su
       "type": "user"
     }
   }
+]
   ```
-] </code>
- 
- 
- 
- 
- 
- 
+* create a resource group via new azure cli from inside the container logged into azure 
+<code> bash-4.3# az group create -n acr -l southcentralus </code>
+```json
+{
+  "id": "/subscriptions/123a1234-1b23-1e00-11c3-123456789d12/resourceGroups/acr",
+  "location": "southcentralus",
+  "managedBy": null,
+  "name": "acr",
+  "properties": {
+    "provisioningState": "Succeeded"
+  },
+  "tags": null
+}
+```
  
  
  
