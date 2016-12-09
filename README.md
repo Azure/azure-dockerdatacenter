@@ -63,7 +63,7 @@ Please report bugs  by opening an issue in the [GitHub Issue Tracker](https://gi
 
 Patches can be submitted as GitHub pull requests. If using GitHub please make sure your branch applies to the current master as a 'fast forward' merge (i.e. without creating a merge commit). Use the `git rebase` command to update your branch to the current master if necessary.
 
-#### ~~Pre-Req and or~~ Optional
+#### ~~Pre-Req and or~~ Optional Usage of Operational Management Suite
 **OMS Setup is optional and the OMS Workspace Id and OMS Workspace Key can either be kept blank or populated post the steps below.**
 
 [Create a free account for MS Azure Operational Management Suite with workspaceName](https://login.mms.microsoft.com/signin.aspx?signUp=on&ref=ms_mms)
@@ -83,9 +83,12 @@ Patches can be submitted as GitHub pull requests. If using GitHub please make su
 ![OMS Container](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/OMSContainer2.png)
 
 ##### Fluentd usage
-![OMS Fluentd](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/OMS.png)
+![OMS Fluentd](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/OMS.
 
-
+#### Optional Usage of Azure Container Registry
+##### Create ACR
+* Create Dockerized new Azur cli
+ * <code> $ docker run -dti -v ${HOME}:/home/azureuser --restart=always --name=azure-cli-python azuresdk/azure-cli-python </code>
 ![Azure Subscription Icon](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/Azure.png)
 
 
