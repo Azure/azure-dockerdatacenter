@@ -110,7 +110,7 @@ Patches can be submitted as GitHub pull requests. If using GitHub please make su
 ]
   ```
 * create a resource group via new azure cli from inside the container logged into azure 
-<code> bash-4.3# az group create -n acr -l southcentralus </code>
+ * <code> bash-4.3# az group create -n acr -l southcentralus </code>
 ```json
 {
   "id": "/subscriptions/123a1234-1b23-1e00-11c3-123456789d12/resourceGroups/acr",
@@ -123,6 +123,52 @@ Patches can be submitted as GitHub pull requests. If using GitHub please make su
   "tags": null
 }
 ```
+* Create the acr instance
+ * <code> bash-4.3# az acr create -n acr12345 -g acr -l southcentralus </code>
+  * Subscription Id, App Id, registry Name, Login Server are representational
+  * ACR is available presently in eastus, westus and southcentralus
+```json
+Create a new service principal and assign access:
+  az ad sp create-for-rbac --scopes /subscriptions/123a1234-1b23-1e00-11c3-123456789d12/resourcegroups/acr/providers/Microsoft.ContainerRegistry/registries/acr12345 --role Owner --password <password>
+
+Use an existing service principal and assign access:
+  az role assignment create --scope /subscriptions/123a1234-1b23-1e00-11c3-123456789d12/resourcegroups/acr/providers/Microsoft.ContainerRegistry/registries/acr12345 --role Owner --assignee <app-id>
+{
+  "adminUserEnabled": false,
+  "creationDate": "2016-12-09T03:45:14.843041+00:00",
+  "id": "/subscriptions/123a1234-1b23-1e00-11c3-123456789d12/resourcegroups/acr/providers/Microsoft.ContainerRegistry/registries/acr12345",
+  "location": "southcentralus",
+  "loginServer": "acr12345-microsoft.azurecr.io",
+  "name": "acr12345",
+  "storageAccount": {
+    "accessKey": null,
+    "name": "acr123456789"
+  },
+  "tags": {},
+  "type": "Microsoft.ContainerRegistry/registries"
+}
+```
+##### Create Service Principal, tag image and push to ACR
+
+* Subscription Id, App Id, registry Name, Login Server are representational
+* <code> bash-4.3# az ad sp create-for-rbac -scopes /subscriptions/123a1234-1b23-1e00-11c3-123456789d12/resourcegroups/acr/providers/Microsoft.ContainerRegistry/registries/acr12345 --role Owner --password bangbaM23# </code>
+```json
+Retrying role assignment creation: 1/24
+Retrying role assignment creation: 2/24
+{
+  "appId": "ab123cd5-b1ab-1234-abab-a2bcd90abcde",
+  "name": "http://azure-cli-2016-12-09-03-46-57",
+  "password": "bangbaM23#",
+  "tenant": "12f123bf-12f1-12af-12ab-1d3cd456db78"
+}
+```
+
+* Login <code>$ docker login -u ab123cd5-b1ab-1234-abab-a2bcd90abcde -p bangbaM23# acr12345-microsoft.azurecr.io</code>
+* Pull a public image <code>$ docker pull dwaiba/azureiot-nodered </code>
+* Tag for new ACR <code> $ docker tag dwaiba/azureiot-nodered acr12345-microsoft.azurecr.io/ab123cd5-b1ab-1234-abab-a2bcd90abcde/azureiot-nodered:latest</code>
+* Push to ACR <code> $ docker push acr12345-microsoft.azurecr.io/ab123cd5-b1ab-1234-abab-a2bcd90abcde/azureiot-nodered:latest </code>
+
+
  
  
  
