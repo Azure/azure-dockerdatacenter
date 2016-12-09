@@ -87,8 +87,42 @@ Patches can be submitted as GitHub pull requests. If using GitHub please make su
 
 #### Optional Usage of Azure Container Registry
 ##### Create ACR
-* Create Dockerized new Azur cli
+* Create Dockerized new Azure cli
  * <code> $ docker run -dti -v ${HOME}:/home/azureuser --restart=always --name=azure-cli-python azuresdk/azure-cli-python </code>
+* Login to Azure from the cli docker instance
+ * <code> $ docker exec -ti azure-cli-python bash -c "az login && bash" </code>
+ * Please view output below. Subscription Id, Tenant Id and names are representational.
+  * To sign in, use a web browser to open the page https://aka.ms/devicelogin and enter the code XXXXX to authenticate.
+```json
+[
+{
+    "cloudName": "AzureCloud",
+    "id": "123a1234-1b23-1e00-11c3-123456789d12",
+    "isDefault": true,
+    "name": "Microsoft Azure Subscription Name",
+    "state": "Enabled",
+    "tenantId": "12f123bf-12f1-12af-12ab-1d3cd456db78",
+    "user": {
+      "name": "ab@company.com",
+      "type": "user"
+    }
+  }
+  ```
+] </code>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 ![Azure Subscription Icon](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/Azure.png)
 
 
