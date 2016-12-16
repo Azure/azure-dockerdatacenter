@@ -194,7 +194,7 @@
     },
     "DockerDCVer": {
       "type": "string",
-      "defaultValue": "ucp-2.0.1_dtr-2.1.1",
+      "defaultValue": "ucp-2.0.1_dtr-2.1.2",
       "metadata": {
         "description": "DDC version - For Beta license usage change to ucp-2.0.0-beta4_dtr-2.1.0-beta4"
       }
