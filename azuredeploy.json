@@ -183,7 +183,7 @@
     },
     "ubuntuTrustyRepo": {
       "type": "string",
-      "defaultValue": "main",
+      "defaultValue": "testing",
             "allowedValues": [
                 "testing",
                 "main"
