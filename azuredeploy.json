@@ -196,7 +196,7 @@
       "type": "string",
       "defaultValue": "ucp-2.0.1_dtr-2.1.3",
       "metadata": {
-        "description": "DDC version - For Beta license usage change to ucp-2.0.0-beta4_dtr-2.1.0-beta4"
+        "description": "DDC version - For Older Beta license usage change to ucp-2.0.0-beta4_dtr-2.1.0-beta4, for newer 2.1.0-beta1 and 2.2.0-beta1 public bits are not available"
       }
     },
         "ucpAdminPassword": {
