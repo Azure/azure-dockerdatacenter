@@ -169,7 +169,7 @@
     },
     "dockerComposeVer": {
       "type": "string",
-      "defaultValue": "1.10.0-rc1",
+      "defaultValue": "1.10.0-rc2",
       "metadata": {
         "description": "The Docker Compose Version "
       }
