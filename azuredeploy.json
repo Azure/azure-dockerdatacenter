@@ -176,7 +176,7 @@
     },
     "dockerMachineVer": {
       "type": "string",
-      "defaultValue": "0.9.0-rc2",
+      "defaultValue": "0.9.0",
       "metadata": {
         "description": "The docker-machine version "
       }
