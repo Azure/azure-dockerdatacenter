@@ -3,6 +3,7 @@ title: Deploy DDC on Azure
 description: Learn how to deploy Docker Datacenter with one click, using an ARM (ARM Resource Manager) Template.
 keywords: docker, datacenter, install, orchestration, management, azure, swarm
 ---
+** [Repo is updated with 1.13 CS Engine for DDC - ucp-2.0.1_dtr-2.1.3](https://blog.docker.com/2017/02/docker-datacenter-1-13/) **
 Table of Contents
 =================
 
