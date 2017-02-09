@@ -162,14 +162,18 @@
         },
     "dockerVer": {
       "type": "string",
-      "defaultValue": "1.12",
+      "defaultValue": "1.13",
+        "allowedValues": [
+        "1.12",
+        "1.13"
+      ],
       "metadata": {
         "description": "The docker version **added testing for trusty for CS rc **"
       }
     },
     "dockerComposeVer": {
       "type": "string",
-      "defaultValue": "1.11.0-rc1",
+      "defaultValue": "1.11.0",
       "metadata": {
         "description": "The Docker Compose Version "
       }
