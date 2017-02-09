@@ -10,6 +10,39 @@
             },
             "defaultValue": "https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master"
         },
+    "imgPublisher": {
+      "type": "string",
+      "defaultValue": "docker",
+      "allowedValues": [
+        "docker",
+        "Canonical"
+      ],
+      "metadata": {
+        "description": "docker/Canonical is the CentOS Distributor in Azure Market Place"
+      }
+    },
+    "imgOffer": {
+      "type": "string",
+      "defaultValue": "docker-datacenter-custom",
+      "allowedValues": [
+        "docker-datacenter-custom",
+        "UbuntuServer"
+      ],
+      "metadata": {
+        "description": "Two Images"
+      }
+    },
+    "imgSku": {
+      "type": "string",
+      "defaultValue": "docker_datacenter",
+      "allowedValues": [
+        "docker_datacenter",
+        "16.04.0-LTS"
+      ],
+      "metadata": {
+        "description": "Skus to use"
+      }
+    },
         "clusterPrefix": {
             "type": "string",
             "defaultValue": "ucpclus",
@@ -232,9 +265,9 @@
         	}
     },
     "variables": {
-        "imagePublisher": "docker",
-        "imageOffer": "docker-datacenter-custom",
-        "imageSKU": "docker_datacenter",
+        "imagePublisher": "[parameters('imgPublisher')]",
+        "imageOffer": "[parameters('imgOffer')]",
+        "imageSKU": "[parameters('imgSku')]",
         "apiVersionCompute": "2015-06-15",
         "apiVersionNetwork": "2015-06-15",
         "apiVersionStorage": "2015-06-15",
