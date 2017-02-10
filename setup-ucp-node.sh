@@ -25,6 +25,46 @@ echo  "omsworkspaceid is" $omsworkspaceid
 else
 echo "All are respectively " $1 $2 $3 $4
 fi
+
+disable_ufw_iptables()
+{
+ufw disable
+
+iptables-save > $HOME/firewall.txt
+
+iptables -X
+
+iptables -t nat -F
+
+iptables -t nat -X
+
+iptables -t mangle -F
+
+iptables -t mangle -X
+
+iptables -P INPUT ACCEPT
+
+iptables -P FORWARD ACCEPT
+
+iptables -P OUTPUT ACCEPT
+
+ip6tables-save > $HOME/firewall-6.txt
+
+ip6tables -X
+
+ip6tables -t mangle -F
+
+ip6tables -t mangle -X
+
+ip6tables -P INPUT ACCEPT
+
+ip6tables -P FORWARD ACCEPT
+
+ip6tables -P OUTPUT ACCEPT
+}
+
+disable_ufw_iptables;
+
 installomsagent()
 {
 #wget https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_Ignite2016_v$omslnxagentver/omsagent-${omslnxagentver}.universal.x64.sh
