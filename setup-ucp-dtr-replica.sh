@@ -30,6 +30,44 @@ TRUSTYREPO=$( echo "$9" |cut -d\: -f4 )
 DOCKERDCVER=$( echo "$9" |cut -d\: -f5 )
 UCPIMAGETAG=$( echo "$DOCKERDCVER" |cut -d\_ -f1|sed 's/ucp\-/ucp\:/g')
 DTRIMAGETAG=$( echo "$DOCKERDCVER" |cut -d\_ -f2|sed 's/dtr\-/dtr\:/g')
+disable_ufw_iptables()
+{
+ufw disable
+
+iptables-save > $HOME/firewall.txt
+
+iptables -X
+
+iptables -t nat -F
+
+iptables -t nat -X
+
+iptables -t mangle -F
+
+iptables -t mangle -X
+
+iptables -P INPUT ACCEPT
+
+iptables -P FORWARD ACCEPT
+
+iptables -P OUTPUT ACCEPT
+
+ip6tables-save > $HOME/firewall-6.txt
+
+ip6tables -X
+
+ip6tables -t mangle -F
+
+ip6tables -t mangle -X
+
+ip6tables -P INPUT ACCEPT
+
+ip6tables -P FORWARD ACCEPT
+
+ip6tables -P OUTPUT ACCEPT
+}
+
+disable_ufw_iptables;
 
 installomsagent()
 {
