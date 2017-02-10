@@ -45,6 +45,43 @@ echo "All are respectively " $1 $2 $3
 echo  "MASTER FQDN is" $MASTERFQDN
 fi
 
+disable_ufw_iptables()
+{
+ufw disable
+
+iptables-save > $HOME/firewall.txt
+
+iptables -X
+
+iptables -t nat -F
+
+iptables -t nat -X
+
+iptables -t mangle -F
+
+iptables -t mangle -X
+
+iptables -P INPUT ACCEPT
+
+iptables -P FORWARD ACCEPT
+
+iptables -P OUTPUT ACCEPT
+
+ip6tables-save > $HOME/firewall-6.txt
+
+ip6tables -X
+
+ip6tables -t mangle -F
+
+ip6tables -t mangle -X
+
+ip6tables -P INPUT ACCEPT
+
+ip6tables -P FORWARD ACCEPT
+
+ip6tables -P OUTPUT ACCEPT
+}
+
 install_license()
 {
 #copy license key to /opt/ucp/ucp
@@ -102,6 +139,7 @@ groupadd docker
 usermod -aG docker ucpadmin
 service docker restart
 }
+disable_ufw_iptables;
 install_docker_tools;
 if [ ! -z "$4" ]; then
 sleep 45;
