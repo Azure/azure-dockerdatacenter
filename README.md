@@ -1,4 +1,6 @@
-** This repo is not maintained anymore. For latest DDC or Docker EE for Azure, please visit https://azuremarketplace.microsoft.com/en-us/marketplace/apps/docker.dockerdatacenter **
+**This repo is not maintained anymore. For latest DDC or Docker EE for Azure, please visit https://azuremarketplace.microsoft.com/en-us/marketplace/apps/docker.dockerdatacenter**
+
+
 ---
 title: Deploy DDC on Azure
 description: Learn how to deploy Docker Datacenter with one click, using an ARM (ARM Resource Manager) Template.
