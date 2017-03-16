@@ -4,8 +4,7 @@ description: Learn how to deploy Docker Datacenter with one click, using an ARM 
 keywords: docker, datacenter, install, orchestration, management, azure, swarm
 ---
 **Not maintained for now, new docker ee template for Azure is @ https://azuremarketplace.microsoft.com/en-us/marketplace/apps/docker.dockerdatacenter**
-
-Repo is updated with [1.13 CS Engine](https://docs.docker.com/cs-engine/1.13/) for [DDC](https://blog.docker.com/2017/02/docker-datacenter-1-13/) - ucp-2.0.1_dtr-2.1.3
+Repo is last updated with [1.13 CS Engine](https://docs.docker.com/cs-engine/1.13/) for [DDC](https://blog.docker.com/2017/02/docker-datacenter-1-13/) - ucp-2.0.1_dtr-2.1.3
 Table of Contents
 =================
 
