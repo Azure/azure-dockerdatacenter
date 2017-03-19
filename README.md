@@ -21,6 +21,7 @@ Table of Contents
       * [Optional Usage of Azure Container Registry](#optional-usage-of-azure-container-registry)
          * [Create ACR](#create-acr)
          * [Create Service Principal tag image and push to ACR](#create-service-principal-tag-image-and-push-to-acr)
+    * [Note on Docker EE and Docker CE for Azure](#note-on-docker-ee-and-docker-ce-for-azure)
 
 
 ### Azure Docker Datacenter
@@ -184,6 +185,28 @@ Retrying role assignment creation: 2/24
 * Push to ACR <code> $ docker push acr12345-microsoft.azurecr.io/ab123cd5-b1ab-1234-abab-a2bcd90abcde/azureiot-nodered:latest </code>
 * Run it <code>$ docker run -dti -p 1880:1880 -p 1881:1881 acr12345-microsoft.azurecr.io/ab123cd5-b1ab-1234-abab-a2bcd90abcde/azureiot-nodered:latest</code>
 
+
+### Note on Docker EE and Docker CE for Azure
+
+Presently Docker is using the docker4x repository for entirely private images with dockerized small footprint go apps for catering to standard design of Docker CE and Docker EE for Public Cloud. The following are the last ones for Azure including the ones used for Docker Azure EE (DDC) and Docker CE. The base system service stack of Docker for CE and EE can be easily obtained via any standard monitoring like OMS or names obtained via
+<code>docker search docker4x --limit 100|grep azure</code>
+
+* [docker4x/upgrademon-azure](https://hub.docker.com/r/docker4x/upgrademon-azure)
+* [docker4x/requp-azure](https://hub.docker.com/r/docker4x/requp-azure)
+* [docker4x/upgrade-azure](https://hub.docker.com/r/docker4x/upgrade-azure)
+* [docker4x/upg-azure](https://hub.docker.com/r/docker4x/upg-azure)
+* [docker4x/ddc-init-azure](https://hub.docker.com/r/docker4x/ddc-init-azure)
+* [docker4x/l4controller-azure](https://hub.docker.com/r/docker4x/l4controller-azure)
+* [docker4x/create-sp-azure](https://hub.docker.com/r/docker4x/create-sp-azure)
+* [docker4x/logger-azure](https://hub.docker.com/r/docker4x/logger-azure)
+* [docker4x/azure-vhd-utils](https://hub.docker.com/r/docker4x/azure-vhd-utils)
+* [docker4x/l4azure](https://hub.docker.com/r/docker4x/l4azure)
+* [docker4x/waalinuxagent](https://hub.docker.com/r/docker4x/waalinuxagent) (dated)
+* [docker4x/meta-azure](https://hub.docker.com/r/docker4x/meta-azure)
+* [docker4x/cloud-azure](https://hub.docker.com/r/docker4x/cloud-azure)
+* [docker4x/guide-azure](https://hub.docker.com/r/docker4x/guide-azure)
+* [docker4x/init-azure](https://hub.docker.com/r/docker4x/init-azure)
+* [docker4x/agent-azure](https://hub.docker.com/r/docker4x/agent-azure)
  
 ![Azure Subscription Icon](https://raw.githubusercontent.com/Azure/azure-dockerdatacenter/master/Azure.png)
 
